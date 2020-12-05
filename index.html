@@ -1,37 +1,266 @@
-<html>
-
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&amp;display=swap" rel="stylesheet">
-    <link rel="icon" href="../logo.png" type="image/icon type">
-    <title>HOME</title>
+    <script data-ad-client="ca-pub-5059879588658422" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List</title>
+    <link rel="icon" href="https://cdn.discordapp.com/attachments/619853456500457474/709049797838897192/icon_a.png" type="image/icon type">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
     <script src="script.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        html {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        body {
+            background: #000;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #000;
+            cursor: default;
+        }
+
+        .content {
+            background: #FFF;
+            margin: 50px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .line {
+            border-bottom: 1px solid #000;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .heander {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            margin: 15px;
+            width: 90%;
+            background: #FFF;
+            transition: .3s;
+        }
+
+        .heander:hover {
+            background: rgb(000,000,000,.2);
+        }
+
+        .version {
+            font-size: 14px;
+            background: rgb(0,0,0);
+            color: #FFF;
+            width: 60px;
+            border-radius: 5px;
+            padding: 1px 10px;
+        }
+
+        .notification_alert {
+            display: none;
+        }
+
+        .notification_bg {
+            z-index: 2;
+            background: rgb(0, 0, 0, .7);
+            position: fixed;
+            width: 500px;
+            height: 270px;
+            top: 50%;
+            left: 50%;
+            margin: 0;
+            transform: scale(100);
+        }
+
+        .notification {
+            -webkit-animation-name: notification;
+            animation-name: notification;
+            -webkit-animation-duration: .3s;
+            animation-duration: .3s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: #FFF;
+            position: fixed;
+            border-radius: 15px;
+            padding: 10px;
+            transition: .2s;
+            align-item: center;
+            height: 90%;
+			box-shadow: 0px 0px 50px ;
+        }
+
+        @-webkit-keyframes notification {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes notification {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .btn_b {
+            position: relative;
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 30px;
+            background: #242424;
+            color: #fff;
+            transition: .2s;
+            margin-left: 10;
+            border-radius: 5px;
+        }
+
+        .btn_b:hover {
+            background: #b1abab;
+            color: #000;
+            cursor: pointer;
+			
+        }
+
+        .notification img {
+            z-index: 5;
+            width: 80%;
+            transition: .2s;
+        }
+
+        .btn_ 
+		{
+            padding: 10px 20px;
+            background: rgb(0,0,0,0.3);
+            color: #fff;
+            transition: .2s;
+			margin:60px;
+            border-radius: 5px;
+        }
+
+        .btn_:hover
+		{
+            background: rgb(255,255,255,0.3);
+			box-shadow: 0px 0px 10px #000;
+        }
+
+        .bt_slider {
+            transform: translateY(-10px);
+        }
+		.bt_centent
+		{
+            transform: translateY(-30px);
+		}
+		
+		@media screen and (max-device-width:768px) 
+		{
+			.notification
+			{
+				width:85%;
+				height:65%;
+
+			}
+			
+			.notification img
+			{
+				width:100%;
+			}
+			
+			.bt_slider 
+			{
+				transform: translateY(-10px);
+			}
+			
+			.bt_centent
+			{
+				transform: translateY(-30px);
+			}
+			
+			.content
+			{
+				margin:20px;
+			}
+		}
+    </style>
 </head>
-<style>
-    html {
-        font-family: 'Kanit', sans-serif;
-    }
-    .content
-    {
-        margin: 100px;
-    }
-</style>
-
-<body>
-    <center>
+<html>
+    <body>
+        <div class="notification_alert" id="notification_alert">
+            <div class="notification_bg"></div>
+            <div class="notification">
+                <h1 id="title_name"></h1>
+                <p id="content_mod"></p>
+                <br>
+                <center>
+                    <img id="img_1" src="">
+                <div class="bt_slider">
+                        <a onclick="slider_bt('back')" class="btn_"><</a>
+                        <a onclick="slider_bt('next')" class="btn_">></a>
+				</div>
+                </center>
+                <br>
+				<div class="bt_centent">
+                <a onclick="cansel_win('notification_alert')" class="btn_b">กลับ</a>
+                <a href="https://github.com/mastere00/MODTH/raw/master/NSU_Textures.zip" class="btn_b" id="download_bt">ดาวน์โหลด</a>
+				</div>
+            </div>
+        </div>
         <div class="content">
-    <p>ID DISCORD : Update 22/11/63</p>
-    <input id="myInput" type="text" value="your id" />
-    <button onclick="send_id()">Send</button>
-    <div id="myCanvas" class="info">
-        <p id="name">Name</p>
-        <p id="age">Age</p>
-        <p id="weapon">Weapon</p>
-        <p id="hr">Hunter Rank</p>
-        <p id="about">About</p>
-    </div>
-</div>
-</center>
-</body>
-
+            <h1>PPSSPP MOD-Thai Translation List.</h1>
+            <p class="version">Ver 1.0.1</p>
+            <br>
+            <a onclick="cansel_win('notification_alert','GodEater 2 Thai-Textures','เป็นการแปล HUD และ GUI บางส่วนของเกม (แปลโดย Asnise) เป็น Textures สำหรับโปรแกรม Emu PPSSPP','https://cdn.discordapp.com/attachments/712618938499858497/759011891002867722/NPJH50832_00002.png','https://cdn.discordapp.com/attachments/712618938499858497/773521901343080489/NPJH50832_00000.png','https://cdn.discordapp.com/attachments/712618938499858497/773521961153331250/NPJH50832_00003.png','https://github.com/mastere00/MODTH/raw/master/GE2_Textrues.rar')" target="_blank">
+                <div class="heander">
+                    <p>GodEater 2 Thai-Textures</p>
+                    <p class="version">90 %</p>
+                </div>
+            </a>
+            <a onclick="cansel_win('notification_alert','Naruto Shippuden Ultimate Impact Thai-Textures','เป็นการแปล HUD และ GUI บางส่วนของเกม (แปลโดย Asnise) เป็น Textures สำหรับโปรแกรม Emu PPSSPP','https://cdn.discordapp.com/attachments/712618938499858497/773222805868118036/ULUS10582_00000.png','https://cdn.discordapp.com/attachments/712618938499858497/773522059946229790/ULUS10582_00004.png','https://cdn.discordapp.com/attachments/712618938499858497/773523086804385792/ULUS10582_00008.png','https://github.com/mastere00/MODTH/raw/master/NSU_Textures.zip')" target="_blank">
+                <div class="heander">
+                    <p>Naruto Shippuden Ultimate Impact Thai-Textures</p>
+                    <p class="version">70 %</p>
+                </div>
+            </a>
+            <a onclick="cansel_win('notification_alert','Persona 3 Thai-Textures','เป็นการแปล HUD และ GUI บางส่วนของเกม (แปลโดย Asnise) เป็น Textures สำหรับโปรแกรม Emu PPSSPP','https://cdn.discordapp.com/attachments/712618938499858497/722456899538124850/ULUS10512_00001.png','https://cdn.discordapp.com/attachments/712618938499858497/722456914406932563/ULUS10512_00004.png','https://cdn.discordapp.com/attachments/712618938499858497/722456919649812571/ULUS10512_00005.png','https://github.com/mastere00/MODTH/raw/master/P3_Textrues.rar')" target="_blank">
+                <div class="heander">
+                    <p>Persona 3 Thai-Textures</p>
+                    <p class="version">60 %</p>
+                </div>
+            </a>
+            <a onclick="cansel_win('notification_alert','Monster Hunter Portable 3rd Thai-Textures','เป็นการแปล HUD และ GUI บางส่วนของเกม (แปลโดย Asnise) เป็น Textures สำหรับโปรแกรม Emu PPSSPP','https://cdn.discordapp.com/attachments/712618938499858497/773524220398665758/NPJB40001_00005.png','https://cdn.discordapp.com/attachments/712618938499858497/773524243854000158/NPJB40001_00011.png','https://cdn.discordapp.com/attachments/712618938499858497/712648193296433204/NPJB40001_00062.png','https://github.com/mastere00/MODTH/raw/master/MHP3rd_Textrue.rar')" target="_blank">
+                <div class="heander">
+                    <p>Monster Hunter Portable 3rd Thai-Textures</p>
+                    <p class="version">80 %</p>
+                </div>
+            </a>
+            <a onclick="cansel_win('notification_alert','GodEaterBurst Thai-Textures','เป็นการแปล HUD และ GUI บางส่วนของเกม (แปลโดย Asnise) เป็น Textures สำหรับโปรแกรม Emu PPSSPP','https://cdn.discordapp.com/attachments/712618938499858497/773524919916167178/ULUS10563_00004.png','https://cdn.discordapp.com/attachments/712618938499858497/773224907462410330/ULUS10563_00002.png','https://cdn.discordapp.com/attachments/712618938499858497/773525320212021268/ULUS10563_00005.png','https://github.com/mastere00/MODTH/raw/master/GE_Textrues.rar')" target="_blank">
+                <div class="heander">
+                    <p>GodEaterBurst Thai-Textures</p>
+                    <p class="version">90 %</p>
+                </div>
+            </a>
+            <br>
+            <p class="line"></p>
+            <p>COPYRIGHT © 2020 Asnise Earth</p>
+        </div>
+    </body>
 </html>

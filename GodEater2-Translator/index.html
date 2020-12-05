@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GE2-Translator</title>
+	<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+	<link rel="icon" href="https://cdn.discordapp.com/attachments/712618938499858497/759035331092676638/logo.png"
+		type="image/icon type">
+	<script src="https://mastere00.github.io/studentcouncilanr/scripts.js"></script>
+
+	<style>
+		::-webkit-scrollbar {
+			width: 0;
+		}
+
+		html {
+			transition: .2s;
+			scroll-behavior: smooth;
+			-prefix-animation: slide 1s ease 3.5s forwards;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: 'Kanit', sans-serif;
+			text-decoration: none;
+
+		}
+
+		body {
+			background: #111;
+		}
+
+		section {
+			position: relative;
+			padding: 100px;
+		}
+
+		.header {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1000000;
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+
+		.header .logo {
+			color: #fff;
+			text-decoration: none;
+			font-size: 1.2em;
+
+		}
+
+		.header .logo img {
+			padding: 50;
+		}
+
+
+		.header .toggle img {
+			max-width: 40px;
+			cursor: pointer;
+		}
+
+		.banner {
+			position: relative;
+			width: 100%;
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-item: center;
+		}
+
+		.banner:before {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 400px;
+			z-index: 1;
+			background: linear-gradient(to top, #111, transparent);
+		}
+
+		.banner .content {
+
+			position: relative;
+			max-width: 900px;
+			text-align: center;
+			top: 300px;
+			z-index: 1;
+
+		}
+
+		.banner .content h2 {
+			color: #fff;
+			font-size: 1.32cm;
+		}
+
+		.banner .content p {
+			color: #fff;
+			font-size: .5cm;
+		}
+
+		.btn {
+			position: relative;
+			display: inline-block;
+			margin-top: 30px;
+			padding: 10px 30px;
+			background: #ffffff96;
+			color: #333;
+			transition: .2s;
+		}
+
+		.btn:hover {
+			background: #fff;
+			cursor: pointer;
+		}
+
+		.btn_img {
+			position: relative;
+			display: inline-block;
+			margin: 50% 40%;
+			padding: 10px;
+			background: #ffffff96;
+			color: #333;
+			transition: .2s;
+			z-index: 5;
+		}
+
+		.btn_img:hover {
+			background: #fff;
+			cursor: pointer;
+		}
+
+		.btn_b {
+			position: relative;
+			display: inline-block;
+			margin-top: 30px;
+			padding: 10px 30px;
+			background: #242424;
+			color: #fff;
+			transition: .2s;
+		}
+
+		.btn_b:hover {
+			background: #b1abab;
+			color: #000;
+			cursor: pointer;
+		}
+
+
+		.fitBg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			opacity: .8;
+		}
+
+		.about {
+			position: relative;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-item: center;
+		}
+
+		.about .contentBx {
+			min-width: 50%;
+			width: 100%;
+			text-align: start;
+			padding-right: 40px;
+		}
+
+		.titlecontact {
+			font-weight: 600;
+			color: #fff;
+			font-size: 2em;
+			margin-bottom: 10px;
+		}
+
+		.text {
+			color: #fff;
+			font-size: 1em;
+		}
+
+		.about .imgBx {
+			position: relative;
+			min-width: 60%;
+			width: 70%;
+			min-height: 500px;
+		}
+
+
+
+		.about_r {
+			position: relative;
+			width: 100%;
+			justify-content: center;
+			display: inline-block;
+			margin: 50px 0;
+		}
+
+		.about_r .contentBx {
+			min-width: 50%;
+			width: 100%;
+			text-align: start;
+			padding-left: 40px;
+		}
+
+		.about_r .titlecontact {
+			font-weight: 600;
+			color: #fff;
+			font-size: 2em;
+			margin-bottom: 10px;
+		}
+
+		.about_r .text {
+			color: #fff;
+			font-size: 1em;
+		}
+
+		.about_r .imgBx {
+			position: relative;
+			min-width: 50%;
+			width: 50%;
+			min-height: 500px;
+		}
+
+
+
+		.banner2 {
+			position: relative;
+			width: 100%;
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-item: center;
+		}
+
+		.banner2:before {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 400px;
+			z-index: 1;
+			background: linear-gradient(to top, #111, transparent);
+		}
+
+		.banner2:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 400px;
+			z-index: 1;
+			background: linear-gradient(to bottom, #111, transparent);
+		}
+
+		.footer {
+			display: flex;
+			justify-content: center;
+			align-item: center;
+			flex-direction: column;
+		}
+
+		.footer .sci {
+			position: relative;
+			display: flex;
+		}
+
+		.footer .sci li {
+			list-style: none;
+		}
+
+		.footer .sci li a {
+			text-decoration: none;
+			margin: 0 20px;
+		}
+
+		.footer .sci li a img {
+			filter: invert(1);
+			max-width: 40px;
+		}
+
+		.copyrigth {
+			margin-top: 20px;
+			color: #fff;
+			font-size: 18px;
+			color: #666;
+			text-align: center;
+		}
+
+
+		.notification {
+			-webkit-animation-name: notification;
+			animation-name: notification;
+			-webkit-animation-duration: .3s;
+			animation-duration: .3s;
+			-webkit-animation-fill-mode: both;
+			animation-fill-mode: both;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 10;
+			background: #FFF;
+			position: fixed;
+			border-radius: 5px;
+			padding: 20px;
+			transition: .2s;
+			align-item: center;
+		}
+
+		@-webkit-keyframes notification {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		@keyframes notification {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+
+
+
+		.notification_alert {
+			display: none;
+		}
+
+		.notification_bg {
+			z-index: 2;
+			background: rgb(0, 0, 0, .4);
+			position: fixed;
+			width: 500px;
+			height: 270px;
+			top: 50%;
+			left: 50%;
+			margin: 0;
+			transform: scale(100);
+		}
+
+		.peroso_alert {
+			display: none;
+		}
+
+		.textcon {
+			z-index: 1000000;
+		}
+
+		.image_tag {
+			width: 400px;
+			/* width of container */
+			height: 400px;
+			/* height of container */
+			object-fit: cover;
+			border-radius: 10px;
+		}
+
+		.skill_alert {
+			display: none;
+		}
+
+
+		@media screen and (max-device-width:768px) {
+			.about .imgBx {
+				margin: 10px;
+				width: 100%;
+			}
+
+			.about {
+				display: block;
+			}
+
+			.imgBx .fitBg {
+				width: 94%;
+				height: 80%;
+			}
+
+			section {
+				position: relative;
+				padding: 10px;
+			}
+
+			.header {
+				font-size: .3cm;
+			}
+
+			.banner .content h2 {
+				color: #fff;
+				font-size: .4cm;
+			}
+
+			.banner .content p {
+				color: #fff;
+				font-size: .4cm;
+			}
+
+			.about .contentBx {
+				padding: 20px;
+			}
+
+			.about_r .contentBx {
+				padding-left: 10px;
+			}
+
+			.titlecontact {
+				font-size: 1.5em;
+			}
+
+			.logo_ge {
+				width: 100%;
+			}
+		}
+
+		.fadeInDown {
+			-webkit-animation-name: fadeInDown;
+			animation-name: fadeInDown;
+			-webkit-animation-duration: 1s;
+			animation-duration: 1s;
+			-webkit-animation-fill-mode: both;
+			animation-fill-mode: both;
+			position: absolute;
+			z-index: 8;
+			width: 80%;
+			margin: 80px 0;
+		}
+
+		@-webkit-keyframes fadeInDown {
+			0% {
+				opacity: 0;
+				-webkit-transform: translate3d(0, -100%, 0);
+				transform: translate3d(0, -100%, 0);
+			}
+
+			100% {
+				opacity: 1;
+				-webkit-transform: none;
+				transform: none;
+			}
+		}
+
+		@keyframes fadeInDown {
+			0% {
+				opacity: 0;
+				-webkit-transform: translate3d(0, -100%, 0);
+				transform: translate3d(0, -100%, 0);
+			}
+
+			100% {
+				opacity: 1;
+				-webkit-transform: none;
+				transform: none;
+			}
+		}
+
+		.progress {
+			width: 100%;
+			height: 20px;
+			background: #fff;
+			border-radius: 5px;
+		}
+
+		.progress-bar {
+			height: 100%;
+			width: 2%;
+			background: #da3d3d;
+		}
+
+		.titlecontact_prograss {
+			font-size: 24px;
+			color: #fff;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<div class="notification_alert" id="notification_alert">
+		<div class="notification_bg">
+		</div>
+		<div class="notification">
+			<h1>บทความ</h1>
+			<p>
+				ไม่มีบทความดังกล่าว <br>(เนื่องด้วยนี้เป็นเว็บทดลอง)
+			</p>
+			<a onclick="cansel_win('notification_alert')" class="btn_b">กลับ</a>
+		</div>
+	</div>
+
+	<div class="peroso_alert" id="peroso_alert">
+		<div class="notification_bg">
+		</div>
+		<div class="notification">
+			<h1>Login เข้าสู่ระบบ</h1>
+			<div class="conster">
+				Username<br>
+				<input type="text" id="username" name="username"><br><br>
+				Password<br>
+				<input type="text" id="password" name="password"><br><br>
+				</p>
+			</div>
+			<a onclick="cansel_win('peroso_alert')" class="btn_b">กลับ</a>
+		</div>
+	</div>
+
+
+	<div class="skill_alert" id="skill_alert">
+		<div class="notification_bg">
+		</div>
+		<div class="notification">
+			<h1>ระบบ</h1>
+			<p>
+				ไม่มีบทความดังกล่าว <br>(เนื่องด้วยนี้เป็นเว็บทดลอง)
+			</p>
+			<a onclick="cansel_win('skill_alert')" class="btn_b">กลับ</a>
+		</div>
+	</div>
+
+
+
+	<section class="header">
+		<a href="#Top" class="logo">
+			<h2>ASNISE TRANSLATOR</h2>
+		</a>
+
+	</section>
+
+	<section class="banner">
+		<img src="https://cdn.discordapp.com/attachments/712618938499858497/759020533425242136/51.png"
+			class="fadeInDown">
+		<img src="https://cdn.discordapp.com/attachments/732121159100792833/771416789166587914/NJB0015.png"
+			class="fitBg">
+
+		<div class="content">
+			<h2>Join Translation</h2>
+			<p>เข้าร่วมการแปลเกม โดยมีทั้งเนื้อเรื่องและเกมเพล</p>
+			<a onclick="cansel_win('peroso_alert')" class="btn">เข้าร่วม</a>
+		</div>
+	</section>
+
+	<section class="about_r">
+		<h2 class="titlecontact">ความคืบหน้า</h2>
+		<div class="contentBx">
+			<h2 class="titlecontact_prograss">เนื้อเรื่อง 0/0</h2>
+			<div class="progress">
+				<div class="progress-bar">
+				</div>
+			</div>
+
+			<h2 class="titlecontact_prograss">ไอเทม 0/0</h2>
+			<div class="progress">
+				<div class="progress-bar">
+				</div>
+			</div>
+
+			<h2 class="titlecontact_prograss">เกมเพล 0/0</h2>
+			<div class="progress">
+				<div class="progress-bar">
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+
+	<section class="about">
+
+		<div class="contentBx">
+			<h2 class="titlecontact">ข้อตกลงในการเข้าร่วมแปล</h2>
+			<p class="text">
+				1. การแปลเกม GodEater 2 ในแพลตฟอร์ม PSP
+				โดยการแปลเกมนี้จะไม่ได้เพิ่มเติมเนื้อหาของเนื้อเรื่องของเกมแต่อย่างใด<br><br>
+				2. การแปลเกม GodEater 2 ไม่ได้จัดขึ้นเพื่อแสวงหาผลกำไรหรือเกี่ยวกับการตลาดใดๆ
+				ทั้งสิ้นโดยที่จุดประสงคือการ แจกจ่ายให้ทุกๆคนใช้ฟรี<br><br>
+				3. การแปลที่ช่องข้อความ ผู้เข้าร่วมแปล "ยอมรับ"
+				ให้ผู้ตรวจการแปลสามารถแก้ไขหรือเปลี่ยนและแก้ไขเพื่อความถูกต้องของเนื้อหาและบทความ<br><br>
+				4. เนื่องด้วยการแปลไม่มีค่าตอบแทนผู้เข้าร่วมที่มีส่วนร่วมทางเราจะทำการให้ชื่อท่านอยู่ในเครดิต<br><br>
+				5. เนื่องด้วยการแปลจะต้องสมัครเพื่อเข้าสู่ระบบแปลเพื่อป้องกันการป่วนและเมื่อพบทางเราจะทำการแบน USER
+				นั่นออกจากระบบ<br><br>
+				6. ขอบคุณทุกท่านที่มีส่วนร่วม และเพื่อประกาศและชี้แจงเรื่องต่างๆทางเราจะใช้กลุ่ม PPSSPP Thailand
+				เป็นกลุ่มหลักในการประกาศต่างๆ<br><br>
+			</p>
+			<a onclick="cansel_win('skill_alert')" class="btn">อ่านเพิ่ม</a>
+		</div>
+		<div class="imgBx">
+			<a onclick="cansel_win('skill_alert')" class="btn_img">รูปภาพตัอย่าง</a>
+			<img src="https://cdn.discordapp.com/attachments/712618938499858497/759035049198354442/NPJH50832_00000.png"
+				class="fitBg">
+		</div>
+		<br>
+	</section>
+
+
+
+	<section class="banner2">
+		<img src="https://cdn.discordapp.com/attachments/732121159100792833/771417582100152371/NJB0016.png"
+			class="fitBg">
+	</section>
+
+	<section class="footer">
+		<ul class="sci">
+			<li><a href="https://web.facebook.com/groups/1410263185894243" target="_blank"><img
+						src="https://mastere00.github.io/studentcouncilanr/facebook.png"></a></li>
+		</ul>
+		<div class="copyrigth">
+			<h3>
+				อีเมล์ mastere00@hotmail.com</h3>
+			<h4>Copyright ©2020 Nattaset Panlek</h4>
+			<div>
+	</section>
+
+</body>
+
+</html>
