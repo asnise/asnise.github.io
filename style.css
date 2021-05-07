@@ -257,6 +257,7 @@ section {
 }
 
 .footer .sci {
+	filter:invert(1);
     position: relative;
     display: flex;
 }
