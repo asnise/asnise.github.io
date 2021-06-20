@@ -22,9 +22,16 @@ request.onload = function(){
       }
    }
    console.log(data_call);
-   document.getElementById("dvCSV").innerHTML = JSON.stringify(data_call);
+   let text = '<select>'
+   for (let x in data_call) {
+     text += "<option>" + data_call[x].name;
+   }
+   text += "</select>"
+   document.getElementById("dvCSV").innerHTML = text;
+   
  }
 };
+
 
 /*$(document).ready(function(){
    $.ajax({
