@@ -1,6 +1,10 @@
 ::-webkit-scrollbar {
     width: 0;
 }
+h1
+{
+	color:#fff;
+}
 
 html {
     transition: .2s;
