@@ -4,6 +4,7 @@ var num = 0;
 $(document).ready(function () {
 	$.getJSON("https://api.countapi.xyz/hit/asnise.github.io/visits", function (response) {
 		$("#visits").text("จำนวนเข้าชม : " + response.value);
+	}
 });
 
 function cansel_win(idtag ,name,content,img_1,img_2,img_3,download)
