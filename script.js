@@ -1,11 +1,16 @@
 var image_ = [];
 var num = 0;
+var data;
+var request = new XMLHttpRequest();
 
-$(document).ready(function () {
-	$.getJSON("https://api.countapi.xyz/hit/asnise.github.io/visits", function (response) {
-		$("#visits").text("จำนวนเข้าชม : " + response.value)
-	})
-});
+request.open('GET', 'https://api.countapi.xyz/hit/asnise.github.io/visits', true);
+request.send();
+request.onload = function () {
+    if (request.status >= 200 && request.status < 400) {
+		data = JSON.parse(request.responseText);
+		document.getElementById("visits").innerHTML = "ตอนนี้มีคนเข้ามาดูแล้ว : " + data.value + " ครั้ง";
+	}
+}
 
 function cansel_win(idtag ,name,content,img_1,img_2,img_3,download)
 {
