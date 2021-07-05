@@ -3,7 +3,7 @@ var num = 0;
 var data;
 var request = new XMLHttpRequest();
 
-request.open('GET', 'https://api.countapi.xyz/hit/asnise.github.io/visits', true);
+request.open('GET', 'https://api.countapi.xyz/hit/asnise.github.io/main', true);
 request.send();
 request.onload = function () {
     if (request.status >= 200 && request.status < 400) {
