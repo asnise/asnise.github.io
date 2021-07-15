@@ -18,14 +18,20 @@ h1
     padding: 0 2px;
   }
 
-  
+  .contact_alert
+  {
+      display: none;
+  }
   .column img {
     margin-top: 4px;
     vertical-align: middle;
     width: 100%;
     transition: .1s;
   }
-
+  .notification h1
+  {
+    color:#000;
+  }
 
   @media screen and (max-width: 800px) {
     .column {
