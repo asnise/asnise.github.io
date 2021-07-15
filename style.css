@@ -26,7 +26,7 @@ h1
     transition: .1s;
   }
 .column img:hover {
-    transform: scale(1.5);
+    transform: scale(1.2);
 }
 
   @media screen and (max-width: 800px) {
