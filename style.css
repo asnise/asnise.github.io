@@ -369,13 +369,10 @@ section {
     border-radius: 5px;
     padding: 20px;
     transition: .2s;
-    width: 90%;
+    
     align-item: center;
 }
-.notification img
-{
-    width: 100%;
-}
+
 
 @-webkit-keyframes notification {
     0% {
@@ -435,6 +432,14 @@ section {
 }
 
 @media screen and (max-device-width: 768px) {
+    .notification
+    {
+        width: 90%;
+    }
+    .notification img
+{
+    width: 100%;
+}
     .about .imgBx {
         margin: 10px;
         width: 100%;
