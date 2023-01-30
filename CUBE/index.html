@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBE MODEL TRAINING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://asnise.github.io/logo_banner.png" type="image/icon type">
+    <script src="https://asnise.github.io/script.js"></script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        html {
+            transition: .2s;
+            scroll-behavior: smooth;
+            -prefix-animation: slide 1s ease 3.5s forwards;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+            text-decoration: none;
+
+        }
+
+        body {
+            background: #111;
+        }
+
+        section {
+            position: relative;
+            padding: 100px;
+        }
+
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000000;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .header .logo {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+
+        }
+
+        .header .logo img {
+            padding: 50;
+        }
+
+
+        .header .toggle img {
+            max-width: 40px;
+            cursor: pointer;
+        }
+
+        .banner {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-item: center;
+        }
+
+        .banner:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            z-index: 1;
+            background: linear-gradient(to top, #111, transparent);
+        }
+
+        .banner .content {
+
+            position: relative;
+            max-width: 900px;
+            text-align: center;
+            top: 300px;
+            z-index: 1;
+
+        }
+
+        .banner .content h2 {
+            color: #fff;
+            font-size: 1.32cm;
+        }
+
+        .banner .content p {
+            color: #fff;
+            font-size: .5cm;
+        }
+
+        .btn {
+            position: relative;
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 30px;
+            background: #ff008b;
+            color: #fff;
+            transition: .2s;
+            border: solid 1px #ff008b;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            color: #ff008b;
+            
+            background: rgb(22, 22, 22);
+            cursor: pointer;
+        }
+
+        .btn_img {
+            position: relative;
+            display: inline-block;
+            margin: 50% 40%;
+            padding: 10px;
+            background: #ffffff96;
+            color: #333;
+            transition: .2s;
+            z-index: 5;
+        }
+
+        .btn_img:hover {
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .btn_b {
+            position: relative;
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 30px;
+            background: #242424;
+            color: #fff;
+            transition: .2s;
+        }
+
+        .btn_b:hover {
+            background: #b1abab;
+            color: #000;
+            cursor: pointer;
+        }
+
+
+        .fitBg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .8;
+        }
+
+        .about {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-item: center;
+        }
+
+        .about .contentBx {
+            min-width: 50%;
+            width: 100%;
+            text-align: start;
+            padding-right: 40px;
+        }
+
+        .titlecontact {
+            font-weight: 600;
+            color: #fff;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .text {
+            color: #fff;
+            font-size: 1em;
+        }
+
+        .about .imgBx {
+            position: relative;
+            min-width: 60%;
+            width: 70%;
+            min-height: 500px;
+        }
+
+
+
+        .about_r {
+            position: relative;
+            width: 100%;
+            justify-content: center;
+            display: inline-block;
+            margin: 50px 0;
+        }
+
+        .about_r .contentBx {
+            min-width: 50%;
+            width: 100%;
+            text-align: start;
+            padding-left: 40px;
+        }
+
+        .about_r .titlecontact {
+            font-weight: 600;
+            color: #fff;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .about_r .text {
+            color: #fff;
+            font-size: 1em;
+        }
+
+        .about_r .imgBx {
+            position: relative;
+            min-width: 50%;
+            width: 50%;
+            min-height: 500px;
+        }
+
+
+
+        .banner2 {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-item: center;
+        }
+
+        .banner2:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            z-index: 1;
+            background: linear-gradient(to top, #111, transparent);
+        }
+
+        .banner2:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            z-index: 1;
+            background: linear-gradient(to bottom, #111, transparent);
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            align-item: center;
+            flex-direction: column;
+        }
+
+        .footer .sci {
+            position: relative;
+            display: flex;
+        }
+
+        .footer .sci li {
+            list-style: none;
+        }
+
+        .footer .sci li a {
+            text-decoration: none;
+            margin: 0 20px;
+        }
+
+        .footer .sci li a img {
+            filter: invert(1);
+            max-width: 40px;
+        }
+
+        .copyrigth {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 18px;
+            color: #666;
+            text-align: center;
+        }
+
+
+        .notification {
+            -webkit-animation-name: notification;
+            animation-name: notification;
+            -webkit-animation-duration: .3s;
+            animation-duration: .3s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: #FFF;
+            position: fixed;
+            border-radius: 5px;
+            padding: 20px;
+            transition: .2s;
+            align-item: center;
+        }
+
+        @-webkit-keyframes notification {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes notification {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+
+
+        .notification_alert {
+            display: none;
+        }
+
+        .notification_bg {
+            z-index: 2;
+            background: rgb(0, 0, 0, .4);
+            position: fixed;
+            width: 500px;
+            height: 270px;
+            top: 50%;
+            left: 50%;
+            margin: 0;
+            transform: scale(100);
+        }
+
+        .peroso_alert {
+            display: none;
+        }
+
+        .textcon {
+            z-index: 1000000;
+        }
+
+        .image_tag {
+            width: 400px;
+            /* width of container */
+            height: 400px;
+            /* height of container */
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .skill_alert {
+            display: none;
+        }
+
+
+        @media screen and (max-device-width:768px) {
+            .about .imgBx {
+                margin: 10px;
+                width: 100%;
+            }
+
+            .about {
+                display: block;
+            }
+
+            .imgBx .fitBg {
+                width: 94%;
+                height: 80%;
+            }
+
+            section {
+                position: relative;
+                padding: 10px;
+            }
+
+            .header {
+                font-size: .3cm;
+            }
+
+            .banner .content h2 {
+                color: #fff;
+                font-size: .4cm;
+            }
+
+            .banner .content p {
+                color: #fff;
+                font-size: .4cm;
+            }
+
+            .about .contentBx {
+                padding: 20px;
+            }
+
+            .about_r .contentBx {
+                padding-left: 10px;
+            }
+
+            .titlecontact {
+                font-size: 1.5em;
+            }
+
+            .logo_ge {
+                width: 100%;
+            }
+        }
+
+        .fadeInDown {
+            -webkit-animation-name: fadeInDown;
+            animation-name: fadeInDown;
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            position: absolute;
+            z-index: 8;
+            width: 80%;
+            margin: 80px 0;
+        }
+
+        @-webkit-keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+
+        .progress-bar {
+  width: 100%;
+  height: 25px;
+  background-color: transparent;
+  border: solid 1px #ff008b;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  border-radius: 25px;
+}
+
+        .titlecontact_prograss {
+            font-size: 24px;
+            color: #fff;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="notification_alert" id="notification_alert">
+        <div class="notification_bg">
+        </div>
+        <div class="notification">
+            <h1>บทความ</h1>
+            <p>
+                ไม่มีบทความดังกล่าว <br>(เนื่องด้วยนี้เป็นเว็บทดลอง)
+            </p>
+            <a onclick="cansel_win('notification_alert')" class="btn_b">กลับ</a>
+        </div>
+    </div>
+
+    <div class="peroso_alert" id="peroso_alert">
+        <div class="notification_bg">
+        </div>
+        <div class="notification">
+            <h1>Login เข้าสู่ระบบ</h1>
+            <div class="conster">
+                Username<br>
+                <input type="text" id="username" name="username"><br><br>
+                Password<br>
+                <input type="text" id="password" name="password"><br><br>
+                </p>
+            </div>
+            <a onclick="cansel_win('peroso_alert')" class="btn_b">กลับ</a>
+        </div>
+    </div>
+
+
+    <div class="skill_alert" id="skill_alert">
+        <div class="notification_bg">
+        </div>
+        <div class="notification">
+            <h1>ระบบ</h1>
+            <p>
+                ไม่มีบทความดังกล่าว <br>(เนื่องด้วยนี้เป็นเว็บทดลอง)
+            </p>
+            <a onclick="cansel_win('skill_alert')" class="btn_b">กลับ</a>
+        </div>
+    </div>
+
+
+
+    <section class="header">
+        <a href="#Top" class="logo">
+            <img src="https://asnise.github.io/logo_banner.png" width=50>
+        </a>
+
+    </section>
+
+    <section class="banner">
+        <img src="logo_banner.png" class="fadeInDown">
+        <img src="Sample.png" class="fitBg">
+
+        <div class="content">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <a onclick="cansel_win('skill_alert')" class="btn">เข้าร่วม</a>
+        </div>
+    </section>
+
+    <section class="about_r">
+        <h2 class="titlecontact">ความคืบหน้า</h2>
+        <div class="contentBx">
+            <h2 class="titlecontact_prograss">Dataset Base 53.84%</h2>
+            <div class="progress-bar">
+                <div class="progress" style="width: 50%; background-color: #ff0066;"></div>
+              </div>
+        </div>
+
+
+    </section>
+
+    <section class="about">
+
+        <div class="contentBx">
+            <h2 class="titlecontact">รายละเอียด</h2>
+            <p class="text">
+                คุณคงรู้จัก AI หรือปัญญาประดิษฐ์หและที่เจาะจงลงไปให้ลึกกับ AI ภายในการำงาน AI จะมีสิ่งที่เรียกว่า โมเดล
+                คือ แบบจำลอง AI เป็นตัวแทนทางคณิตศาสตร์ของระบบที่ได้รับการฝึกฝนให้ทำงานเฉพาะทาง
+                โดยพื้นฐานแล้วเป็นชุดของอัลกอริทึมและพารามิเตอร์ที่ได้รับการปรับให้เหมาะสมสำหรับกรณีการใช้งานเฉพาะตามข้อมูลอินพุตจำนวนมาก
+                เมื่อแบบจำลอง AI นำเสนอข้อมูลใหม่ จะใช้การเทรนเพื่อคาดการณ์หรือตัดสินใจ มีการใช้โมเดล AI
+                ในแอปพลิเคชันที่หลากหลาย รวมถึงการจดจำรูปภาพและคำพูด การประมวลผลภาษาธรรมชาติ และระบบอัตโนมัติ
+                กล่าวโดยย่อ โมเดล AI คือโปรแกรมคอมพิวเตอร์ที่สามารถเรียนรู้และตัดสินใจตามข้อมูลที่ป้อนเข้ามา
+                และ Cube Model Training จะเข้ามาช่วยเรื่องของการเทรนข้อมูล ของผู้ใช้บริการโดย CUBE จะเจาะจงไปที่
+                โมเดลภาษา โมเดลภาษาคือ รู้แบบของโมเดลที่กล่าวไปข้างต้นและจะเน้นไปที่ภาษาในการตอบกลับ
+                หมายความว่าโมเดลนี้จะทำงานรูปแบบการเลือกนำคำตอบเพื่อตอบกลับผู้ใช้งาน
+                <br><br>
+                Cube Model Training เป็น Cloud Training
+                ซึ่งหมายความว่าผู้ใช้สามารถนำข้อมูลเข้ามาเทรนที่ไหนเมื่อไหร่ก็ได้ โดยจะมี Mode
+                ให้ผู้ใช้เลือกใช้ในการเทรนคือ สาธารณะและส่วนตัว ซึ่ง
+                สาธารณะ คือ ผู้ใช้ทุกๆจะเทรนและใช้โมเดลตัวเดียวกัน หรือเรียกว่า “Open Source”
+                ส่วนตัว คือ ผู้ใช้จะต้องเสียค่าใช้จ่ายการใช้ Cloud และโมเดลที่ได้จากการเทรนจะเป็น
+                โมเดลที่เอาไว้ใช้ส่วนตัว
+                <br><br>
+            </p>
+            <a onclick="cansel_win('skill_alert')" class="btn">อ่านเพิ่ม</a>
+        </div>
+        <div class="imgBx">
+            <a onclick="cansel_win('skill_alert')" class="btn_img">รูปภาพตัอย่าง</a>
+            <img src="Sample.png" class="fitBg">
+        </div>
+        <br>
+    </section>
+
+
+
+    <section class="banner2">
+        <img src="Sample.png"
+            class="fitBg">
+    </section>
+
+    <section class="footer">
+        <ul class="sci">
+            <li><a href="https://web.facebook.com/groups/1410263185894243" target="_blank">
+                    <img
+                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9Ijk3Ljc1cHgiIGhlaWdodD0iOTcuNzVweCIgdmlld0JveD0iMCAwIDk3Ljc1IDk3Ljc1IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA5Ny43NSA5Ny43NTsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQoJPg0KPGc+DQoJPHBhdGggZD0iTTQ4Ljg3NSwwQzIxLjg4MiwwLDAsMjEuODgyLDAsNDguODc1UzIxLjg4Miw5Ny43NSw0OC44NzUsOTcuNzVTOTcuNzUsNzUuODY4LDk3Ljc1LDQ4Ljg3NVM3NS44NjgsMCw0OC44NzUsMHoNCgkJIE02Ny41MjEsMjQuODlsLTYuNzYsMC4wMDNjLTUuMzAxLDAtNi4zMjYsMi41MTktNi4zMjYsNi4yMTV2OC4xNWgxMi42NDFMNjcuMDcsNTIuMDIzSDU0LjQzNnYzMi43NThINDEuMjUxVjUyLjAyM0gzMC4yMjlWMzkuMjU4DQoJCWgxMS4wMjJ2LTkuNDE0YzAtMTAuOTI1LDYuNjc1LTE2Ljg3NSwxNi40Mi0xNi44NzVsOS44NTEsMC4wMTVWMjQuODlMNjcuNTIxLDI0Ljg5eiIvPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=">
+        </ul>
+        <div class="copyrigth">
+            <h3>
+                อีเมล์ 65011213065@msu.ac.th</h3>
+            <h4>Copyright ©2023 Nattaset Panlek</h4>
+            <div>
+    </section>
+
+</body>
+
+</html>
