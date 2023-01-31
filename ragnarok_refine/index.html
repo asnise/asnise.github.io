@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Frame by Frame Animation</title>
+  <style>
+    * {
+      background: rgb(38, 37, 39);
+    }
+
+    #container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transition: 0.5s;
+      transform: translate(-50%, -50%);
+      background: rgb(22, 21, 21);
+    }
+
+    #myButton {
+      position: fixed;
+      top: 245px;
+      left: 77px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+    #myButton p {
+      position: fixed;
+      top: 240px;
+      left: 110px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+    #myButton h4 {
+      position: fixed;
+      top: 253px;
+      left: 123px;
+      color: #fff;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+    #myButton_fail_retrun {
+      position: fixed;
+      top: 249px;
+      left: 13px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: none;
+      z-index: 5;
+    }
+
+    #myButton_fail_retrun p {
+      position: fixed;
+      top: 247px;
+      left: 52px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+    #myButton_fail_retrun h4 {
+      position: fixed;
+      top: -6px;
+      font-weight: 200;
+      left: 87px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+    #myButton_fail_retrun h3 {
+      position: fixed;
+      top: 212px;
+      font-weight: 100;
+      left: 79px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+    #myButton_success_retrun {
+      position: fixed;
+      top: 249px;
+      left: 13px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: none;
+      z-index: 5;
+    }
+
+    #myButton_success_retrun p {
+      position: fixed;
+      top: 247px;
+      left: 52px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+    #myButton_success_retrun h4 {
+      position: fixed;
+      top: -6px;
+      font-weight: 200;
+      left: 87px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+
+
+    #myButton_success_next {
+      position: fixed;
+      top: 249px;
+      left: 135px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: none;
+      z-index: 5;
+    }
+
+    #myButton_success_next h5 {
+      position: fixed;
+      top: 240px;
+      left: 167px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+    #myButton_success_next h6 {
+      position: fixed;
+      top: 265px;
+      left: 185px;
+      border: 0px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+
+    #myImage_fail {
+      image-rendering: pixelated;
+    }
+
+    #myImage_success {
+      image-rendering: pixelated;
+    }
+
+    #imageContainer {
+      image-rendering: pixelated;
+      z-index: 0;
+    }
+
+    #imageContainer h4 {
+      position: fixed;
+      top: -12px;
+      font-weight: 500;
+      left: 90px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 5;
+    }
+    #weapon_level, #weapon_level option
+    {
+      background-color: #fff;
+    }
+
+    #item {
+      position: fixed;
+      top: 195px;
+      left: 118px;
+      border: 0px;
+      background: rgba(255, 255, 255, 0);
+      display: block;
+      transform: scale(1.5);
+      z-index: 5;
+    }
+
+    #state {
+      position: fixed;
+      top: 220px;
+      left: 110px;
+      border: 0px;
+      font-size: 15px;
+      background: rgba(255, 255, 255, 0);
+      image-rendering: pixelated;
+      display: block;
+      z-index: 10;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="container">
+
+    <img id="item" src="https://file5s.ratemyserver.net/items/small/card.gif">
+
+    <h1 id="state">ดวงคุณ</h1>
+
+    <div id="imageContainer">
+      <img id="image_state" src="bg_refining_wait.gif">
+      <h4 id="wait_rate">สำเร็จ 95%</h4>
+    </div>
+
+    <button id="myButton">
+      <img id="myImage" src="bt_refining_normal.bmp" alt="Button">
+      <p>อัพเกรด</p>
+      <h4>ฟรี</h4>
+    </button>
+
+    <button id="myButton_fail_retrun">
+      <img id="myImage_fail" src="bt_refining_return_fail_normal.bmp" alt="Button">
+      <p>กลับไป</p>
+
+      <h3>ไอเท็มแตกสลาย</h3>
+      <h4>อัพเกรดล้มเหลว</h4>
+    </button>
+
+    <button id="myButton_success_retrun">
+      <img id="myImage_success" src="bt_refining_return_success_normal.bmp" alt="Button">
+      <p>กลับไป</p>
+      <h4>อัพเกรดสำเร็จ</h4>
+    </button>
+    <button id="myButton_success_next">
+      <img id="myImage_success_next" src="bt_refining_again_success_normal.bmp" alt="Button">
+      <h5 id="refine_again">เริ่มอีกครั้ง<br>Rate : XX%</h5>
+      <h6>ฟรี</h6>
+    </button>
+
+    <audio id="sound">
+      <source src="bs_refine.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="sound_fail">
+      <source src="bs_refine_failed.wav" type="audio/mpeg">
+    </audio>
+
+    <audio id="sound_success">
+      <source src="bs_refine_success.wav" type="audio/mpeg">
+    </audio>
+
+    <select id="weapon_level">
+      <option value="1">Weapon Lv.1</option>
+      <option value="2">Weapon Lv.2</option>
+      <option value="3">Weapon Lv.3</option>
+      <option value="4">Weapon Lv.4</option>
+      <option value="5">Armor</option>
+    </select>
+  </div>
+
+
+  <script>
+
+    const refine_again = document.querySelector("#refine_again");
+    const wait_rate = document.querySelector("#wait_rate");
+    const button = document.querySelector("#myButton");
+    const myButton_fail_retrun = document.querySelector("#myButton_fail_retrun");
+    const myButton_success_retrun = document.querySelector("#myButton_success_retrun");
+    const myButton_success_next = document.querySelector("#myButton_success_next");
+
+
+    const image = document.querySelector("#myImage");
+    const image_fail = document.querySelector("#myImage_fail");
+    const image_success = document.querySelector("#myImage_success");
+    const myImage_success_next = document.querySelector("#myImage_success_next");
+
+
+    const image_bg = document.querySelector("#image_state");
+    const sound = document.querySelector("#sound");
+    const sound_fail = document.querySelector("#sound_fail");
+    const sound_success = document.querySelector("#sound_success");
+
+    var rate_refine_W1 = [95, 95, 95, 95, 95, 90, 90, 75, 50, 25]
+    var rate_refine_W2 = [95, 95, 95, 95, 95, 90, 55, 40, 36, 13]
+    var rate_refine_W3 = [85, 85, 85, 85, 85, 40, 30, 25, 18, 10]
+    var rate_refine_W4 = [80, 80, 80, 80, 40, 30, 30, 15, 15, 5]
+    var rate_refine_A = [80, 80, 80, 80, 40, 30, 30, 15, 15, 5]
+    var rate_refine = rate_refine_W1
+    var index_rate = 0;
+
+    const select = document.getElementById("weapon_level");
+
+    select.addEventListener("change", function () {
+      const selectedValue = this.value;
+      switch (selectedValue) {
+        case "1":
+          rate_refine = rate_refine_W1;
+          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          console.log("Weapon Lv.1 selected");
+          break;
+        case "2":
+          rate_refine = rate_refine_W2;
+          console.log("Weapon Lv.2 selected");
+          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          break;
+        case "3":
+          rate_refine = rate_refine_W3;
+          console.log("Weapon Lv.3 selected");
+          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          break;
+        case "4":
+          rate_refine = rate_refine_W4;
+          console.log("Weapon Lv.4 selected");
+          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          break;
+        case "5":
+          rate_refine = rate_refine_A;
+          console.log("Armor selected");
+          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          break;
+      }
+    });
+
+    button.addEventListener("click", function () {
+      refine();
+    });
+
+    function refine() {
+      document.querySelector("#state").style.left = "90px"
+      document.querySelector("#wait_rate").style.display = "none";
+      document.getElementById("weapon_level").style.display = "none";
+      image_bg.src = "bg_refining_process.gif";
+      sound.currentTime = 0;
+      sound.play();
+      setTimeout(function () {
+        let randomChance = Math.floor(Math.random() * 100) + 1;
+
+        if (randomChance < rate_refine[index_rate]) {
+          index_rate++;
+          console.log(randomChance + " : " + index_rate + " : " + rate_refine[index_rate]);
+          document.querySelector("#state").innerHTML = `+${index_rate} ดวงคุณ`
+          refine_again.innerHTML = `เริ่มอีกครั้ง<br>Rate : ${rate_refine[index_rate]}%`
+          image_bg.src = "bg_refining_success.gif";
+          setTimeout(function () {
+            image_bg.src = "bg_refining_success_idle.gif";
+            document.querySelector("#myButton_success_retrun").style.display = "block";
+            document.querySelector("#myButton_success_next").style.display = "block";
+            sound_success.currentTime = 0;
+            sound_success.play();
+          }, 500);
+        }
+        else {
+          console.log(randomChance + " : " + index_rate + " : " + rate_refine[index_rate]);
+          index_rate = 0;
+          document.querySelector("#state").style.display = "none";
+          image_bg.src = "bg_refining_fail.gif";
+          setTimeout(function () {
+            image_bg.src = "bg_refining_fail_idle.gif";
+            document.querySelector("#myButton_fail_retrun").style.display = "block";
+            sound_fail.currentTime = 0;
+            sound_fail.play();
+          }, 500);
+        }
+      }, 500);
+    }
+
+
+    button.addEventListener("mousedown", function () {
+      image.src = "bt_refining_press.bmp";
+
+    });
+
+    button.addEventListener("mouseup", function () {
+      image.src = "bt_refining_normal.bmp";
+      document.querySelector("#myButton").style.display = "none";
+    });
+
+
+
+    myButton_fail_retrun.addEventListener("mousedown", function () {
+      image_fail.src = "bt_refining_return_fail_press.bmp";
+
+    });
+    myButton_fail_retrun.addEventListener("mouseup", function () {
+      image_fail.src = "bt_refining_return_fail_normal.bmp";
+
+    });
+    myButton_fail_retrun.addEventListener("click", function () {
+      image_bg.src = "bg_refining_wait.gif";
+      document.querySelector("#myButton_fail_retrun").style.display = "none";
+      document.querySelector("#myButton").style.display = "block";
+      document.querySelector("#wait_rate").style.display = "block";
+      document.getElementById("weapon_level").style.display = "block";
+      document.querySelector("#state").style.display = "block";
+      document.querySelector("#state").innerHTML = `ดวงคุณ`
+      document.querySelector("#state").style.left = "110px"
+    });
+
+
+    myButton_success_retrun.addEventListener("mousedown", function () {
+      image_success.src = "bt_refining_return_success_press.bmp";
+
+    });
+    myButton_success_retrun.addEventListener("mouseup", function () {
+      image_success.src = "bt_refining_return_success_normal.bmp";
+
+    });
+    myButton_success_retrun.addEventListener("click", function () {
+      image_bg.src = "bg_refining_wait.gif";
+      document.querySelector("#myButton_success_retrun").style.display = "none";
+      document.querySelector("#myButton_success_next").style.display = "none";
+      index_rate = 0;
+      document.querySelector("#myButton").style.display = "block";
+      document.querySelector("#wait_rate").style.display = "block";
+      document.getElementById("weapon_level").style.display = "block";
+      document.querySelector("#state").style.display = "block";
+      document.querySelector("#state").innerHTML = `ดวงคุณ`
+      document.querySelector("#state").style.left = "110px"
+    });
+
+
+
+
+
+    myButton_success_next.addEventListener("mousedown", function () {
+      myImage_success_next.src = "bt_refining_again_success_press.bmp";
+
+    });
+    myButton_success_next.addEventListener("mouseup", function () {
+      myImage_success_next.src = "bt_refining_again_success_normal.bmp";
+
+    });
+
+    myButton_success_next.addEventListener("click", function () {
+      document.querySelector("#myButton_success_next").style.display = "none";
+      document.querySelector("#myButton_success_retrun").style.display = "none";
+      refine();
+    });
+
+
+
+
+
+  </script>
+</body>
+
+</html>
