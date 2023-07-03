@@ -227,17 +227,17 @@
 
     <img id="item" src="https://file5s.ratemyserver.net/items/small/card.gif">
 
-    <h1 id="state">ดวงคุณ</h1>
+    <h1 id="state">Your Equipment</h1>
 
     <div id="imageContainer">
       <img id="image_state" src="bg_refining_wait.gif">
-      <h4 id="wait_rate">สำเร็จ 95%</h4>
+      <h4 id="wait_rate">Success 95%</h4>
     </div>
 
     <button id="myButton">
       <img id="myImage" src="bt_refining_normal.bmp" alt="Button">
-      <p>อัพเกรด</p>
-      <h4>ฟรี</h4>
+      <p>Refine</p>
+      <h4>Free</h4>
     </button>
 
     <button id="myButton_fail_retrun">
@@ -245,13 +245,13 @@
       <p>กลับไป</p>
 
       <h3>ไอเท็มแตกสลาย</h3>
-      <h4>อัพเกรดล้มเหลว</h4>
+      <h4>Refineล้มเหลว</h4>
     </button>
 
     <button id="myButton_success_retrun">
       <img id="myImage_success" src="bt_refining_return_success_normal.bmp" alt="Button">
       <p>กลับไป</p>
-      <h4>อัพเกรดสำเร็จ</h4>
+      <h4>RefineSuccess</h4>
     </button>
     <button id="myButton_success_next">
       <img id="myImage_success_next" src="bt_refining_again_success_normal.bmp" alt="Button">
@@ -317,28 +317,28 @@
       switch (selectedValue) {
         case "1":
           rate_refine = rate_refine_W1;
-          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          wait_rate.innerHTML = `Success ${rate_refine[0]}%`;
           console.log("Weapon Lv.1 selected");
           break;
         case "2":
           rate_refine = rate_refine_W2;
           console.log("Weapon Lv.2 selected");
-          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          wait_rate.innerHTML = `Success ${rate_refine[0]}%`;
           break;
         case "3":
           rate_refine = rate_refine_W3;
           console.log("Weapon Lv.3 selected");
-          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          wait_rate.innerHTML = `Success ${rate_refine[0]}%`;
           break;
         case "4":
           rate_refine = rate_refine_W4;
           console.log("Weapon Lv.4 selected");
-          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          wait_rate.innerHTML = `Success ${rate_refine[0]}%`;
           break;
         case "5":
           rate_refine = rate_refine_A;
           console.log("Armor selected");
-          wait_rate.innerHTML = `สำเร็จ ${rate_refine[0]}%`;
+          wait_rate.innerHTML = `Success ${rate_refine[0]}%`;
           break;
       }
     });
@@ -360,7 +360,7 @@
         if (randomChance < rate_refine[index_rate]) {
           index_rate++;
           console.log(randomChance + " : " + index_rate + " : " + rate_refine[index_rate]);
-          document.querySelector("#state").innerHTML = `+${index_rate} ดวงคุณ`
+          document.querySelector("#state").innerHTML = `+${index_rate} Your Equipment`
           refine_again.innerHTML = `เริ่มอีกครั้ง<br>Rate : ${rate_refine[index_rate]}%`
           image_bg.src = "bg_refining_success.gif";
           setTimeout(function () {
@@ -414,7 +414,7 @@
       document.querySelector("#wait_rate").style.display = "block";
       document.getElementById("weapon_level").style.display = "block";
       document.querySelector("#state").style.display = "block";
-      document.querySelector("#state").innerHTML = `ดวงคุณ`
+      document.querySelector("#state").innerHTML = `Your Equipment`
       document.querySelector("#state").style.left = "110px"
     });
 
@@ -436,7 +436,7 @@
       document.querySelector("#wait_rate").style.display = "block";
       document.getElementById("weapon_level").style.display = "block";
       document.querySelector("#state").style.display = "block";
-      document.querySelector("#state").innerHTML = `ดวงคุณ`
+      document.querySelector("#state").innerHTML = `Your Equipment`
       document.querySelector("#state").style.left = "110px"
     });
 
