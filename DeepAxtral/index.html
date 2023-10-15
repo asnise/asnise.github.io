@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Axtral</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+    <link rel="icon" href="icon.png" type="image/icon type">
+    <script src="https://asnise.github.io/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            width: 30px;
+            color: #FFF;
+
+        }
+        #salesChartCanvas {
+            width: 80%;
+            height: 300px;
+            margin: 0 auto;
+            transform: scale(0.9);
+        }
+
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        html {
+            transition: .2s;
+            scroll-behavior: smooth;
+            -prefix-animation: slide 1s ease 3.5s forwards;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+            text-decoration: none;
+
+        }
+
+        body {
+            background: #131313;
+        }
+
+        section {
+            position: relative;
+            padding: 100px;
+        }
+
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000000;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .header .logo {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+
+        }
+
+        .header .logo img {
+            padding: 50;
+        }
+
+
+        .header .toggle img {
+            max-width: 40px;
+            cursor: pointer;
+        }
+
+        .banner {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-item: center;
+        }
+
+        .banner:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            z-index: 1;
+            background: linear-gradient(to top, #131313, transparent);
+        }
+
+        .banner .content {
+
+            position: relative;
+            max-width: 900px;
+            text-align: center;
+            top: 300px;
+            z-index: 1;
+
+        }
+
+        .banner .content h2 {
+            color: #fff;
+            font-size: 1.32cm;
+        }
+
+        .banner .content p {
+            color: #fff;
+            font-size: .5cm;
+        }
+
+        .btn {
+            position: relative;
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 30px;
+            background: #6200ff;
+            color: #fff;
+            transition: .2s;
+            border: solid 1px #6200ff;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            color: #6200ff;
+
+            background: rgb(22, 22, 22);
+            cursor: pointer;
+        }
+
+        .btn_img {
+            position: relative;
+            display: inline-block;
+            margin: 50% 40%;
+            padding: 10px;
+            background: #ffffff96;
+            color: #333;
+            transition: .2s;
+            z-index: 5;
+        }
+
+        .btn_img:hover {
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .btn_b {
+            position: relative;
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 30px;
+            background: #242424;
+            color: #fff;
+            transition: .2s;
+        }
+
+        .btn_b:hover {
+            background: #b1abab;
+            color: #000;
+            cursor: pointer;
+        }
+
+
+        .fitBg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .8;
+        }
+
+        .about {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-item: center;
+        }
+
+        .about .contentBx {
+            min-width: 50%;
+            width: 100%;
+            text-align: start;
+            padding-right: 40px;
+        }
+
+        .titlecontact {
+            font-weight: 600;
+            color: #fff;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .text {
+            color: #fff;
+            font-size: 1em;
+        }
+
+        .about .imgBx {
+            position: relative;
+            min-width: 60%;
+            width: 70%;
+            min-height: 500px;
+        }
+
+
+
+        .about_r {
+            position: relative;
+            width: 100%;
+            justify-content: center;
+            display: inline-block;
+            margin: 50px 0;
+        }
+
+        .about_r .contentBx {
+            min-width: 50%;
+            width: 100%;
+            text-align: start;
+            padding-left: 40px;
+        }
+
+        .about_r .titlecontact {
+            font-weight: 600;
+            color: #fff;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .about_r .text {
+            color: #fff;
+            font-size: 1em;
+        }
+
+        .about_r .imgBx {
+            position: relative;
+            min-width: 50%;
+            width: 50%;
+            min-height: 500px;
+        }
+
+
+
+        .banner2 {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-item: center;
+        }
+
+        .banner2:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            z-index: 1;
+            background: linear-gradient(to top, #131313, transparent);
+        }
+
+        .banner2:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            z-index: 1;
+            background: linear-gradient(to bottom, #131313, transparent);
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            align-item: center;
+            flex-direction: column;
+        }
+
+        .footer .sci {
+            position: relative;
+            display: flex;
+        }
+
+        .footer .sci li {
+            list-style: none;
+        }
+
+        .footer .sci li a {
+            text-decoration: none;
+            margin: 0 20px;
+        }
+
+        .footer .sci li a img {
+            filter: invert(1);
+            max-width: 40px;
+        }
+
+        .copyrigth {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 18px;
+            color: #666;
+            text-align: center;
+        }
+
+
+        .notification {
+            -webkit-animation-name: notification;
+            animation-name: notification;
+            -webkit-animation-duration: .3s;
+            animation-duration: .3s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: #FFF;
+            position: fixed;
+            border-radius: 5px;
+            padding: 20px;
+            transition: .2s;
+            align-item: center;
+        }
+
+        @-webkit-keyframes notification {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes notification {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+        .comment-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-gap: 20px;
+            margin: 20px;
+        }
+
+        .comment-block {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .user-avatar img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .username {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .comment-text {
+            font-size: 14px;
+            color: #555;
+        }
+
+
+
+        .notification_alert {
+            display: none;
+        }
+
+        .notification_bg {
+            z-index: 2;
+            background: rgb(0, 0, 0, .4);
+            position: fixed;
+            width: 500px;
+            height: 270px;
+            top: 50%;
+            left: 50%;
+            margin: 0;
+            transform: scale(100);
+        }
+
+        .peroso_alert {
+            display: none;
+        }
+
+        .textcon {
+            z-index: 1000000;
+        }
+
+        .image_tag {
+            width: 400px;
+            /* width of container */
+            height: 400px;
+            /* height of container */
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .skill_alert {
+            display: none;
+        }
+
+
+        @media screen and (max-device-width:768px) {
+            .about .imgBx {
+                margin: 10px;
+                width: 100%;
+            }
+
+            .about {
+                display: block;
+            }
+
+            .imgBx .fitBg {
+                width: 94%;
+                height: 80%;
+            }
+
+            section {
+                position: relative;
+                padding: 10px;
+            }
+
+            .header {
+                font-size: .3cm;
+            }
+
+            .banner .content h2 {
+                color: #fff;
+                font-size: .4cm;
+            }
+
+            .banner .content p {
+                color: #fff;
+                font-size: .4cm;
+            }
+
+            .about .contentBx {
+                padding: 20px;
+            }
+
+            .about_r .contentBx {
+                padding-left: 10px;
+            }
+
+            .titlecontact {
+                font-size: 1.5em;
+            }
+
+            .logo_ge {
+                width: 100%;
+            }
+        }
+
+        .fadeInDown {
+            -webkit-animation-name: fadeInDown;
+            animation-name: fadeInDown;
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            position: absolute;
+            z-index: 8;
+            width: 30%;
+            margin: 80px 0;
+        }
+
+        @-webkit-keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background-color: transparent;
+            border: solid 1px #6200ff;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            border-radius: 25px;
+        }
+
+        .titlecontact_prograss {
+            font-size: 24px;
+            color: #fff;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="notification_alert" id="notification_alert">
+        <div class="notification_bg">
+        </div>
+        <div class="notification">
+            <h1>บทความ</h1>
+            <p>
+                ไม่มีบทความดังกล่าว <br>(เนื่องด้วยนี้เป็นเว็บทดลอง)
+            </p>
+            <a onclick="cansel_win('notification_alert')" class="btn_b">กลับ</a>
+        </div>
+    </div>
+
+    <div class="peroso_alert" id="peroso_alert">
+        <div class="notification_bg">
+        </div>
+        <div class="notification">
+            <h1>Login เข้าสู่ระบบ</h1>
+            <div class="conster">
+                Username<br>
+                <input type="text" id="username" name="username"><br><br>
+                Password<br>
+                <input type="text" id="password" name="password"><br><br>
+                </p>
+            </div>
+            <a onclick="cansel_win('peroso_alert')" class="btn_b">กลับ</a>
+        </div>
+    </div>
+
+
+    <div class="skill_alert" id="skill_alert">
+        <div class="notification_bg">
+        </div>
+        <div class="notification">
+            <h1>ระบบ</h1>
+            <p>
+                ไม่มีบทความดังกล่าว <br>(เนื่องด้วยนี้เป็นเว็บทดลอง)
+            </p>
+            <a onclick="cansel_win('skill_alert')" class="btn_b">กลับ</a>
+        </div>
+    </div>
+
+
+
+    <section class="header">
+        <a href="#Top" class="logo">
+            <img src="icon.png" width=80>
+        </a>
+
+    </section>
+
+    <section class="banner">
+        <img src="icon_title.png" class="fadeInDown">
+        <img src="cover.png" class="fitBg">
+
+        <div class="content">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <a onclick="cansel_win('skill_alert')" class="btn">BUY</a>
+            <a onclick="cansel_win('skill_alert')" class="btn">Free Of Play</a>
+            <a onclick="cansel_win('skill_alert')" class="btn">OMEGA PACK 315 THB</a>
+            <br>
+
+
+        </div>
+    </section>
+
+    </div>
+    </section>
+
+    <section class="about_r">
+        <center>
+            <img src="icon_DEX.png" width="30%">
+        </center>
+    </section>
+
+    <section class="about">
+
+        <div class="contentBx">
+            <h2 class="titlecontact">รายละเอียด</h2>
+            <p class="text">
+                เป็นบริษัทผลิตเกมอินดี้ “ Deep Axtral ” และจัดจำหน่ายตามช่องทางต่าง ๆ อาทิ Steam, GOG, Discord, และ Epic
+                Game Store โดยตัวเกมจะเป็นรูปแบบ Co-po (Cooperative)
+                แบบออฟไลน์ที่ผู้เล่นสามารถเล่นร่วมกับผู้อื่นได้โดยไม่ต้องใช้อินเตอร์เน็ต ผู้เล่นจะต้องหาเงินมาพัฒนายาน
+                ปรับใช้ยานตามสถานะการณ์หรือภารกิจที่ได้รับ มีการปรับแต่งหรือสับเปลี่ยนอุปกรณ์ของยาน
+                ผู้เล่นจึงมีทางเลือกหลากหลายให้ลอง เป้าหมายหลักคือการพัฒนาตนเองหรือยานขึ้นไปเรื่อย ๆ
+                เพื่อหาเงินซื้อของทำภารกิจ ตัวเกมมีโหมดเนื้อเรื่องแต่ไม่มีการบังคับเล่น
+                สามารถปรับระดับความยากง่ายตามผู้เล่น World level
+                <br><br>
+                โดยตัวเกมจัดจำหน่ายสินค้าผ่านช่องทางที่เป็นที่นิยมและสามารถเข้าถึงกลุ่มลูกค้า
+                หรือกลุ่มเป้าหมายได้เป็นจำนวนมากและรวดเร็ว
+                <br><br>
+            </p>
+            <a onclick="cansel_win('skill_alert')" class="btn">อ่านเพิ่ม</a>
+        </div>
+        <div class="imgBx">
+            <a onclick="cansel_win('skill_alert')" class="btn_img">รูปภาพตัอย่าง</a>
+            <img src="image5.png" class="fitBg">
+        </div>
+        <br>
+    </section>
+
+    <div class="comment-grid">
+    </div>
+
+    <canvas id="salesChartCanvas"></canvas>
+
+    <section class="banner2">
+        <img src="image3.png" class="fitBg">
+
+    </section>
+
+    <section class="footer">
+        <ul class="sci">
+            <li><a href="https://web.facebook.com/groups/1410263185894243" target="_blank">
+                    <img
+                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9Ijk3Ljc1cHgiIGhlaWdodD0iOTcuNzVweCIgdmlld0JveD0iMCAwIDk3Ljc1IDk3Ljc1IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA5Ny43NSA5Ny43NTsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQoJPg0KPGc+DQoJPHBhdGggZD0iTTQ4Ljg3NSwwQzIxLjg4MiwwLDAsMjEuODgyLDAsNDguODc1UzIxLjg4Miw5Ny43NSw0OC44NzUsOTcuNzVTOTcuNzUsNzUuODY4LDk3Ljc1LDQ4Ljg3NVM3NS44NjgsMCw0OC44NzUsMHoNCgkJIE02Ny41MjEsMjQuODlsLTYuNzYsMC4wMDNjLTUuMzAxLDAtNi4zMjYsMi41MTktNi4zMjYsNi4yMTV2OC4xNWgxMi42NDFMNjcuMDcsNTIuMDIzSDU0LjQzNnYzMi43NThINDEuMjUxVjUyLjAyM0gzMC4yMjlWMzkuMjU4DQoJCWgxMS4wMjJ2LTkuNDE0YzAtMTAuOTI1LDYuNjc1LTE2Ljg3NSwxNi40Mi0xNi44NzVsOS44NTEsMC4wMTVWMjQuODlMNjcuNTIxLDI0Ljg5eiIvPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=">
+        </ul>
+        <div class="copyrigth">
+            <h3>
+                อีเมล์ DEXGAME@email.com</h3>
+            <h4>Copyright ©2023 Dexterity Game Studio</h4>
+            <div>
+    </section>
+
+</body>
+
+
+
+
+<script>
+    var comments = [
+    "เกมนี้น่าทึ่งมาก!",
+         "ฉันชอบกราฟิก!",
+         "เกมที่ดีที่สุด!",
+         "หยุดเล่นไม่ได้!",
+         "ขอแนะนำอย่างยิ่ง!",
+         "การเล่นเกมที่ยอดเยี่ยม!",
+         "เกมนี้ฉันไม่พอ!",
+         "ชุมชนเป็นมิตรและสนับสนุน!",
+         "ความใส่ใจในรายละเอียดอย่างไม่น่าเชื่อ!",
+         "กิจกรรมในเกมน่าตื่นเต้นอยู่เสมอ!",
+         "เกมนี้มอบความบันเทิงไม่รู้จบ!",
+         "ภารกิจท้าทายและให้รางวัล!",
+         "ฉันชอบสำรวจโลกของเกม!",
+         "นักพัฒนารับฟังความคิดเห็นของผู้เล่นจริงๆ!",
+         "ประสบการณ์การเล่นเกมที่สร้างสรรค์มาอย่างดี!",
+         "กราฟิกอยู่นอกโลกนี้!",
+         "ฉันแนะนำเกมนี้ให้กับเพื่อน ๆ ทุกคน!",
+         "การอัปเดตดีขึ้นเรื่อยๆ!",
+         "ฉันไม่เคยลงทุนกับเกมมือถือขนาดนี้มาก่อน!",
+         "เกมทำงานได้อย่างราบรื่นบนอุปกรณ์ของฉัน!",
+         "การต่อสู้ของบอสนั้นยิ่งใหญ่!",
+         "ทุกแง่มุมของเกมได้รับการออกแบบมาอย่างดี!",
+         "เกมนี้เป็นผลงานชิ้นเอก!",
+         "ฉันขอขอบคุณที่มีการอัปเดตเนื้อหาบ่อยครั้ง!",
+         "สมดุลของเกมถูกต้องแล้ว!",
+         "ตัวเลือกการปรับแต่งตัวละครนั้นยอดเยี่ยมมาก!",
+         "เกมนี้น่าทึ่งมาก!",
+         "ฉันชอบกราฟิก!",
+         "เกมที่ดีที่สุด!",
+         "หยุดเล่นไม่ได้!",
+         "ขอแนะนำอย่างยิ่ง!",
+         "การเล่นเกมที่ยอดเยี่ยม!",
+         "เนื้อเรื่องเยี่ยมมาก!",
+         "ฉันติดเกมนี้แล้ว!",
+         "เอฟเฟกต์เสียงนั้นดื่มด่ำ!",
+         "ประสบการณ์การเล่นเกมที่ยอดเยี่ยมเช่นนี้!",
+         "กราฟิกนั้นยอดเยี่ยมมาก!",
+         "ฉันไม่อยากจะเชื่อเลยว่าเกมนี้ฟรี!",
+         "นักพัฒนาทำงานได้อย่างเหลือเชื่อ!",
+         "ฉันเล่นเกมนี้ทุกวัน!",
+         "การออกแบบตัวละครน่าประทับใจมาก!",
+         "โหมดผู้เล่นหลายคนสนุกมาก!",
+         "ฉันไม่เคยเห็นสภาพแวดล้อมที่มีรายละเอียดเช่นนี้มาก่อน!",
+         "คุ้มค่ากับการดาวน์โหลดอย่างแน่นอน!",
+         "การควบคุมนั้นใช้งานง่ายและตอบสนอง!",
+         "กลไกของเกมมีความสมดุลอย่างดี!",
+    ];
+
+    var usernames = [
+    "PlayerX",
+    "Gamer123",
+    "MasterGamer",
+    "GameFanatic",
+    "ProPlayer",
+    "EpicGamer",
+    "PlayerX",
+    "Gamer123",
+    "MasterGamer",
+    "GameFanatic",
+    "ProPlayer",
+    "EpicGamer",
+    "PixelPioneer",
+    "QuestMaster",
+    "LegendaryGamer",
+    "GameChanger",
+    "NinjaGamer",
+    "DigitalHero",
+    "GamingLegend",
+    "RetroGamer",
+    "PowerPlayer",
+    "ConsoleCommander",
+    "ArcadeHero",
+    "GameGladiator",
+    "VirtualVoyager",
+    "ControllerCrusader",
+    "GameSavvy",
+    "JoystickJuggler",
+    "LevelUpLion",
+    "GamerGlitch",
+    "PuzzlePirate",
+    "BossBattleBrawler",
+    "QuestQuasar",
+    "DigitalDungeonMaster",
+    "GamepadGuru",
+    "ScoreSeeker",
+    "StrategySorcerer",
+    "GameplayGuardian",
+    "ConsoleConqueror",
+    "VirtualVoyager",
+    "PixelPioneer",
+    "RetroRocket",
+    "QuestQuantum",
+    "ActionAdventurer",
+    "ControllerCrusader",
+    "GamerGalaxy",
+];
+
+    var commentGrid = document.querySelector('.comment-grid');
+
+for (var i = 0; i < 25  ; i++) {
+    var randomComment = comments[Math.floor(Math.random() * comments.length)];
+    var randomUsername = usernames[Math.floor(Math.random() * usernames.length)];
+
+    var commentBlock = document.createElement('div');
+    commentBlock.className = 'comment-block';
+    commentBlock.innerHTML = `
+        <div class="comment-content">
+            <p class="username">${randomUsername}:</p>
+            <p class="comment-text">${randomComment}</p>
+        </div>
+    `;
+    commentGrid.appendChild(commentBlock);
+}
+
+var salesData = {
+            labels: ['3/9/2023', '4/9/2023', '5/9/2023', '6/9/2023', '7/9/2023', '8/9/2023', '9/9/2023', '10/9/2023', '11/9/2023', '12/9/2023', '13/9/2023', '14/9/2023', '15/9/2023', '16/9/2023', '17/9/2023', '18/9/2023', '19/9/2023', '20/9/2023', '21/9/2023', '22/9/2023', '23/9/2023', '24/9/2023', '25/9/2023', '26/9/2023', '27/9/2023', '28/9/2023', '29/9/2023', '30/9/2023', '1/10/2023', '2/10/2023', '3/10/2023', '4/10/2023', '5/10/2023', '6/10/2023', '7/10/2023', '8/10/2023', '9/10/2023', '10/10/2023', '11/10/2023', '12/10/2023', '13/10/2023', '14/10/2023', '15/10/2023', '16/10/2023'],
+            datasets: [{
+                label: 'ยอดขาย/ชุด (Download Copy)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                data: [155, 63, 175, 164, 157, 27, 55, 239, 1, 195, 163, 249, 176, 278, 290, 170, 6, 56, 117, 12, 169, 128, 123, 80, 91, 87, 133, 187, 218, 60, 88, 189, 300, 211, 143, 213, 186, 154, 50, 132, 281, 229, 78, 294, 252]
+            }]
+        };
+
+        var ctx = document.getElementById('salesChartCanvas').getContext('2d');
+        var salesChart = new Chart(ctx, {
+            type: 'bar',
+            data: salesData,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor: 'white'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: 'white' // Set xAxes ticks text color to white
+                        }
+                    }]
+                },
+                legend: {
+                    labels: {
+                        fontColor: 'white' // Set legend text color to white
+                    }
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return tooltipItem.yLabel;
+                        }
+                    },
+
+                }
+            }
+        });
+
+        salesChart.data.datasets.forEach(dataset => {
+            dataset.backgroundColor = '#6200ff';
+        });
+
+        salesChart.update();
+</script>
+
+
+</html>
