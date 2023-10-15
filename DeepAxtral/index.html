@@ -18,6 +18,7 @@
             color: #FFF;
 
         }
+
         #salesChartCanvas {
             width: 80%;
             height: 300px;
@@ -364,7 +365,6 @@
 
         .comment-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
             grid-gap: 20px;
             margin: 20px;
         }
@@ -441,6 +441,11 @@
                 margin: 10px;
                 width: 100%;
             }
+
+            .comment-grid {
+                grid-template-columns: auto;
+            }
+
 
             .about {
                 display: block;
@@ -687,170 +692,170 @@
 
 <script>
     var comments = [
-    "เกมนี้น่าทึ่งมาก!",
-         "ฉันชอบกราฟิก!",
-         "เกมที่ดีที่สุด!",
-         "หยุดเล่นไม่ได้!",
-         "ขอแนะนำอย่างยิ่ง!",
-         "การเล่นเกมที่ยอดเยี่ยม!",
-         "เกมนี้ฉันไม่พอ!",
-         "ชุมชนเป็นมิตรและสนับสนุน!",
-         "ความใส่ใจในรายละเอียดอย่างไม่น่าเชื่อ!",
-         "กิจกรรมในเกมน่าตื่นเต้นอยู่เสมอ!",
-         "เกมนี้มอบความบันเทิงไม่รู้จบ!",
-         "ภารกิจท้าทายและให้รางวัล!",
-         "ฉันชอบสำรวจโลกของเกม!",
-         "นักพัฒนารับฟังความคิดเห็นของผู้เล่นจริงๆ!",
-         "ประสบการณ์การเล่นเกมที่สร้างสรรค์มาอย่างดี!",
-         "กราฟิกอยู่นอกโลกนี้!",
-         "ฉันแนะนำเกมนี้ให้กับเพื่อน ๆ ทุกคน!",
-         "การอัปเดตดีขึ้นเรื่อยๆ!",
-         "ฉันไม่เคยลงทุนกับเกมมือถือขนาดนี้มาก่อน!",
-         "เกมทำงานได้อย่างราบรื่นบนอุปกรณ์ของฉัน!",
-         "การต่อสู้ของบอสนั้นยิ่งใหญ่!",
-         "ทุกแง่มุมของเกมได้รับการออกแบบมาอย่างดี!",
-         "เกมนี้เป็นผลงานชิ้นเอก!",
-         "ฉันขอขอบคุณที่มีการอัปเดตเนื้อหาบ่อยครั้ง!",
-         "สมดุลของเกมถูกต้องแล้ว!",
-         "ตัวเลือกการปรับแต่งตัวละครนั้นยอดเยี่ยมมาก!",
-         "เกมนี้น่าทึ่งมาก!",
-         "ฉันชอบกราฟิก!",
-         "เกมที่ดีที่สุด!",
-         "หยุดเล่นไม่ได้!",
-         "ขอแนะนำอย่างยิ่ง!",
-         "การเล่นเกมที่ยอดเยี่ยม!",
-         "เนื้อเรื่องเยี่ยมมาก!",
-         "ฉันติดเกมนี้แล้ว!",
-         "เอฟเฟกต์เสียงนั้นดื่มด่ำ!",
-         "ประสบการณ์การเล่นเกมที่ยอดเยี่ยมเช่นนี้!",
-         "กราฟิกนั้นยอดเยี่ยมมาก!",
-         "ฉันไม่อยากจะเชื่อเลยว่าเกมนี้ฟรี!",
-         "นักพัฒนาทำงานได้อย่างเหลือเชื่อ!",
-         "ฉันเล่นเกมนี้ทุกวัน!",
-         "การออกแบบตัวละครน่าประทับใจมาก!",
-         "โหมดผู้เล่นหลายคนสนุกมาก!",
-         "ฉันไม่เคยเห็นสภาพแวดล้อมที่มีรายละเอียดเช่นนี้มาก่อน!",
-         "คุ้มค่ากับการดาวน์โหลดอย่างแน่นอน!",
-         "การควบคุมนั้นใช้งานง่ายและตอบสนอง!",
-         "กลไกของเกมมีความสมดุลอย่างดี!",
+        "เกมนี้น่าทึ่งมาก!",
+        "ฉันชอบกราฟิก!",
+        "เกมที่ดีที่สุด!",
+        "หยุดเล่นไม่ได้!",
+        "ขอแนะนำอย่างยิ่ง!",
+        "การเล่นเกมที่ยอดเยี่ยม!",
+        "เกมนี้ฉันไม่พอ!",
+        "ชุมชนเป็นมิตรและสนับสนุน!",
+        "ความใส่ใจในรายละเอียดอย่างไม่น่าเชื่อ!",
+        "กิจกรรมในเกมน่าตื่นเต้นอยู่เสมอ!",
+        "เกมนี้มอบความบันเทิงไม่รู้จบ!",
+        "ภารกิจท้าทายและให้รางวัล!",
+        "ฉันชอบสำรวจโลกของเกม!",
+        "นักพัฒนารับฟังความคิดเห็นของผู้เล่นจริงๆ!",
+        "ประสบการณ์การเล่นเกมที่สร้างสรรค์มาอย่างดี!",
+        "กราฟิกอยู่นอกโลกนี้!",
+        "ฉันแนะนำเกมนี้ให้กับเพื่อน ๆ ทุกคน!",
+        "การอัปเดตดีขึ้นเรื่อยๆ!",
+        "ฉันไม่เคยลงทุนกับเกมมือถือขนาดนี้มาก่อน!",
+        "เกมทำงานได้อย่างราบรื่นบนอุปกรณ์ของฉัน!",
+        "การต่อสู้ของบอสนั้นยิ่งใหญ่!",
+        "ทุกแง่มุมของเกมได้รับการออกแบบมาอย่างดี!",
+        "เกมนี้เป็นผลงานชิ้นเอก!",
+        "ฉันขอขอบคุณที่มีการอัปเดตเนื้อหาบ่อยครั้ง!",
+        "สมดุลของเกมถูกต้องแล้ว!",
+        "ตัวเลือกการปรับแต่งตัวละครนั้นยอดเยี่ยมมาก!",
+        "เกมนี้น่าทึ่งมาก!",
+        "ฉันชอบกราฟิก!",
+        "เกมที่ดีที่สุด!",
+        "หยุดเล่นไม่ได้!",
+        "ขอแนะนำอย่างยิ่ง!",
+        "การเล่นเกมที่ยอดเยี่ยม!",
+        "เนื้อเรื่องเยี่ยมมาก!",
+        "ฉันติดเกมนี้แล้ว!",
+        "เอฟเฟกต์เสียงนั้นดื่มด่ำ!",
+        "ประสบการณ์การเล่นเกมที่ยอดเยี่ยมเช่นนี้!",
+        "กราฟิกนั้นยอดเยี่ยมมาก!",
+        "ฉันไม่อยากจะเชื่อเลยว่าเกมนี้ฟรี!",
+        "นักพัฒนาทำงานได้อย่างเหลือเชื่อ!",
+        "ฉันเล่นเกมนี้ทุกวัน!",
+        "การออกแบบตัวละครน่าประทับใจมาก!",
+        "โหมดผู้เล่นหลายคนสนุกมาก!",
+        "ฉันไม่เคยเห็นสภาพแวดล้อมที่มีรายละเอียดเช่นนี้มาก่อน!",
+        "คุ้มค่ากับการดาวน์โหลดอย่างแน่นอน!",
+        "การควบคุมนั้นใช้งานง่ายและตอบสนอง!",
+        "กลไกของเกมมีความสมดุลอย่างดี!",
     ];
 
     var usernames = [
-    "PlayerX",
-    "Gamer123",
-    "MasterGamer",
-    "GameFanatic",
-    "ProPlayer",
-    "EpicGamer",
-    "PlayerX",
-    "Gamer123",
-    "MasterGamer",
-    "GameFanatic",
-    "ProPlayer",
-    "EpicGamer",
-    "PixelPioneer",
-    "QuestMaster",
-    "LegendaryGamer",
-    "GameChanger",
-    "NinjaGamer",
-    "DigitalHero",
-    "GamingLegend",
-    "RetroGamer",
-    "PowerPlayer",
-    "ConsoleCommander",
-    "ArcadeHero",
-    "GameGladiator",
-    "VirtualVoyager",
-    "ControllerCrusader",
-    "GameSavvy",
-    "JoystickJuggler",
-    "LevelUpLion",
-    "GamerGlitch",
-    "PuzzlePirate",
-    "BossBattleBrawler",
-    "QuestQuasar",
-    "DigitalDungeonMaster",
-    "GamepadGuru",
-    "ScoreSeeker",
-    "StrategySorcerer",
-    "GameplayGuardian",
-    "ConsoleConqueror",
-    "VirtualVoyager",
-    "PixelPioneer",
-    "RetroRocket",
-    "QuestQuantum",
-    "ActionAdventurer",
-    "ControllerCrusader",
-    "GamerGalaxy",
-];
+        "PlayerX",
+        "Gamer123",
+        "MasterGamer",
+        "GameFanatic",
+        "ProPlayer",
+        "EpicGamer",
+        "PlayerX",
+        "Gamer123",
+        "MasterGamer",
+        "GameFanatic",
+        "ProPlayer",
+        "EpicGamer",
+        "PixelPioneer",
+        "QuestMaster",
+        "LegendaryGamer",
+        "GameChanger",
+        "NinjaGamer",
+        "DigitalHero",
+        "GamingLegend",
+        "RetroGamer",
+        "PowerPlayer",
+        "ConsoleCommander",
+        "ArcadeHero",
+        "GameGladiator",
+        "VirtualVoyager",
+        "ControllerCrusader",
+        "GameSavvy",
+        "JoystickJuggler",
+        "LevelUpLion",
+        "GamerGlitch",
+        "PuzzlePirate",
+        "BossBattleBrawler",
+        "QuestQuasar",
+        "DigitalDungeonMaster",
+        "GamepadGuru",
+        "ScoreSeeker",
+        "StrategySorcerer",
+        "GameplayGuardian",
+        "ConsoleConqueror",
+        "VirtualVoyager",
+        "PixelPioneer",
+        "RetroRocket",
+        "QuestQuantum",
+        "ActionAdventurer",
+        "ControllerCrusader",
+        "GamerGalaxy",
+    ];
 
     var commentGrid = document.querySelector('.comment-grid');
 
-for (var i = 0; i < 25  ; i++) {
-    var randomComment = comments[Math.floor(Math.random() * comments.length)];
-    var randomUsername = usernames[Math.floor(Math.random() * usernames.length)];
+    for (var i = 0; i < 25; i++) {
+        var randomComment = comments[Math.floor(Math.random() * comments.length)];
+        var randomUsername = usernames[Math.floor(Math.random() * usernames.length)];
 
-    var commentBlock = document.createElement('div');
-    commentBlock.className = 'comment-block';
-    commentBlock.innerHTML = `
+        var commentBlock = document.createElement('div');
+        commentBlock.className = 'comment-block';
+        commentBlock.innerHTML = `
         <div class="comment-content">
             <p class="username">${randomUsername}:</p>
             <p class="comment-text">${randomComment}</p>
         </div>
     `;
-    commentGrid.appendChild(commentBlock);
-}
+        commentGrid.appendChild(commentBlock);
+    }
 
-var salesData = {
-            labels: ['3/9/2023', '4/9/2023', '5/9/2023', '6/9/2023', '7/9/2023', '8/9/2023', '9/9/2023', '10/9/2023', '11/9/2023', '12/9/2023', '13/9/2023', '14/9/2023', '15/9/2023', '16/9/2023', '17/9/2023', '18/9/2023', '19/9/2023', '20/9/2023', '21/9/2023', '22/9/2023', '23/9/2023', '24/9/2023', '25/9/2023', '26/9/2023', '27/9/2023', '28/9/2023', '29/9/2023', '30/9/2023', '1/10/2023', '2/10/2023', '3/10/2023', '4/10/2023', '5/10/2023', '6/10/2023', '7/10/2023', '8/10/2023', '9/10/2023', '10/10/2023', '11/10/2023', '12/10/2023', '13/10/2023', '14/10/2023', '15/10/2023', '16/10/2023'],
-            datasets: [{
-                label: 'ยอดขาย/ชุด (Download Copy)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-                data: [155, 63, 175, 164, 157, 27, 55, 239, 1, 195, 163, 249, 176, 278, 290, 170, 6, 56, 117, 12, 169, 128, 123, 80, 91, 87, 133, 187, 218, 60, 88, 189, 300, 211, 143, 213, 186, 154, 50, 132, 281, 229, 78, 294, 252]
-            }]
-        };
+    var salesData = {
+        labels: ['3/9/2023', '4/9/2023', '5/9/2023', '6/9/2023', '7/9/2023', '8/9/2023', '9/9/2023', '10/9/2023', '11/9/2023', '12/9/2023', '13/9/2023', '14/9/2023', '15/9/2023', '16/9/2023', '17/9/2023', '18/9/2023', '19/9/2023', '20/9/2023', '21/9/2023', '22/9/2023', '23/9/2023', '24/9/2023', '25/9/2023', '26/9/2023', '27/9/2023', '28/9/2023', '29/9/2023', '30/9/2023', '1/10/2023', '2/10/2023', '3/10/2023', '4/10/2023', '5/10/2023', '6/10/2023', '7/10/2023', '8/10/2023', '9/10/2023', '10/10/2023', '11/10/2023', '12/10/2023', '13/10/2023', '14/10/2023', '15/10/2023', '16/10/2023'],
+        datasets: [{
+            label: 'ยอดขาย/ชุด (Download Copy)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            data: [155, 63, 175, 164, 157, 27, 55, 239, 1, 195, 163, 249, 176, 278, 290, 170, 6, 56, 117, 12, 169, 128, 123, 80, 91, 87, 133, 187, 218, 60, 88, 189, 300, 211, 143, 213, 186, 154, 50, 132, 281, 229, 78, 294, 252]
+        }]
+    };
 
-        var ctx = document.getElementById('salesChartCanvas').getContext('2d');
-        var salesChart = new Chart(ctx, {
-            type: 'bar',
-            data: salesData,
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            fontColor: 'white'
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            fontColor: 'white' // Set xAxes ticks text color to white
-                        }
-                    }]
-                },
-                legend: {
-                    labels: {
-                        fontColor: 'white' // Set legend text color to white
+    var ctx = document.getElementById('salesChartCanvas').getContext('2d');
+    var salesChart = new Chart(ctx, {
+        type: 'bar',
+        data: salesData,
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: 'white'
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: 'white' // Set xAxes ticks text color to white
+                    }
+                }]
+            },
+            legend: {
+                labels: {
+                    fontColor: 'white' // Set legend text color to white
+                }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        return tooltipItem.yLabel;
                     }
                 },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            return tooltipItem.yLabel;
-                        }
-                    },
 
-                }
             }
-        });
+        }
+    });
 
-        salesChart.data.datasets.forEach(dataset => {
-            dataset.backgroundColor = '#6200ff';
-        });
+    salesChart.data.datasets.forEach(dataset => {
+        dataset.backgroundColor = '#6200ff';
+    });
 
-        salesChart.update();
+    salesChart.update();
 </script>
 
 
