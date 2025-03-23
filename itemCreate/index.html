@@ -74,8 +74,6 @@
                     <label>Category:</label>
                     <select onchange="updateObject(${index}, 'category', this.value)">
                         <option value="Miscellaneous" ${obj.category === 'Miscellaneous' ? 'selected' : ''}>Miscellaneous</option>
-                        <option value="Weapon" ${obj.category === 'Weapon' ? 'selected' : ''}>Weapon</option>
-                        <option value="Armor" ${obj.category === 'Armor' ? 'selected' : ''}>Armor</option>
                         <option value="Consumable" ${obj.category === 'Consumable' ? 'selected' : ''}>Consumable</option>
                     </select><br>
                     <label>Stack:</label>
