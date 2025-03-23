@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Item Creator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .object { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+        textarea { width: 100%; height: 80px; }
+        button { margin-top: 10px; padding: 5px 10px; }
+        #output { margin-top: 20px; padding: 10px; border: 1px solid #ccc; white-space: pre-wrap; background: #f9f9f9; }
+    </style>
+</head>
+<body>
+
+    <h2>Item JSON Creator</h2>
+
+    <input type="file" id="importFile" accept=".json">
+    <button onclick="importJSON()">Import JSON</button>
+
+    <div id="form">
+        <button onclick="addObject()">Add Object</button>
+        <button onclick="generateJSON()">Generate JSON</button>
+        <button onclick="saveJSON()">Save JSON</button>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        let objects = [];
+        let objectCount = 0;
+
+        function addObject(data = {}) {
+            objectCount++;
+            const id = objectCount;
+            const objData = {
+                id: data.id || id,
+                sprite: data.sprite || '',
+                itemName: data.itemName || '',
+                price: data.price || 1,
+                description: data.description || '',
+                category: data.category || 'Miscellaneous',
+                stack: data.stack || 1,
+                stackCount: data.stackCount || 1
+            };
+
+            objects.push(objData);
+            renderObjects();
+        }
+
+        function renderObjects() {
+            const form = document.getElementById('form');
+            form.innerHTML = `
+                <button onclick="addObject()">Add Object</button>
+                <button onclick="generateJSON()">Generate JSON</button>
+                <button onclick="saveJSON()">Save JSON</button>
+            `;
+
+            objects.forEach((obj, index) => {
+                const objectDiv = document.createElement('div');
+                objectDiv.className = 'object';
+                objectDiv.innerHTML = `
+                    <h3>Object ${index + 1}</h3>
+                    <label>ID: ${obj.id}</label><br>
+                    <label>Sprite URL:</label>
+                    <input type="text" value="${obj.sprite}" onchange="updateObject(${index}, 'sprite', this.value)"><br>
+                    <label>Item Name:</label>
+                    <input type="text" value="${obj.itemName}" onchange="updateObject(${index}, 'itemName', this.value)"><br>
+                    <label>Price:</label>
+                    <input type="number" value="${obj.price}" onchange="updateObject(${index}, 'price', this.value)"><br>
+                    <label>Description:</label><br>
+                    <textarea onchange="updateObject(${index}, 'description', this.value)">${obj.description}</textarea><br>
+                    <label>Category:</label>
+                    <select onchange="updateObject(${index}, 'category', this.value)">
+                        <option value="Miscellaneous" ${obj.category === 'Miscellaneous' ? 'selected' : ''}>Miscellaneous</option>
+                        <option value="Weapon" ${obj.category === 'Weapon' ? 'selected' : ''}>Weapon</option>
+                        <option value="Armor" ${obj.category === 'Armor' ? 'selected' : ''}>Armor</option>
+                        <option value="Consumable" ${obj.category === 'Consumable' ? 'selected' : ''}>Consumable</option>
+                    </select><br>
+                    <label>Stack:</label>
+                    <input type="number" value="${obj.stack}" onchange="updateObject(${index}, 'stack', this.value)"><br>
+                    <label>Stack Count:</label>
+                    <input type="number" value="${obj.stackCount}" onchange="updateObject(${index}, 'stackCount', this.value)"><br>
+                    <button onclick="removeObject(${index})">Remove</button>
+                `;
+                form.appendChild(objectDiv);
+            });
+        }
+
+        function updateObject(index, key, value) {
+            objects[index][key] = value;
+        }
+
+        function removeObject(index) {
+            objects.splice(index, 1);
+            renderObjects();
+        }
+
+        function generateJSON() {
+            document.getElementById('output').innerText = JSON.stringify(objects, null, 4);
+        }
+
+        function saveJSON() {
+            const jsonData = JSON.stringify(objects, null, 4);
+            const blob = new Blob([jsonData], { type: "application/json" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "items.json";
+            a.click();
+        }
+
+        function importJSON() {
+            const fileInput = document.getElementById('importFile');
+            const file = fileInput.files[0];
+            if (!file) return alert("Please select a JSON file.");
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    objects = [];
+                    objectCount = 0;
+                    data.forEach(obj => addObject(obj));
+                } catch (e) {
+                    alert("Invalid JSON file.");
+                }
+            };
+            reader.readAsText(file);
+        }
+    </script>
+
+</body>
+</html>
