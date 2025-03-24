@@ -1,29 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elemental JSON Creator</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .object { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
-        textarea { width: 100%; height: 60px; }
-        button { margin-top: 10px; padding: 5px 10px; }
-        #output { margin-top: 20px; padding: 10px; border: 1px solid #ccc; white-space: pre-wrap; background: #f9f9f9; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .object {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 60px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+            background: #f9f9f9;
+        }
+
+        /* Periodic table styles */
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 50px);
+            grid-template-rows: repeat(9, 50px);
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .periodic-element {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 12px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .periodic-element.selected {
+            background-color: #d3f9d8;
+        }
+
+        #formContainer {
+    width: 100%;
+    max-width: 50%; /* Adjust width as needed */
+    height: 400px; /* Set a height to make it scrollable */
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto; /* Enables vertical scrolling */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
     </style>
 </head>
+
 <body>
 
     <h2>Elemental JSON Creator</h2>
 
     <input type="file" id="importFile" accept=".json">
     <button onclick="importJSON()">Import JSON</button>
+    <button onclick="addObject()">Add Element</button>
+    <button onclick="generateJSON()">Generate JSON</button>
+    <button onclick="saveJSON()">Save JSON</button>
+    <button onclick="renderPeriodicTable()">Update Periodic Table</button>
 
-    <div id="form">
-        <button onclick="addObject()">Add Element</button>
-        <button onclick="generateJSON()">Generate JSON</button>
-        <button onclick="saveJSON()">Save JSON</button>
+    <div id="formContainer">
+        <div id="form">
+
+        </div>
     </div>
+    
+    
+
+    <div id="periodicTable" class="periodic-table"></div> <!-- Periodic Table Display -->
 
     <div id="output"></div>
 
@@ -32,93 +104,89 @@
         let elementCount = 0;
 
         function addObject(data = {}) {
-    elementCount++;
-    const id = elementCount;
-    const element = {
-        id: data.id || id,
-        stack_: data.stack_ || 1,
-        sprite: data.sprite || '',
-        name_: data.name_ || '',
-        description_: data.description_ || '',
-        symbol_: data.symbol_ || '',
-        elementState_: data.elementState_ || 'Solid',
-        atom_number: data.atom_number || 0,
-        atom_mass: data.atom_mass || 0,
-        wight: data.wight || 0,
-        photron_: data.photron_ || 0,
-        electron_: data.electron_ || 0,
-        pos_in_table: data.pos_in_table || { x: 0, y: 0 } // Default to {x: 0, y: 0}
-    };
+            elementCount++;
+            const id = elementCount;
+            const element = {
+                id: data.id || id,
+                stack_: data.stack_ || 1,
+                sprite: data.sprite || '',
+                name_: data.name_ || '',
+                description_: data.description_ || '',
+                symbol_: data.symbol_ || '',
+                elementState_: data.elementState_ || 'Solid',
+                atom_number: data.atom_number || 0,
+                atom_mass: data.atom_mass || 0,
+                wight: data.wight || 0,
+                photron_: data.photron_ || 0,
+                electron_: data.electron_ || 0,
+                pos_in_table: data.pos_in_table || { x: 0, y: 0 } // Default to {x: 0, y: 0}
+            };
 
-    elements.push(element);
-    renderObjects();
-}
+            elements.push(element);
+            renderObjects();
+            renderPeriodicTable(); // Re-render periodic table after adding an element
+        }
 
+        function renderObjects() {
+            const form = document.getElementById('form');
+            form.innerHTML = ''; // Clear previous objects
 
-function renderObjects() {
-    const form = document.getElementById('form');
-    form.innerHTML = `
-        <button onclick="addObject()">Add Element</button>
-        <button onclick="generateJSON()">Generate JSON</button>
-        <button onclick="saveJSON()">Save JSON</button>
-    `;
+            elements.forEach((el, index) => {
+                const objectDiv = document.createElement('div');
+                objectDiv.className = 'object';
+                objectDiv.innerHTML = `
+                    <h3>Element ${index + 1}</h3>
+                    <label>ID: ${el.id}</label><br>
+                    <label>Stack:</label>
+                    <input type="number" value="${el.stack_}" onchange="updateObject(${index}, 'stack_', this.value)"><br>
+                    <label>Sprite URL:</label>
+                    <input type="text" value="${el.sprite}" onchange="updateObject(${index}, 'sprite', this.value)"><br>
+                    <label>Name:</label>
+                    <input type="text" value="${el.name_}" onchange="updateObject(${index}, 'name_', this.value)"><br>
+                    <label>Description:</label><br>
+                    <textarea onchange="updateObject(${index}, 'description_', this.value)">${el.description_}</textarea><br>
+                    <label>Symbol:</label>
+                    <input type="text" value="${el.symbol_}" onchange="updateObject(${index}, 'symbol_', this.value)"><br>
+                    <label>State:</label>
+                    <select onchange="updateObject(${index}, 'elementState_', this.value)">
+                        <option value="Solid" ${el.elementState_ === 'Solid' ? 'selected' : ''}>Solid</option>
+                        <option value="Liquid" ${el.elementState_ === 'Liquid' ? 'selected' : ''}>Liquid</option>
+                        <option value="Gas" ${el.elementState_ === 'Gas' ? 'selected' : ''}>Gas</option>
+                    </select><br>
+                    <label>Atomic Number:</label>
+                    <input type="number" value="${el.atom_number}" onchange="updateObject(${index}, 'atom_number', this.value)"><br>
+                    <label>Atomic Mass:</label>
+                    <input type="number" step="0.01" value="${el.atom_mass}" onchange="updateObject(${index}, 'atom_mass', this.value)"><br>
+                    <label>Weight:</label>
+                    <input type="number" step="0.01" value="${el.wight}" onchange="updateObject(${index}, 'wight', this.value)"><br>
+                    <label>Photron:</label>
+                    <input type="number" value="${el.photron_}" onchange="updateObject(${index}, 'photron_', this.value)"><br>
+                    <label>Electron:</label>
+                    <input type="number" value="${el.electron_}" onchange="updateObject(${index}, 'electron_', this.value)"><br>
+                    <label>Position in Table:</label><br>
+                    <label>X:</label>
+                    <input type="number" value="${el.pos_in_table.x}" onchange="updateObject(${index}, 'pos_in_table', { x: this.value, y: elements[${index}].pos_in_table.y })"><br>
+                    <label>Y:</label>
+                    <input type="number" value="${el.pos_in_table.y}" onchange="updateObject(${index}, 'pos_in_table', { x: elements[${index}].pos_in_table.x, y: this.value })"><br>
+                    <button onclick="removeObject(${index})">Remove</button>
+                `;
+                form.appendChild(objectDiv);
+            });
+        }
 
-    elements.forEach((el, index) => {
-        const objectDiv = document.createElement('div');
-        objectDiv.className = 'object';
-        objectDiv.innerHTML = `
-            <h3>Element ${index + 1}</h3>
-            <label>ID: ${el.id}</label><br>
-            <label>Stack:</label>
-            <input type="number" value="${el.stack_}" onchange="updateObject(${index}, 'stack_', this.value)"><br>
-            <label>Sprite URL:</label>
-            <input type="text" value="${el.sprite}" onchange="updateObject(${index}, 'sprite', this.value)"><br>
-            <label>Name:</label>
-            <input type="text" value="${el.name_}" onchange="updateObject(${index}, 'name_', this.value)"><br>
-            <label>Description:</label><br>
-            <textarea onchange="updateObject(${index}, 'description_', this.value)">${el.description_}</textarea><br>
-            <label>Symbol:</label>
-            <input type="text" value="${el.symbol_}" onchange="updateObject(${index}, 'symbol_', this.value)"><br>
-            <label>State:</label>
-            <select onchange="updateObject(${index}, 'elementState_', this.value)">
-                <option value="Solid" ${el.elementState_ === 'Solid' ? 'selected' : ''}>Solid</option>
-                <option value="Liquid" ${el.elementState_ === 'Liquid' ? 'selected' : ''}>Liquid</option>
-                <option value="Gas" ${el.elementState_ === 'Gas' ? 'selected' : ''}>Gas</option>
-            </select><br>
-            <label>Atomic Number:</label>
-            <input type="number" value="${el.atom_number}" onchange="updateObject(${index}, 'atom_number', this.value)"><br>
-            <label>Atomic Mass:</label>
-            <input type="number" step="0.01" value="${el.atom_mass}" onchange="updateObject(${index}, 'atom_mass', this.value)"><br>
-            <label>Weight:</label>
-            <input type="number" step="0.01" value="${el.wight}" onchange="updateObject(${index}, 'wight', this.value)"><br>
-            <label>Photron:</label>
-            <input type="number" value="${el.photron_}" onchange="updateObject(${index}, 'photron_', this.value)"><br>
-            <label>Electron:</label>
-            <input type="number" value="${el.electron_}" onchange="updateObject(${index}, 'electron_', this.value)"><br>
-            <label>Position in Table:</label><br>
-            <label>X:</label>
-            <input type="number" value="${el.pos_in_table.x}" onchange="updateObject(${index}, 'pos_in_table', { x: this.value, y: elements[${index}].pos_in_table.y })"><br>
-            <label>Y:</label>
-            <input type="number" value="${el.pos_in_table.y}" onchange="updateObject(${index}, 'pos_in_table', { x: elements[${index}].pos_in_table.x, y: this.value })"><br>
-            <button onclick="removeObject(${index})">Remove</button>
-        `;
-        form.appendChild(objectDiv);
-    });
-}
-
-
-function updateObject(index, key, value) {
-    if (key === 'pos_in_table') {
-        elements[index][key] = value;
-    } else {
-        elements[index][key] = value;
-    }
-}
-
+        function updateObject(index, key, value) {
+            if (key === 'pos_in_table') {
+                elements[index][key] = value;
+            } else {
+                elements[index][key] = value;
+            }
+            renderPeriodicTable(); // Re-render periodic table after updating an object
+        }
 
         function removeObject(index) {
             elements.splice(index, 1);
             renderObjects();
+            renderPeriodicTable(); // Re-render periodic table after removing an object
         }
 
         function generateJSON() {
@@ -140,19 +208,58 @@ function updateObject(index, key, value) {
             if (!file) return alert("Please select a JSON file.");
 
             const reader = new FileReader();
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 try {
                     const data = JSON.parse(event.target.result);
                     elements = [];
                     elementCount = 0;
                     data.forEach(el => addObject(el));
+                    element_periodic_table = data;
+
+                    // Now that the data is loaded, render the table
+                    renderPeriodicTable();
                 } catch (e) {
                     alert("Invalid JSON file.");
                 }
             };
             reader.readAsText(file);
         }
+        let numberslot = 1;
+
+        function renderPeriodicTable() {
+            const tableContainer = document.getElementById('periodicTable');
+            tableContainer.innerHTML = ''; // Clear previous table
+
+            // Create a grid for the periodic table (18 columns, 9 rows)
+            const totalRows = 7;
+            const totalCols = 18;
+
+
+            for (let y = 0; y < totalRows; y++) {
+                for (let x = 0; x < totalCols; x++) {
+                    
+                    const element = elements.find(el => el.pos_in_table.x == x+1 && el.pos_in_table.y == y+1);
+
+                    const cell = document.createElement('div');
+                    cell.className = 'periodic-element';
+                    if (element) {
+                        cell.textContent = `${element.symbol_}\n[${element.pos_in_table.x},${element.pos_in_table.y}]`;
+                        cell.classList.add('selected');
+                    }
+                    else
+                    {
+                        cell.textContent = `${x+1},${y+1}`;
+                    }
+
+                    tableContainer.appendChild(cell);
+
+                }
+            }
+        }
+
+
     </script>
 
 </body>
+
 </html>
