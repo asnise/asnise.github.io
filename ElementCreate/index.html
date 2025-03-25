@@ -62,17 +62,19 @@
         }
 
         #formContainer {
-    width: 100%;
-    max-width: 50%; /* Adjust width as needed */
-    height: 400px; /* Set a height to make it scrollable */
-    border: 1px solid #ccc;
-    padding: 10px;
-    overflow-y: auto; /* Enables vertical scrolling */
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
+            width: 100%;
+            max-width: 50%;
+            /* Adjust width as needed */
+            height: 400px;
+            /* Set a height to make it scrollable */
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            /* Enables vertical scrolling */
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
@@ -92,8 +94,8 @@
 
         </div>
     </div>
-    
-    
+
+
 
     <div id="periodicTable" class="periodic-table"></div> <!-- Periodic Table Display -->
 
@@ -119,13 +121,15 @@
                 wight: data.wight || 0,
                 photron_: data.photron_ || 0,
                 electron_: data.electron_ || 0,
-                pos_in_table: data.pos_in_table || { x: 0, y: 0 } // Default to {x: 0, y: 0}
+                pos_in_table: data.pos_in_table || { x: 0, y: 0 }, // Default to {x: 0, y: 0}
+                price: data.price || 0, // Default to 0)
             };
 
             elements.push(element);
             renderObjects();
-            renderPeriodicTable(); // Re-render periodic table after adding an element
+            renderPeriodicTable();
         }
+
 
         function renderObjects() {
             const form = document.getElementById('form');
@@ -135,44 +139,47 @@
                 const objectDiv = document.createElement('div');
                 objectDiv.className = 'object';
                 objectDiv.innerHTML = `
-                    <h3>Element ${index + 1}</h3>
-                    <label>ID: ${el.id}</label><br>
-                    <label>Stack:</label>
-                    <input type="number" value="${el.stack_}" onchange="updateObject(${index}, 'stack_', this.value)"><br>
-                    <label>Sprite URL:</label>
-                    <input type="text" value="${el.sprite}" onchange="updateObject(${index}, 'sprite', this.value)"><br>
-                    <label>Name:</label>
-                    <input type="text" value="${el.name_}" onchange="updateObject(${index}, 'name_', this.value)"><br>
-                    <label>Description:</label><br>
-                    <textarea onchange="updateObject(${index}, 'description_', this.value)">${el.description_}</textarea><br>
-                    <label>Symbol:</label>
-                    <input type="text" value="${el.symbol_}" onchange="updateObject(${index}, 'symbol_', this.value)"><br>
-                    <label>State:</label>
-                    <select onchange="updateObject(${index}, 'elementState_', this.value)">
-                        <option value="Solid" ${el.elementState_ === 'Solid' ? 'selected' : ''}>Solid</option>
-                        <option value="Liquid" ${el.elementState_ === 'Liquid' ? 'selected' : ''}>Liquid</option>
-                        <option value="Gas" ${el.elementState_ === 'Gas' ? 'selected' : ''}>Gas</option>
-                    </select><br>
-                    <label>Atomic Number:</label>
-                    <input type="number" value="${el.atom_number}" onchange="updateObject(${index}, 'atom_number', this.value)"><br>
-                    <label>Atomic Mass:</label>
-                    <input type="number" step="0.01" value="${el.atom_mass}" onchange="updateObject(${index}, 'atom_mass', this.value)"><br>
-                    <label>Weight:</label>
-                    <input type="number" step="0.01" value="${el.wight}" onchange="updateObject(${index}, 'wight', this.value)"><br>
-                    <label>Photron:</label>
-                    <input type="number" value="${el.photron_}" onchange="updateObject(${index}, 'photron_', this.value)"><br>
-                    <label>Electron:</label>
-                    <input type="number" value="${el.electron_}" onchange="updateObject(${index}, 'electron_', this.value)"><br>
-                    <label>Position in Table:</label><br>
-                    <label>X:</label>
-                    <input type="number" value="${el.pos_in_table.x}" onchange="updateObject(${index}, 'pos_in_table', { x: this.value, y: elements[${index}].pos_in_table.y })"><br>
-                    <label>Y:</label>
-                    <input type="number" value="${el.pos_in_table.y}" onchange="updateObject(${index}, 'pos_in_table', { x: elements[${index}].pos_in_table.x, y: this.value })"><br>
-                    <button onclick="removeObject(${index})">Remove</button>
-                `;
+            <h3>Element ${index + 1}</h3>
+            <label>ID: ${el.id}</label><br>
+            <label>Stack:</label>
+            <input type="number" value="${el.stack_}" onchange="updateObject(${index}, 'stack_', this.value)"><br>
+            <label>Sprite URL:</label>
+            <input type="text" value="${el.sprite}" onchange="updateObject(${index}, 'sprite', this.value)"><br>
+            <label>Name:</label>
+            <input type="text" value="${el.name_}" onchange="updateObject(${index}, 'name_', this.value)"><br>
+            <label>Description:</label><br>
+            <textarea onchange="updateObject(${index}, 'description_', this.value)">${el.description_}</textarea><br>
+            <label>Symbol:</label>
+            <input type="text" value="${el.symbol_}" onchange="updateObject(${index}, 'symbol_', this.value)"><br>
+            <label>State:</label>
+            <select onchange="updateObject(${index}, 'elementState_', this.value)">
+                <option value="Solid" ${el.elementState_ === 'Solid' ? 'selected' : ''}>Solid</option>
+                <option value="Liquid" ${el.elementState_ === 'Liquid' ? 'selected' : ''}>Liquid</option>
+                <option value="Gas" ${el.elementState_ === 'Gas' ? 'selected' : ''}>Gas</option>
+            </select><br>
+            <label>Atomic Number:</label>
+            <input type="number" value="${el.atom_number}" onchange="updateObject(${index}, 'atom_number', this.value)"><br>
+            <label>Atomic Mass:</label>
+            <input type="number" step="0.01" value="${el.atom_mass}" onchange="updateObject(${index}, 'atom_mass', this.value)"><br>
+            <label>Weight:</label>
+            <input type="number" step="0.01" value="${el.wight}" onchange="updateObject(${index}, 'wight', this.value)"><br>
+            <label>Photron:</label>
+            <input type="number" value="${el.photron_}" onchange="updateObject(${index}, 'photron_', this.value)"><br>
+            <label>Electron:</label>
+            <input type="number" value="${el.electron_}" onchange="updateObject(${index}, 'electron_', this.value)"><br>
+            <label>Price:</label>
+            <input type="number" value="${el.price}" onchange="updateObject(${index}, 'price', this.value)"><br> <!-- ✅ Price field added -->
+            <label>Position in Table:</label><br>
+            <label>X:</label>
+            <input type="number" value="${el.pos_in_table.x}" onchange="updateObject(${index}, 'pos_in_table', { x: this.value, y: elements[${index}].pos_in_table.y })"><br>
+            <label>Y:</label>
+            <input type="number" value="${el.pos_in_table.y}" onchange="updateObject(${index}, 'pos_in_table', { x: elements[${index}].pos_in_table.x, y: this.value })"><br>
+            <button onclick="removeObject(${index})">Remove</button>
+        `;
                 form.appendChild(objectDiv);
             });
         }
+
 
         function updateObject(index, key, value) {
             if (key === 'pos_in_table') {
@@ -208,15 +215,25 @@
             if (!file) return alert("Please select a JSON file.");
 
             const reader = new FileReader();
-            reader.onload = function (event) {
+            reader.onload = async function (event) {
                 try {
                     const data = JSON.parse(event.target.result);
                     elements = [];
                     elementCount = 0;
-                    data.forEach(el => addObject(el));
-                    element_periodic_table = data;
 
-                    // Now that the data is loaded, render the table
+                    for (const el of data) {
+                        // Fetch price from API based on the element's name
+                        const price = await fetchPrice(el.name_);
+                        el.price = price || (() => {
+                            const rand = Math.random() * 100;
+                            if (rand <= 50) return Math.floor(Math.random() * (20 - 10 + 1)) + 10; // 50% chance for 10~20
+                            if (rand <= 80) return Math.floor(Math.random() * (50 - 20 + 1)) + 20; // 30% chance for 20~50
+                            if (rand <= 95) return Math.floor(Math.random() * (70 - 50 + 1)) + 50; // 15% chance for 50~70
+                            return Math.floor(Math.random() * (150 - 70 + 1)) + 70; // 5% chance for 70~150
+                        })();
+                        addObject(el);
+                    }
+
                     renderPeriodicTable();
                 } catch (e) {
                     alert("Invalid JSON file.");
@@ -224,6 +241,25 @@
             };
             reader.readAsText(file);
         }
+
+        let cachedRates = { "AED": 3.6730195274, "AFN": 70.457383, "ALL": 90.829847, "AMD": 390.535624, "ANG": 1.7926708938, "AOA": 913.303914708, "ARS": 1066.4501894286, "AUD": 1.5902171541, "AZN": 1.7002255, "BAM": 1.8026615, "BBD": 2.014158, "BDT": 121.2041605, "BGN": 1.80768, "BHD": 0.3770511728, "BIF": 2956.4698885, "BND": 1.3348463533, "BOB": 6.893114, "BRL": 5.7330829847, "BSD": 0.9989881199, "BTC": 0.0000116308, "BTN": 86.069409, "BWP": 13.600576, "BYN": 3.264629, "BZD": 2.0107829846, "CAD": 1.4330177808, "CDF": 2868.874983, "CHF": 0.8831634258, "CLF": 0.0240547885, "CLP": 928.6536105927, "CNY": 7.2486944207, "COP": 4161.987875, "CRC": 498.7379615, "CVE": 101.7845631542, "CZK": 23.0589319167, "DJF": 177.6409605, "DKK": 6.885505701, "DOP": 62.8451615, "DZD": 133.0690895, "EGP": 50.47312426, "ERN": 15, "ETB": 131.5567, "ETH": 0.0004992225, "EUR": 0.9228923474, "FJD": 2.299475, "FKP": 0.774133, "GBP": 0.773643517, "GEL": 2.7734995, "GHS": 15.4633350377, "GIP": 0.7744171763, "GMD": 71.4871478027, "GNF": 8666.499617971, "GTQ": 7.7035303757, "GYD": 208.9861249415, "HKD": 7.7730237971, "HNL": 25.6356330111, "HRK": 6.954698, "HTG": 131.6368100815, "HUF": 367.2950517431, "IDR": 16498.3156335, "ILS": 3.7334433647, "INR": 85.9954016685, "IQD": 1309.1755061717, "IRR": 42002.8075160215, "ISK": 133.1956668844, "JMD": 156.4961410328, "JOD": 0.709010906, "JPY": 149.6407944364, "KES": 129.5987677227, "KGS": 86.805804, "KHR": 3998.6399506667, "KMF": 453.460515541, "KRW": 1463.2428155, "KWD": 0.3081258093, "KYD": 0.8200066, "KZT": 502.7856503238, "LAK": 21661.9371242609, "LBP": 90174.955200697, "LKR": 296.3490229057, "LRD": 199.3633507337, "LSL": 18.1596741732, "LYD": 4.8048985, "MAD": 9.6302381541, "MDL": 17.9726665, "MGA": 4664.1062060872, "MKD": 56.6425995, "MMK": 2098.1041510448, "MNT": 3478.8335518304, "MOP": 8.0058221394, "MRO": 39.551, "MUR": 45.3000566251, "MVR": 15.45862, "MWK": 1733.2426090165, "MXN": 20.2146555118, "MYR": 4.420973, "MZN": 63.5759523013, "NAD": 18.1813834159, "NGN": 1539.8533697628, "NIO": 36.627533189, "NOK": 10.5302200123, "NPR": 137.6466902946, "NZD": 1.7403260534, "OMR": 0.384899, "PAB": 1.0015, "PEN": 3.625384, "PHP": 57.3388735, "PKR": 279.8436995, "PLN": 3.8734, "PYG": 7988.421782, "QAR": 3.6383355, "RON": 4.5906375, "RSD": 108.054984, "RUB": 84.5029775, "RWF": 1421.8016955, "SAR": 3.750721, "SCR": 14.510453, "SDG": 598.905031, "SEK": 10.1155875, "SGD": 1.3350145, "SLL": 21818.8505415, "SOS": 570.772046, "SRD": 36.3747555, "STN": 22.7847084878, "SVC": 8.739583, "SZL": 18.156907, "THB": 33.82038, "TJS": 10.9110675, "TMT": 3.4975295, "TND": 3.089115, "TOP": 2.407309, "TRY": 38.0020375, "TTD": 6.7918215, "TWD": 33.012862, "TZS": 2634.501452, "UAH": 41.5485695, "UGX": 3661.107766, "USDAED": 0.2722555632, "USDAFN": 0.0141929768, "USDALL": 0.0110095969, "USDAMD": 0.0025605859, "USDANG": 0.5578268736, "USDAOA": 0.0010949258, "USDARS": 0.0009376903, "USDAUD": 0.6288449332, "USDAZN": 0.5881572768, "USDBAM": 0.5547353178, "USDBBD": 0.49648538, "USDBDT": 0.0082505419, "USDBGN": 0.5531952558, "USDBHD": 2.652159898, "USDBIF": 0.0003382412, "USDBND": 0.7491498909, "USDBOB": 0.1450723142, "USDBRL": 0.1744262211, "USDBSD": 1.001012905, "USDBTC": 85978.6085221997, "USDBTN": 0.0116185299, "USDBWP": 0.0735262977, "USDBYN": 0.3063135199, "USDBZD": 0.49731871, "USDCAD": 0.6978280475, "USDCDF": 0.0003485687, "USDCHF": 1.1322932662, "USDCLF": 41.5717643911, "USDCLP": 0.0010768278, "USDCNY": 0.1379558776, "USDCOP": 0.0002402698, "USDCRC": 0.0020050609, "USDCVE": 0.0098246725, "USDCZK": 0.0433671431, "USDDJF": 0.0056293323, "USDDKK": 0.1452326152, "USDDOP": 0.015912124, "USDDZD": 0.0075148932, "USDEGP": 0.0198125243, "USDERN": 0.0666666667, "USDETB": 0.0076012852, "USDETH": 2003.1148435818, "USDEUR": 1.0835499967, "USDFJD": 0.4348818752, "USDFKP": 1.2917676937, "USDGBP": 1.292584993, "USDGEL": 0.3605553201, "USDGHS": 0.0646691026, "USDGIP": 1.291293673, "USDGMD": 0.0139885284, "USDGNF": 0.0001153868, "USDGTQ": 0.129810613, "USDGYD": 0.0047850067, "USDHKD": 0.1286500628, "USDHNL": 0.0390082039, "USDHRK": 0.1437876957, "USDHTG": 0.0075966593, "USDHUF": 0.0027226068, "USDIDR": 0.0000606122, "USDILS": 0.2678492486, "USDINR": 0.0116285287, "USDIQD": 0.0007638395, "USDIRR": 0.0000238079, "USDISK": 0.0075077517, "USDJMD": 0.0063899339, "USDJOD": 1.4104155402, "USDJPY": 0.0066826697, "USDKES": 0.0077161228, "USDKGS": 0.011519967, "USDKHR": 0.000250085, "USDKMF": 0.0022052637, "USDKRW": 0.0006834136, "USDKWD": 3.2454275813, "USDKYD": 1.2195023796, "USDKZT": 0.0019889191, "USDLAK": 0.0000461639, "USDLBP": 0.0000110896, "USDLKR": 0.0033743995, "USDLRD": 0.0050159671, "USDLSL": 0.0550670673, "USDLYD": 0.2081209416, "USDMAD": 0.1038395919, "USDMDL": 0.0556400465, "USDMGA": 0.0002144034, "USDMKD": 0.017654557, "USDMMK": 0.0004766208, "USDMNT": 0.0002874527, "USDMOP": 0.1249090952, "USDMRO": 0.0252838108, "USDMUR": 0.0220750276, "USDMVR": 0.0646888273, "USDMWK": 0.0005769533, "USDMXN": 0.0494690597, "USDMYR": 0.2261945504, "USDMZN": 0.0157292178, "USDNAD": 0.0550013152, "USDNGN": 0.0006494125, "USDNIO": 0.0273018659, "USDNOK": 0.0949647775, "USDNPR": 0.0072649767, "USDNZD": 0.5746049702, "USDOMR": 2.5980841727, "USDPAB": 0.9985022466, "USDPEN": 0.2758328497, "USDPHP": 0.0174401752, "USDPKR": 0.0035734233, "USDPLN": 0.2581711158, "USDPYG": 0.0001251812, "USDQAR": 0.2748509586, "USDRON": 0.2178346689, "USDRSD": 0.0092545477, "USDRUB": 0.0118339025, "USDRWF": 0.000703333, "USDSAR": 0.2666154054, "USDSCR": 0.0689158361, "USDSDG": 0.0016697138, "USDSEK": 0.0988573328, "USDSGD": 0.7490555346, "USDSLL": 0.0000458319, "USDSOS": 0.0017520129, "USDSRD": 0.0274915937, "USDSTN": 0.0438890847, "USDSVC": 0.1144219352, "USDSZL": 0.0550754597, "USDTHB": 0.0295679706, "USDTJS": 0.0916500608, "USDTMT": 0.2859161016, "USDTND": 0.3237173106, "USDTOP": 0.4154015957, "USDTRY": 0.0263143785, "USDTTD": 0.1472359072, "USDTWD": 0.0302912241, "USDTZS": 0.0003795785, "USDUAH": 0.0240682173, "USDUGX": 0.0002731414, "USDUYU": 0.0236787556, "USDUZS": 0.0000773372, "USDVES": 0.0147123262, "USDVND": 0.0000390816, "USDVUV": 0.0081531403, "USDXAF": 0.0016552742, "USDXAG": 33.067197068, "USDXAU": 3025.5025662313, "USDXCD": 0.3703625516, "USDXOF": 0.0016552742, "USDXPD": 965.6413229595, "USDXPF": 0.0091016454, "USDXPT": 985.4121555319, "USDXRP": 2.4291, "USDYER": 0.0040620244, "USDZAR": 0.0549420437, "USDZMK": 0.0001110963, "USDZMW": 0.0346256821, "UYU": 42.231949, "UZS": 12930.38012, "VES": 67.9702165, "VND": 25587.4703135, "VUV": 122.652127, "XAF": 604.129519, "XAG": 0.0302414504, "XAU": 0.0003305236, "XCD": 2.700057, "XOF": 604.129519, "XPD": 0.0010355812, "XPF": 109.8702445, "XPT": 0.0010148038, "XRP": 0.411675106, "YER": 246.1826675, "ZAR": 18.2009975, "ZMK": 9001.198421, "ZMW": 28.8802975 } ; // Global variable to store fetched rates
+        let CachedSymbol = { "AED": "UAE Dirham", "AFN": "Afghan Afghani", "ALL": "Albanian Lek", "ALU": "Aluminum", "AMD": "Armenian Dram", "ANG": "Netherlands Antillean Guilder", "AOA": "Angolan Kwanza", "ARS": "Argentine Peso", "AUD": "Australian Dollar", "AZN": "Azerbaijan Manat", "BAM": "Bosnia And Herzegovina Convertible Mark", "BBD": "Barbadian Dollar", "BDT": "Bangladeshi Taka", "BGN": "Bulgarian Lev", "BHD": "Bahraini Dinar", "BIF": "Burundi Franc", "BIH": "Bosnia-Herzegovina Convertible Mark", "BND": "Brunei Dollar", "BOB": "Bolivian Boliviano", "BRL": "Brazilian Real", "BSD": "Bahamian Dollar", "BTC": "Bitcoin", "BTN": "Bhutanese Ngultrum", "BYN": "Belarusian Ruble", "BZD": "Belize Dollar", "CAD": "Canadian Dollar", "CDF": "Congolese Franc", "CHF": "Swiss Franc", "CLF": "Chilean Unit Of Account", "CLP": "Chilean Peso", "CNY": "Chinese Yuan Renminbi", "COP": "Colombian Peso", "CRC": "Costa Rican Colon", "CVE": "Cape Verdean Escudo", "CZK": "Czech Koruna", "DJF": "Djiboutian Franc", "DKK": "Danish Krone", "DOP": "Dominican Peso", "DZD": "Algerian Dinar", "EGP": "Egyptian Pound", "ERN": "Eritrean Nakfa", "ETB": "Ethiopian Birr", "ETH": "Ethereum", "EUR": "European Euro", "FJD": "Fijian Dollar", "FKP": "Falkland Islands Pound", "GBP": "Pound Sterling", "GEL": "Georgian Lari", "GHS": "Ghanaian Cedi", "GIP": "Gibraltar Pound", "GMD": "Gambian Dalasi", "GNF": "Guinean Franc", "GTQ": "Guatemalan Quetzal", "GYD": "Guyanese Dollar", "HKD": "Hong Kong Dollar", "HNL": "Honduran Lempira", "HRK": "Croatian Kuna", "HTG": "Haitian Gourde", "HUF": "Hungarian Forint", "IDR": "Indonesian Rupiah", "ILS": "Israeli New Shekel", "INR": "Indian Rupee", "IQD": "Iraqi Dinar", "IRON": "Iron", "IRR": "Iranian Rial", "ISK": "Icelandic Krona", "JMD": "Jamaican Dollar", "JOD": "Jordanian Dinar", "JPY": "Japanese Yen", "KES": "Kenyan Shilling", "KGS": "Kyrgyzstani Som", "KHR": "Cambodian Riel", "KMF": "Comorian Franc", "KRW": "South Korean Won", "KWD": "Kuwaiti Dinar", "KYD": "Cayman Islands Dollar", "KZT": "Kazakhstani Tenge", "LAK": "Lao Kip", "LBMA-XAG": "LBMA Silver", "LBMA-XAU-AM": "LBMA Gold AM", "LBMA-XAU-PM": "LBMA Gold PM", "LBMA-XPD-AM": "LBMA Palladium AM", "LBMA-XPD-PM": "LBMA Palladium PM", "LBMA-XPT-AM": "LBMA Platinum AM", "LBMA-XPT-PM": "LBMA Platinum PM", "LBP": "Lebanese Pound", "LKR": "Sri Lankan Rupee", "LRD": "Liberian Dollar", "LSL": "Lesotho Loti", "LYD": "Libyan Dinar", "MAD": "Moroccan Dirham", "MDL": "Moldovan Leu", "MGA": "Malagasy Ariary", "MKD": "Macedonian Denar", "MMK": "Myanmar Kyat", "MNT": "Mongolian Tugrik", "MOP": "Macanese Pataca", "MRO": "Mauritanian Ouguiya", "MUR": "Mauritian Rupee", "MVR": "Maldivian Rufiyaa", "MWK": "Malawian Kwacha", "MXN": "Mexican Peso", "MYR": "Malaysian Ringgit", "MZN": "Mozambican Metical", "NAD": "Namibian Dollar", "NGN": "Nigerian Naira", "NI": "Nickel", "NIO": "Nicaraguan Cordoba", "NOK": "Norwegian Krone", "NPR": "Nepalese Rupee", "NZD": "New Zealand Dollar", "OMR": "Omani Rial", "PAB": "Panamanian Balboa", "PEN": "Peruvian Sol", "PHP": "Philippine Peso", "PKR": "Pakistani Rupee", "PLN": "Polish Zloty", "PYG": "Paraguayan Guarani", "QAR": "Qatari Riyal", "RON": "Romanian Leu", "RSD": "Serbian Dinar", "RUB": "Russian Ruble", "RWF": "Rwandan Franc", "SAR": "Saudi Arabian Riyal", "SCR": "Seychellois Rupee", "SDG": "Sudanese Pound", "SEK": "Swedish Krona", "SGD": "Singapore Dollar", "SHP": "Saint Helena Pound", "SLL": "Sierra Leonean Leone", "SOS": "Somali Shilling", "SRD": "Surinamese Dollar", "STN": "Sao Tome And Principe Dobra", "SVC": "Salvadoran Colón", "SZL": "Swazi Lilangeni", "THB": "Thai Baht", "TJS": "Tajikistani Somoni", "TMT": "Turkmen Manat", "TND": "Tunisian Dinar", "TOP": "Tongan Pa†anga", "TRY": "Turkish Lira", "TTD": "Trinidad And Tobago Dollar", "TWD": "New Taiwan Dollar", "TZS": "Tanzanian Shilling", "UAH": "Ukrainian Hryvnia", "UGX": "Ugandan Shilling", "USD": "United States Dollar", "UYU": "Uruguayan Peso", "UZS": "Uzbekistani Som", "VES": "Venezuelan Bolivar", "VND": "Vietnamese Dong", "VUV": "Vanuatu Vatu", "WST": "Samoan Tala", "XAF": "Central African CFA Franc", "XAG": "Silver", "XAG-AHME": "Ahmedabad Silver", "XAG-ASK": "Silver Ask", "XAG-BANG": "Bangalore Silver", "XAG-BID": "Silver Bid", "XAG-CHAN": "Chandigarh Silver", "XAG-CHEN": "Chennai Silver", "XAG-COIM": "Coimbatore Silver", "XAG-HYDE": "Hyderabad Silver", "XAG-JAIP": "Jaipur Silver", "XAG-KOLK": "Kolkata Silver", "XAG-LUCK": "Lucknow Silver", "XAG-MADU": "Madurai Silver", "XAG-MANG": "Mangalore Silver", "XAG-MUMB": "Mumbai Silver", "XAG-MYSO": "Mysore Silver", "XAG-NAGP": "Nagpur Silver", "XAG-PATN": "Patna Silver", "XAG-PUNE": "Pune Silver", "XAG-SALE": "Salem Silver", "XAG-VIJA": "Vijayawada Silver", "XAU": "Gold", "XAU-AHME": "Ahmedabad Gold", "XAU-ASK": "Gold Ask", "XAU-BANG": "Bangalore Gold", "XAU-BHOP": "Bhopal Gold", "XAU-BID": "Gold Bid", "XAU-CHAN": "Chandigarh Gold", "XAU-CHEN": "Chennai Gold", "XAU-COIM": "Coimbatore Gold", "XAU-DEHR": "Dehradun Gold", "XAU-FARI": "Faridabad Gold", "XAU-GURG": "Gurgaon Gold", "XAU-GUWA": "Guwahati Gold", "XAU-HYDE": "Hyderabad Gold", "XAU-INDO": "Indore Gold", "XAU-JAIP": "Jaipur Gold", "XAU-KANP": "Kanpur Gold", "XAU-KOCH": "Kochi Gold", "XAU-KOLH": "Kolhapur Gold", "XAU-KOLK": "Kolkata Gold", "XAU-LUCK": "Lucknow Gold", "XAU-LUDH": "Ludhiana Gold", "XAU-MADU": "Madurai Gold", "XAU-MALA": "Malappuram Gold", "XAU-MANG": "Mangalore Gold", "XAU-MEER": "Meerut Gold", "XAU-MUMB": "Mumbai Gold", "XAU-MYSO": "Mysore Gold", "XAU-NAGP": "Nagpur Gold", "XAU-NOID": "Noida Gold", "XAU-PATN": "Patna Gold", "XAU-POND": "Pondicherry Gold", "XAU-PUNE": "Pune Gold", "XAU-RAIP": "Raipur Gold", "XAU-SALE": "Salem Gold", "XAU-VIJA": "Vijayawada Gold", "XAU-VISA": "Visakhapatnam Gold", "XCD": "East Caribbean Dollar", "XCO": "Cobalt", "XCU": "Copper", "XGA": "Gallium", "XIN": "Indium", "XLI": "Lithium", "XMO": "Molybdenum", "XND": "Neodymium", "XOF": "West African CFA Franc", "XPB": "Lead", "XPD": "Palladium", "XPD-ASK": "Palladium Ask", "XPD-BID": "Palladium Bid", "XPF": "CFP Franc", "XPT": "Platinum", "XPT-ASK": "Platinum Ask", "XPT-BID": "Platinum Bid", "XRH": "Rhodium", "XRP": "Ripple", "XSN": "Tin", "XTE": "Tellurium", "XU": "Uranium", "YER": "Yemeni Rial", "ZAR": "South African Rand", "ZMK": "Zambian Kwacha (pre-2013)", "ZMW": "Zambian Kwacha", "ZNC": "Zinc" }; // Global variable to store fetched symbols
+
+        async function fetchPrice(name) {
+            try {
+                if (typeof name !== 'string') {
+                    throw new ReferenceError('The name parameter must be a string.');
+                }
+
+                // Find the key in CachedSymbol where the value matches the provided name
+                const symbolKey =  "USD" + Object.keys(CachedSymbol).find(key => CachedSymbol[key].toLowerCase() === name.toLowerCase());
+                return symbolKey && cachedRates[symbolKey] ? cachedRates[symbolKey] : null; // Return the price if found, otherwise null
+            } catch (error) {
+                console.error("Error fetching price:", error);
+                return null; // Return null if the operation fails
+            }
+        }
+
         let numberslot = 1;
 
         function renderPeriodicTable() {
@@ -237,18 +273,23 @@
 
             for (let y = 0; y < totalRows; y++) {
                 for (let x = 0; x < totalCols; x++) {
-                    
-                    const element = elements.find(el => el.pos_in_table.x == x+1 && el.pos_in_table.y == y+1);
+
+                    const element = elements.find(el => el.pos_in_table.x == x + 1 && el.pos_in_table.y == y + 1);
 
                     const cell = document.createElement('div');
                     cell.className = 'periodic-element';
                     if (element) {
-                        cell.textContent = `${element.symbol_}\n[${element.pos_in_table.x},${element.pos_in_table.y}]`;
+                        cell.textContent = `${element.symbol_}`;
                         cell.classList.add('selected');
+                        const br = document.createElement('br');
+                        cell.appendChild(br);
+                        const pos = document.createElement('p');
+                        pos.textContent = `[${element.pos_in_table.x},${element.pos_in_table.y}]`;
+
+                        cell.appendChild(pos);
                     }
-                    else
-                    {
-                        cell.textContent = `${x+1},${y+1}`;
+                    else {
+                        cell.textContent = `${x + 1},${y + 1}`;
                     }
 
                     tableContainer.appendChild(cell);

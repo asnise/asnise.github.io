@@ -42,7 +42,8 @@
                 description: data.description || '',
                 category: data.category || 'Miscellaneous',
                 stack: data.stack || 1,
-                stackCount: data.stackCount || 1
+                stackCount: data.stackCount || 1,
+                crafting_resources: data.crafting_resources || [] // Add crafting_resources
             };
 
             objects.push(objData);
@@ -80,6 +81,19 @@
                     <input type="number" value="${obj.stack}" onchange="updateObject(${index}, 'stack', this.value)"><br>
                     <label>Stack Count:</label>
                     <input type="number" value="${obj.stackCount}" onchange="updateObject(${index}, 'stackCount', this.value)"><br>
+                    <label>Crafting Resources:</label>
+                    <div id="crafting-resources-${index}">
+                        ${obj.crafting_resources.map((res, resIndex) => `
+                            <div>
+                                <label>Atom Number:</label>
+                                <input type="number" value="${res.AtomNumber}" onchange="updateCraftingResource(${index}, ${resIndex}, 'AtomNumber', this.value)">
+                                <label>Stack Count:</label>
+                                <input type="number" value="${res.StackCount}" onchange="updateCraftingResource(${index}, ${resIndex}, 'StackCount', this.value)">
+                                <button onclick="removeCraftingResource(${index}, ${resIndex})">Remove</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button onclick="addCraftingResource(${index})">Add Crafting Resource</button>
                     <button onclick="removeObject(${index})">Remove</button>
                 `;
                 form.appendChild(objectDiv);
@@ -125,6 +139,20 @@
                 }
             };
             reader.readAsText(file);
+        }
+
+        function addCraftingResource(index) {
+            objects[index].crafting_resources.push({ AtomNumber: 0, StackCount: 0 });
+            renderObjects();
+        }
+
+        function updateCraftingResource(objIndex, resIndex, key, value) {
+            objects[objIndex].crafting_resources[resIndex][key] = parseInt(value, 10);
+        }
+
+        function removeCraftingResource(objIndex, resIndex) {
+            objects[objIndex].crafting_resources.splice(resIndex, 1);
+            renderObjects();
         }
     </script>
 
