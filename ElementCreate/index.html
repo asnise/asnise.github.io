@@ -118,7 +118,7 @@
                 elementState_: data.elementState_ || 'Solid',
                 atom_number: data.atom_number || 0,
                 atom_mass: data.atom_mass || 0,
-                wight: data.wight || 0,
+                weight: data.weight || 0,
                 photron_: data.photron_ || 0,
                 electron_: data.electron_ || 0,
                 pos_in_table: data.pos_in_table || { x: 0, y: 0 }, // Default to {x: 0, y: 0}
@@ -162,7 +162,7 @@
             <label>Atomic Mass:</label>
             <input type="number" step="0.01" value="${el.atom_mass}" onchange="updateObject(${index}, 'atom_mass', this.value)"><br>
             <label>Weight:</label>
-            <input type="number" step="0.01" value="${el.wight}" onchange="updateObject(${index}, 'wight', this.value)"><br>
+            <input type="number" step="0.01" value="${el.weight}" onchange="updateObject(${index}, 'weight', this.value)"><br>
             <label>Photron:</label>
             <input type="number" value="${el.photron_}" onchange="updateObject(${index}, 'photron_', this.value)"><br>
             <label>Electron:</label>
