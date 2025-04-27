@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchantment JSON Creator</title>
+    <style>
+        #scrollableContainer {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            max-width: 800px;
+        }
+
+        .enchantment {
+            border: 1px solid #000;
+            padding: 10px;
+            margin: 10px;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enchantment JSON Creator</h1>
+
+    <button type="button" onclick="addEnchantment()">Add Enchantment</button>
+    <button type="button" onclick="generateJSON()">Generate JSON</button>
+    <button type="button" onclick="triggerImport()">Import JSON</button>
+    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importJSON(event)">
+    <div id="scrollableContainer">
+        <form id="enchantmentForm">
+            <div id="enchantmentsContainer"></div>
+        </form>
+    </div>
+
+    <!-- Hidden template for enchantment -->
+    <div id="enchantmentTemplate" class="enchantment" style="display: none;">
+        <label for="name">Enchantment Name:</label>
+        <input type="text" class="name" required><br><br>
+
+        <label for="description">Description:</label>
+        <input type="text" class="description" required><br><br>
+
+        <label for="level">Level:</label>
+        <input type="number" class="level" min="1" value="1" required><br><br> <!-- Default value set to 1 -->
+
+        <label for="maxLevel">Max Level:</label>
+        <input type="number" class="maxLevel" min="1" value="10" required><br><br> <!-- Default value set to 10 -->
+
+        <label for="material">Material:</label>
+        <div class="material-container">
+            <div class="material-entry">
+                <label>atom_number:</label>
+                <input type="number" class="material-key" min="0" required>
+                <label>count:</label>
+                <input type="number" class="material-value" min="0" required>
+            </div>
+        </div>
+        <button type="button" class="add-material" onclick="addMaterial(this)">Add Material</button><br><br>
+
+        <label for="effectType">Effect Type:</label>
+        <select class="effectType" required>
+            <option value="DamageOverTime">DamageOverTime</option>
+            <option value="Explosion">Explosion</option>
+            <option value="Sharpness">Sharpness</option>
+        </select><br><br>
+
+        <label for="damage">Damage:</label>
+        <input type="number" class="damage" min="0" value="1" required><br><br> <!-- Default value set to 1 -->
+    </div>
+
+    <script>
+        function addEnchantment() {
+            const container = document.getElementById('enchantmentsContainer');
+            const template = document.getElementById('enchantmentTemplate');
+            const enchantmentTemplate = template.cloneNode(true);
+            enchantmentTemplate.style.display = ''; // Make it visible
+            enchantmentTemplate.id = ''; // Remove the ID to avoid duplicates
+            container.appendChild(enchantmentTemplate);
+        }
+
+        function addMaterial(button) {
+            const materialContainer = button.previousElementSibling;
+            const materialEntry = document.createElement('div');
+            materialEntry.classList.add('material-entry');
+            materialEntry.innerHTML = `
+                <label>atom_number:</label>
+                <input type="number" class="material-key" min="0" required>
+                <label>count:</label>
+                <input type="number" class="material-value" min="0" required>
+            `;
+            materialContainer.appendChild(materialEntry);
+        }
+
+        function generateJSON() {
+            const enchantments = {};
+            const enchantmentElements = document.querySelectorAll('.enchantment');
+
+            enchantmentElements.forEach((element, index) => {
+                const name = element.querySelector('.name').value;
+                const description = element.querySelector('.description').value;
+                const level = parseInt(element.querySelector('.level').value);
+                const maxLevel = parseInt(element.querySelector('.maxLevel').value);
+
+                const materialEntries = element.querySelectorAll('.material-entry');
+                const material = {};
+                materialEntries.forEach(entry => {
+                    const key = parseInt(entry.querySelector('.material-key').value);
+                    const value = parseInt(entry.querySelector('.material-value').value);
+                    material[key] = value;
+                });
+
+                const effectType = element.querySelector('.effectType').value;
+                const damage = parseInt(element.querySelector('.damage').value);
+
+                // Only add valid enchantments (name is not empty or null)
+                if (name && name.trim() !== "") {
+                    enchantments[index] = {
+                        "name": name,
+                        "description": description,
+                        "level": level,
+                        "maxLevel": maxLevel,
+                        "material": material,
+                        "effects": {
+                            "effectType": effectType,
+                            "damage": damage
+                        }
+                    };
+                }
+            });
+
+            // Reindex the enchantments
+            const reindexedEnchantments = {};
+            let newIndex = 0;
+            Object.values(enchantments).forEach(enchantment => {
+                reindexedEnchantments[newIndex] = enchantment;
+                newIndex++;
+            });
+
+            const jsonString = JSON.stringify(reindexedEnchantments, null, 4);
+            downloadJSON(jsonString, 'enchantments.json');
+        }
+
+        function downloadJSON(content, fileName) {
+            const blob = new Blob([content], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = fileName;
+            a.click();
+        }
+
+        function triggerImport() {
+            document.getElementById('importFile').click();
+        }
+
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const enchantments = JSON.parse(content);
+                populateForm(enchantments);
+            };
+            reader.readAsText(file);
+        }
+
+        function populateForm(enchantments) {
+            const container = document.getElementById('enchantmentsContainer');
+            container.innerHTML = ''; // Clear existing enchantments
+
+            Object.values(enchantments).forEach(enchantment => {
+                const template = document.getElementById('enchantmentTemplate');
+                const enchantmentTemplate = template.cloneNode(true);
+                enchantmentTemplate.style.display = ''; // Make it visible
+                enchantmentTemplate.id = ''; // Remove the ID to avoid duplicates
+
+                enchantmentTemplate.querySelector('.name').value = enchantment.name;
+                enchantmentTemplate.querySelector('.description').value = enchantment.description;
+                enchantmentTemplate.querySelector('.level').value = enchantment.level;
+                enchantmentTemplate.querySelector('.maxLevel').value = enchantment.maxLevel;
+
+                const materialContainer = enchantmentTemplate.querySelector('.material-container');
+                materialContainer.innerHTML = ''; // Clear existing materials
+                Object.entries(enchantment.material).forEach(([key, value]) => {
+                    const materialEntry = document.createElement('div');
+                    materialEntry.classList.add('material-entry');
+                    materialEntry.innerHTML = `
+                        <label>atom_number:</label>
+                        <input type="number" class="material-key" value="${key}" min="0" required>
+                        <label>count:</label>
+                        <input type="number" class="material-value" value="${value}" min="0" required>
+                    `;
+                    materialContainer.appendChild(materialEntry);
+                });
+
+                enchantmentTemplate.querySelector('.effectType').value = enchantment.effects.effectType;
+                enchantmentTemplate.querySelector('.damage').value = enchantment.effects.damage;
+
+                container.appendChild(enchantmentTemplate);
+            });
+        }
+    </script>
+</body>
+</html>
