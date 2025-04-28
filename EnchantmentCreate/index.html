@@ -120,12 +120,19 @@
                 const maxLevel = parseInt(element.querySelector('.maxLevel').value);
 
                 const materialEntries = element.querySelectorAll('.material-entry');
-                const material = {};
+                const materialAtom = {};
+                const materialItem = {};
+
                 materialEntries.forEach(entry => {
                     const type = entry.querySelector('.material-type').value;
                     const key = parseInt(entry.querySelector('.material-key').value);
                     const value = parseInt(entry.querySelector('.material-value').value);
-                    material[`${type}_${key}`] = value;
+
+                    if (type === 'atom_number') {
+                        materialAtom[key] = value;
+                    } else if (type === 'item_id') {
+                        materialItem[key] = value;
+                    }
                 });
 
                 const effectType = element.querySelector('.effectType').value;
@@ -137,7 +144,8 @@
                         "description": description,
                         "level": level,
                         "maxLevel": maxLevel,
-                        "material": material,
+                        "material_atom": materialAtom,
+                        "material_item": materialItem,
                         "effects": {
                             "effectType": effectType,
                             "damage": damage
@@ -192,30 +200,53 @@
                 enchantmentTemplate.style.display = ''; // Make it visible
                 enchantmentTemplate.id = ''; // Remove the ID to avoid duplicates
 
+                // Populate enchantment fields
                 enchantmentTemplate.querySelector('.name').value = enchantment.name;
                 enchantmentTemplate.querySelector('.description').value = enchantment.description;
                 enchantmentTemplate.querySelector('.level').value = enchantment.level;
                 enchantmentTemplate.querySelector('.maxLevel').value = enchantment.maxLevel;
 
+                // Populate materials
                 const materialContainer = enchantmentTemplate.querySelector('.material-container');
                 materialContainer.innerHTML = ''; // Clear existing materials
-                Object.entries(enchantment.material).forEach(([key, value]) => {
+
+                // Populate material_atom
+                Object.entries(enchantment.material_atom || {}).forEach(([key, value]) => {
                     const materialEntry = document.createElement('div');
                     materialEntry.classList.add('material-entry');
                     materialEntry.innerHTML = `
                         <label>Type:</label>
                         <select class="material-type">
-                            <option value="atom_number" ${key.startsWith('atom_number') ? 'selected' : ''}>atom_number</option>
-                            <option value="item_id" ${key.startsWith('item_id') ? 'selected' : ''}>item_id</option>
+                            <option value="atom_number" selected>atom_number</option>
+                            <option value="item_id">item_id</option>
                         </select>
                         <label>Key:</label>
-                        <input type="number" class="material-key" value="${key.split('_')[1]}" min="0" required>
+                        <input type="number" class="material-key" value="${key}" min="0" required>
                         <label>Count:</label>
                         <input type="number" class="material-value" value="${value}" min="0" required>
                     `;
                     materialContainer.appendChild(materialEntry);
                 });
 
+                // Populate material_item
+                Object.entries(enchantment.material_item || {}).forEach(([key, value]) => {
+                    const materialEntry = document.createElement('div');
+                    materialEntry.classList.add('material-entry');
+                    materialEntry.innerHTML = `
+                        <label>Type:</label>
+                        <select class="material-type">
+                            <option value="atom_number">atom_number</option>
+                            <option value="item_id" selected>item_id</option>
+                        </select>
+                        <label>Key:</label>
+                        <input type="number" class="material-key" value="${key}" min="0" required>
+                        <label>Count:</label>
+                        <input type="number" class="material-value" value="${value}" min="0" required>
+                    `;
+                    materialContainer.appendChild(materialEntry);
+                });
+
+                // Populate effects
                 enchantmentTemplate.querySelector('.effectType').value = enchantment.effects.effectType;
                 enchantmentTemplate.querySelector('.damage').value = enchantment.effects.damage;
 
