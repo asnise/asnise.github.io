@@ -57,9 +57,14 @@
         <label for="material">Material:</label>
         <div class="material-container">
             <div class="material-entry">
-                <label>atom_number:</label>
+                <label>Type:</label>
+                <select class="material-type">
+                    <option value="atom_number">atom_number</option>
+                    <option value="item_id">item_id</option>
+                </select>
+                <label>Key:</label>
                 <input type="number" class="material-key" min="0" required>
-                <label>count:</label>
+                <label>Count:</label>
                 <input type="number" class="material-value" min="0" required>
             </div>
         </div>
@@ -91,9 +96,14 @@
             const materialEntry = document.createElement('div');
             materialEntry.classList.add('material-entry');
             materialEntry.innerHTML = `
-                <label>atom_number:</label>
+                <label>Type:</label>
+                <select class="material-type">
+                    <option value="atom_number">atom_number</option>
+                    <option value="item_id">item_id</option>
+                </select>
+                <label>Key:</label>
                 <input type="number" class="material-key" min="0" required>
-                <label>count:</label>
+                <label>Count:</label>
                 <input type="number" class="material-value" min="0" required>
             `;
             materialContainer.appendChild(materialEntry);
@@ -112,15 +122,15 @@
                 const materialEntries = element.querySelectorAll('.material-entry');
                 const material = {};
                 materialEntries.forEach(entry => {
+                    const type = entry.querySelector('.material-type').value;
                     const key = parseInt(entry.querySelector('.material-key').value);
                     const value = parseInt(entry.querySelector('.material-value').value);
-                    material[key] = value;
+                    material[`${type}_${key}`] = value;
                 });
 
                 const effectType = element.querySelector('.effectType').value;
                 const damage = parseInt(element.querySelector('.damage').value);
 
-                // Only add valid enchantments (name is not empty or null)
                 if (name && name.trim() !== "") {
                     enchantments[index] = {
                         "name": name,
@@ -136,7 +146,6 @@
                 }
             });
 
-            // Reindex the enchantments
             const reindexedEnchantments = {};
             let newIndex = 0;
             Object.values(enchantments).forEach(enchantment => {
@@ -194,9 +203,14 @@
                     const materialEntry = document.createElement('div');
                     materialEntry.classList.add('material-entry');
                     materialEntry.innerHTML = `
-                        <label>atom_number:</label>
-                        <input type="number" class="material-key" value="${key}" min="0" required>
-                        <label>count:</label>
+                        <label>Type:</label>
+                        <select class="material-type">
+                            <option value="atom_number" ${key.startsWith('atom_number') ? 'selected' : ''}>atom_number</option>
+                            <option value="item_id" ${key.startsWith('item_id') ? 'selected' : ''}>item_id</option>
+                        </select>
+                        <label>Key:</label>
+                        <input type="number" class="material-key" value="${key.split('_')[1]}" min="0" required>
+                        <label>Count:</label>
                         <input type="number" class="material-value" value="${value}" min="0" required>
                     `;
                     materialContainer.appendChild(materialEntry);
