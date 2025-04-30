@@ -110,7 +110,7 @@
         }
 
         function generateJSON() {
-            const enchantments = {};
+            const enchantments = [];
             const enchantmentElements = document.querySelectorAll('.enchantment');
 
             enchantmentElements.forEach((element, index) => {
@@ -139,29 +139,23 @@
                 const damage = parseInt(element.querySelector('.damage').value);
 
                 if (name && name.trim() !== "") {
-                    enchantments[index] = {
-                        "name": name,
-                        "description": description,
-                        "level": level,
-                        "maxLevel": maxLevel,
-                        "material_atom": materialAtom,
-                        "material_item": materialItem,
-                        "effects": {
-                            "effectType": effectType,
-                            "damage": damage
+                    enchantments.push({
+                        id: index,
+                        name: name,
+                        description: description,
+                        level: level,
+                        maxLevel: maxLevel,
+                        material_atom: materialAtom,
+                        material_item: materialItem,
+                        effects: {
+                            effectType: effectType,
+                            damage: damage
                         }
-                    };
+                    });
                 }
             });
 
-            const reindexedEnchantments = {};
-            let newIndex = 0;
-            Object.values(enchantments).forEach(enchantment => {
-                reindexedEnchantments[newIndex] = enchantment;
-                newIndex++;
-            });
-
-            const jsonString = JSON.stringify(reindexedEnchantments, null, 4);
+            const jsonString = JSON.stringify(enchantments, null, 4);
             downloadJSON(jsonString, 'enchantments.json');
         }
 
