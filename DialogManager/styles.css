@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f8f9fa;
+}
+h1 {
+    font-size: 24px;
+}
+label, textarea, input, select, button {
+    display: block;
+    margin: 10px 0;
+    font-size: 16px;
+}
+.line-block {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.choice-block {
+    margin-left: 20px;
+}
+button {
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.section {
+    background: #e9ecef;
+    padding: 15px;
+    border-radius: 8px;
+}
+.preview {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 6px;
+}
+.preview-line {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.preview-choice button {
+    margin: 5px 0;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+.lines-container {
+    width: 100%;
+    height: 500px;
+    overflow: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+}
+.line-text {
+    width: 50%;
+    height: 200px;
+}
