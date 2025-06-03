@@ -13,7 +13,13 @@
       <button onclick="importJSON()">Import JSON</button>
     </div>
 
-    <div id="linesContainer" class="lines-container"></div>
+    <div class="main-container">
+        <div id="linesContainer" class="lines-container"></div>
+        <div class="preview">
+            <h3>Preview Dialog</h3>
+            <div id="previewDialog"></div>
+        </div>
+    </div>
 
     <button onclick="addLine()">+ Add Dialogue Line</button>
     <button onclick="saveJSON()">Save JSON</button>
@@ -21,16 +27,11 @@
     <hr>
     <h3>วิธีใช้งาน:</h3>
     <ul>
-      <li>ใช้เครื่องมือนี้เพื่อสร้างบทสนทนาสำหรับตัวละครหนึ่งตัว</li>
-      <li>แต่ละบรรทัดจะมีหมายเลข (index) และช่องกรอกข้อความ</li>
-      <li>สามารถเพิ่มตัวเลือก (choice) ได้สูงสุด 3 ตัวเลือกต่อบรรทัด โดยแต่ละตัวเลือกจะมีข้อความและหมายเลขบรรทัดถัดไป</li>
-      <li>นำเข้าไฟล์ JSON เพื่อแก้ไขข้อมูลเดิม หรือบันทึกไฟล์ใหม่ด้วยปุ่ม Save</li>
+        <li>ใช้เครื่องมือนี้เพื่อสร้างบทสนทนาสำหรับตัวละครหนึ่งตัว</li>
+        <li>แต่ละบรรทัดจะมีหมายเลข (index) และช่องกรอกข้อความ</li>
+        <li>สามารถเพิ่มตัวเลือก (choice) ได้สูงสุด 3 ตัวเลือกต่อบรรทัด โดยแต่ละตัวเลือกจะมีข้อความและหมายเลขบรรทัดถัดไป</li>
+        <li>นำเข้าไฟล์ JSON เพื่อแก้ไขข้อมูลเดิม หรือบันทึกไฟล์ใหม่ด้วยปุ่ม Save</li>
     </ul>
-
-    <div class="preview">
-        <h3>Preview Dialog</h3>
-        <div id="previewDialog"></div>
-    </div>
 
     <script src="main.js"></script>
 </body>
