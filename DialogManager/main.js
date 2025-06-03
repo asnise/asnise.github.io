@@ -13,6 +13,7 @@ function addLine(lineData = null) {
         <label>Line Index: ${lineData ? lineData.index : index}
           <input type="hidden" class="line-index" value="${lineData ? lineData.index : index}">
         </label>
+        <label>Character Name: <input type="text" class="character-name" value="${lineData ? lineData.characterName : ''}"></label>
         <label>Line Text: <textarea class="line-text">${lineData ? lineData.text.replaceAll("\\n", "\n") : ''}</textarea></label>
         <div class="choice-block"></div>
         <button onclick="addChoice(this)">+ Add Choice</button>
@@ -56,13 +57,14 @@ function addChoice(button, choiceData = null) {
 function saveJSON() {
     const linesJSON = Array.from(document.querySelectorAll('.line-block')).map(block => {
         const index = parseInt(block.querySelector('.line-index').value);
+        const characterName = block.querySelector('.character-name').value;
         const text = block.querySelector('.line-text').value.replaceAll("\n", "\\n");
         const choices = Array.from(block.querySelectorAll('.choice-block > div')).map((choiceDiv, i) => ({
             index: i,
             text: choiceDiv.querySelector('.choice-text').value,
             nextLineIndex: parseInt(choiceDiv.querySelector('.choice-next').value)
         }));
-        return { index, text, choices };
+        return { index, characterName, text, choices };
     });
 
     const output = JSON.stringify({ lines: linesJSON }, null, 2);
@@ -98,12 +100,13 @@ function previewLine(buttonOrIndex) {
     if (typeof buttonOrIndex !== 'number') {
         const block = buttonOrIndex.parentElement;
         const index = parseInt(block.querySelector('.line-index').value);
+        const characterName = block.querySelector('.character-name').value;
         const text = block.querySelector('.line-text').value;
         const choices = Array.from(block.querySelectorAll('.choice-block > div')).map(cDiv => ({
             text: cDiv.querySelector('.choice-text').value,
             nextLineIndex: parseInt(cDiv.querySelector('.choice-next').value)
         }));
-        previewCurrentLine = { index, text, choices };
+        previewCurrentLine = { index, characterName, text, choices };
     } else {
         const idx = buttonOrIndex;
         const lineDiv = lines.find(div => parseInt(div.querySelector('.line-index').value) === idx);
