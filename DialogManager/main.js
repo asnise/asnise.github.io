@@ -15,6 +15,7 @@ function addLine(lineData = null) {
         </label>
         <label>Character Name: <input type="text" class="character-name" value="${lineData ? lineData.characterName : ''}"></label>
         <label>Line Text: <textarea class="line-text">${lineData ? lineData.text.replaceAll("\\n", "\n") : ''}</textarea></label>
+        <label>Next To Line: <input type="text" class="next-to-line" value="${lineData ? lineData.NextToLine : ''}"></label>
         <div class="choice-block"></div>
         <button onclick="addChoice(this)">+ Add Choice</button>
         <button onclick="previewLine(this)">Preview This Line</button>
@@ -59,12 +60,13 @@ function saveJSON() {
         const index = parseInt(block.querySelector('.line-index').value);
         const characterName = block.querySelector('.character-name').value;
         const text = block.querySelector('.line-text').value.replaceAll("\n", "\\n");
+        const nextToLine = block.querySelector('.next-to-line').value;
         const choices = Array.from(block.querySelectorAll('.choice-block > div')).map((choiceDiv, i) => ({
             index: i,
             text: choiceDiv.querySelector('.choice-text').value,
             nextLineIndex: parseInt(choiceDiv.querySelector('.choice-next').value)
         }));
-        return { index, characterName, text, choices };
+        return { index, characterName, text, NextToLine: nextToLine, choices };
     });
 
     const output = JSON.stringify({ lines: linesJSON }, null, 2);
