@@ -104,11 +104,12 @@ function previewLine(buttonOrIndex) {
         const index = parseInt(block.querySelector('.line-index').value);
         const characterName = block.querySelector('.character-name').value;
         const text = block.querySelector('.line-text').value;
+        const nextToLine = block.querySelector('.next-to-line').value;
         const choices = Array.from(block.querySelectorAll('.choice-block > div')).map(cDiv => ({
             text: cDiv.querySelector('.choice-text').value,
             nextLineIndex: parseInt(cDiv.querySelector('.choice-next').value)
         }));
-        previewCurrentLine = { index, characterName, text, choices };
+        previewCurrentLine = { index, characterName, text, NextToLine: nextToLine, choices };
     } else {
         const idx = buttonOrIndex;
         const lineDiv = lines.find(div => parseInt(div.querySelector('.line-index').value) === idx);
@@ -116,12 +117,14 @@ function previewLine(buttonOrIndex) {
             alert('Line not found: ' + idx);
             return;
         }
+        const characterName = lineDiv.querySelector('.character-name').value;
         const text = lineDiv.querySelector('.line-text').value;
+        const nextToLine = lineDiv.querySelector('.next-to-line').value;
         const choices = Array.from(lineDiv.querySelectorAll('.choice-block > div')).map(cDiv => ({
             text: cDiv.querySelector('.choice-text').value,
             nextLineIndex: parseInt(cDiv.querySelector('.choice-next').value)
         }));
-        previewCurrentLine = { index: idx, text, choices };
+        previewCurrentLine = { index: idx, characterName, text, NextToLine: nextToLine, choices };
     }
 
     previewTextLines = previewCurrentLine.text.split("\n").map(l => l.trim());
@@ -133,6 +136,13 @@ function showPreviewPage() {
     const preview = document.getElementById("previewDialog");
     preview.innerHTML = '';
 
+    // Display Character Name as a header if provided
+    if (previewCurrentLine.characterName) {
+        const header = document.createElement("h4");
+        header.textContent = previewCurrentLine.characterName;
+        preview.appendChild(header);
+    }
+
     const start = previewPage * 3;
     const end = Math.min(start + 3, previewTextLines.length);
     for (let i = start; i < end; i++) {
@@ -142,19 +152,32 @@ function showPreviewPage() {
         preview.appendChild(div);
     }
 
-    if (end === previewTextLines.length && previewCurrentLine.choices.length > 0) {
-        const choiceWrap = document.createElement("div");
-        choiceWrap.className = "preview-choice";
-        previewCurrentLine.choices.forEach(choice => {
-            const btn = document.createElement("button");
-            btn.innerText = choice.text;
-            btn.onclick = () => previewLine(choice.nextLineIndex);
-            choiceWrap.appendChild(btn);
-        });
-        preview.appendChild(choiceWrap);
+    // If more text pages exist, show Next button for paging.
+    if (end < previewTextLines.length) {
+        addOrUpdateNextButton(true);
+    } else {
+        // If all text is displayed and choices exist, show choice buttons.
+        if (previewCurrentLine.choices.length > 0) {
+            const choiceWrap = document.createElement("div");
+            choiceWrap.className = "preview-choice";
+            previewCurrentLine.choices.forEach(choice => {
+                const btn = document.createElement("button");
+                btn.innerText = choice.text;
+                btn.onclick = () => previewLine(choice.nextLineIndex);
+                choiceWrap.appendChild(btn);
+            });
+            preview.appendChild(choiceWrap);
+        }
+        // If no choices but a valid NextToLine is specified, add a Next Dialog button.
+        else if (previewCurrentLine.NextToLine && !isNaN(parseInt(previewCurrentLine.NextToLine))) {
+            const nextDialogBtn = document.createElement("button");
+            nextDialogBtn.textContent = "Next Dialog";
+            nextDialogBtn.style.marginTop = "10px";
+            nextDialogBtn.onclick = () => previewLine(parseInt(previewCurrentLine.NextToLine));
+            preview.appendChild(nextDialogBtn);
+        }
+        addOrUpdateNextButton(false);
     }
-
-    addOrUpdateNextButton(end < previewTextLines.length);
 }
 
 function addOrUpdateNextButton(hasNextPage) {
