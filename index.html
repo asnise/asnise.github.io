@@ -1,302 +1,81 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="th">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200&display=swap" rel="stylesheet">
-    <link rel="icon" href="logo.png" type="image/icon type">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Portfolio</title>
+    <link rel="icon" href="/images/stars.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-
 <body>
-
-    <div class="img_alert" id="img_alert">
-        <div class="notification_bg"></div>
-        <div class="notification">
-            <img id="imgpre" src="" width="500">
-            <br>
-            <a onclick="cansel_win('img_alert')" class="btn_b">กลับ</a>
-        </div>
+    <div id="loader">
+        <div class="spinner"></div>
     </div>
-
-
-    <div class="notification_alert" id="notification_alert">
-        <div class="notification_bg"></div>
-        <div class="notification">
-            <h1>บทความ</h1>
-            <p>
-                ไม่มีบทความดังกล่าว <br>(เนื่องด้วยนี้เป็นเว็บทดลอง)
-
-            </p>
-            <a onclick="cansel_win('notification_alert')" class="btn_b">กลับ</a>
-        </div>
-    </div>
-
-    <div class="contact_alert" id="contact_alert">
-        <div class="notification_bg"></div>
-        <div class="notification">
-            <h1>ติดต่อ</h1>
-            <p>
-                - 109/1 บ.ห้วยแสง ต.ภูปอ อ.เมือง จ.กาฬสินธ์<br>
-                - 76/10 บ.ด่านใต้ ต.เหล่าอ้อย อ.ร่องคำ จ.กาฬสินธ์<br>
-                Email : Mastere00@hotmail.com<br>
-                Tell : 080-2189-360<br>
-                Facebook : Nattaset Panlek
-            </p>
-            <a href="https://www.artstation.com/nattasetpanlek" target="_blank">
-                <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands-1/512/27_Artstation_logo_logos-512.png"
-                    width="35">
+    
+    <header class="banner">
+        <div class="banner-social-links">
+            <a href="https://www.facebook.com/Aerth00/" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook"></i>
             </a>
-            <br>
-            <a onclick="cansel_win('contact_alert')" class="btn_b">กลับ</a>
+            <a href="https://www.instagram.com/asnise_00/" target="_blank" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/@asnise" target="_blank" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://www.artstation.com/ax_nise" target="_blank" aria-label="ArtStation">
+                <i class="fab fa-artstation"></i>
+            </a>
+            <a href="https://github.com/asnise" target="_blank" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <div class="banner-content">
+            <h1>PORTFOLIO</h1>
+            <p>Game Developer | Visual & Digital Artist | Animator</p>
+            <p>Nattaset Panlek</p>
+        </div>
+    </header>
+
+    <nav id="portfolio-menu"></nav>
+
+    <main id="portfolio-gallery"></main>
+    
+    <footer>
+        <div class="social-links">
+            <a href="https://www.facebook.com/Aerth00/" target="_blank" aria-label="Facebook">
+            <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/asnise_00/" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/@asnise" target="_blank" aria-label="YouTube">
+            <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://www.artstation.com/ax_nise" target="_blank" aria-label="ArtStation">
+            <i class="fab fa-artstation"></i>
+            </a>
+            <a href="https://github.com/asnise" target="_blank" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <p>masteraerth00@outlook.com | © 2025 NATTASET PANLEK</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <div id="image-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button">×</button>
+            <div class="modal-image-container"></div>
         </div>
     </div>
-
-    <div class="skill_alert" id="skill_alert">
-        <div class="notification_bg">
-        </div>
-        <div class="notification">
-            <h1>ความสามารถ</h1>
-            <h4>
-                งานอดิเรก : วาดภาพ เขียนโปรแกรม ออกแบบเกม เขียนเว็บ <br>
-                วิชาที่ชอบและไม่ชอบ : ชอบหมวดเทคโนโลยี พวกคอมพิวเตอร์ โค้ด พวกที่ไม่ชอบคือหมวดวิทย์<br>
-            </h4>
-            <a onclick="cansel_win('skill_alert')" class="btn_b">กลับ</a>
-        </div>
-    </div>
-
-    <div class="topnav">
-        <a href="#skill" onclick="cansel_win('skill_alert')">Skill</a>
-
-        <a href="#contact" onclick="cansel_win('contact_alert')">Contact</a>
-        <a href="#Top" class="logo">
-            <img src="logo_banner.png" width=50>
-        </a>
-    </div>
-
-    <section class="banner">
-        <img src="Cover.png" class="fitBg">
-	    
-        <div class="content">
-            <h2>ASNISE ARTWORK</h2>
-            <p>เว็บรวมสะสมผลงาน</p>
-        </div>
-    </section>
-    <section class="about">
-
-		<div class="contentBx">
-			<h2 class="titlecontact">RoV Design Contest</h2>
-			<p class="text">
-				    เป็นผลงานจากการประกวด RoV Design Contest<br>
-			</p>
-            <div class="fadeIn" id="rovds">
-                <br>
-                คลิกรูปเพื่อดูภาพรวม
-                <br>
-                <br>
-                <h1 class="text">Veres ( Lam Pao ) 2020</h1>
-                <br>
-                <center>
-                    <div class="row">
-                        <div class="column">
-                            <a onclick="img_win('img_alert','images/Rovdsc/CG_posting.jpg')"><img src="images/Rovdsc/CG_posting.jpg"></a>
-                            <a onclick="img_win('img_alert','images/Rovdsc/skill_Preview.jpg')"><img src="images/Rovdsc/skill_Preview.jpg"></a>
     
-                        </div>
-                        <div class="column">
-                            <a onclick="img_win('img_alert','images/Rovdsc/Desing_page.jpg')"><img src="images/Rovdsc/Desing_page.jpg"></a>
-                        </div>
-                    </div>
-                </center>
-                <br>
-                <br>
-                <h1 class="text">Brigth ( Azura Ram ) 2021 : รางวัลชมเชย</h1>
-                <br>
-                <center>
-                    <div class="row">
-                        <div class="column">
-                            <a onclick="img_win('img_alert','images/Rovdsc/pre.jpg')"><img src="images/Rovdsc/pre.jpg"></a>
-                            <a onclick="img_win('img_alert','images/Rovdsc/desing.jpg')"><img src="images/Rovdsc/desing.jpg"></a>
-    
-                        </div>
-                        <div class="column">
-                            <a onclick="img_win('img_alert','images/Rovdsc/desing_altimate.jpg')"><img src="images/Rovdsc/desing_altimate.jpg"></a>
-                            <a onclick="img_win('img_alert','images/Rovdsc/skill.jpg')"><img src="images/Rovdsc/skill.jpg"></a>
-                        </div>
-                    </div>
-                </center>
-		<br>
-                <br>
-                <h1 class="text">Veraa ( Vira BlodyFlower ) 2022 : รางวัลชมเชย</h1>
-                <br>
-                <center>
-                    <div class="row">
-                        <div class="column">
-                            <a onclick="img_win('img_alert','https://cdn.discordapp.com/attachments/1002609831565328464/1011502028515717150/mayavee_pre.jpg')"><img src="https://cdn.discordapp.com/attachments/1002609831565328464/1011502028515717150/mayavee_pre.jpg"></a>
-                            <a onclick="img_win('img_alert','https://cdn.discordapp.com/attachments/1002609831565328464/1011502028108877905/mayavee_design.jpg')"><img src="https://cdn.discordapp.com/attachments/1002609831565328464/1011502028108877905/mayavee_design.jpg"></a>
-    
-                        </div>
-                        <div class="column">
-                            <a onclick="img_win('img_alert','https://cdn.discordapp.com/attachments/1002609831565328464/1011502028926746725/mayavee_asse_design.jpg')"><img src="https://cdn.discordapp.com/attachments/1002609831565328464/1011502028926746725/mayavee_asse_design.jpg"></a>
-                            <a onclick="img_win('img_alert','https://cdn.discordapp.com/attachments/1002609831565328464/1011502029287460906/mayavee_skill.jpg')"><img src="https://cdn.discordapp.com/attachments/1002609831565328464/1011502029287460906/mayavee_skill.jpg"></a>
-                        </div>
-                    </div>
-                </center>
-            </div>
-			<a onclick="slid_win('rovds','more')" class="btn" id="more">อ่านเพิ่ม</a>
-		</div>
-		<br>
-	</section>
-    <section class="about_r">
-        <h1>Artwork</h1>
-        <br>
-        <center>
-            <div class="row">
-                <div class="column">
-                    <img src="images/00.jpg">
-                    <img src="images/01.jpg">
-                    <img src="images/0s0.jpg">
-                    <img src="images/0casd3.jpg">
-                    <img src="images/0sd1.jpg">
-                    <img src="images/10.jpg">
-                    <img src="images/3.jpg">
-                    <img src="images/3264510.jpg">
-                    <img src="images/4.jpg">
-                    <img src="images/4524245.jpg">
-                    <img src="images/5.jpg">
-                    <img src="images/aasdaasd.jpg">
-                    <img src="images/Sewer.jpg">
-			<img src="images/Concecpt.png">
-                </div>
-                <div class="column">
-                    <img src="images/565161_CP.jpg">
-                    <img src="images/566asd.jpg">
-                    <img src="images/6.jpg">
-                    <img src="images/626.jpg">
-                    <img src="images/7.jpg">
-                    <img src="images/7a0a207486ec0a75b6c5812fed11788d.jpg">
-                    <img src="images/8.jpg">
-                    <img src="images/85665.jpg">
-                    <img src="images/9.jpg">
-                    <img src="images/91473796_2233463740294954_2271762890396532736_o.jpg">
-                    <img src="images/page.jpg">
-			<img src="images/PIKKABO.png">
-			
-                </div>
-                <div class="column">
-                    <img src="images/anim_life.jpg">
-                    <img src="images/asd5156sad.jpg">
-                    <img src="images/asdasd.jpg">
-                    <img src="images/character Design.jpg">
-                    <img src="images/dasdasd.jpg">
-                    <img src="images/dasdasdd.jpg">
-                    <img src="images/Glir_02.jpg">
-                    <img src="images/Illustration.jpg">
-                    <img src="images/Illustration11.jpg">
-                    <img src="images/Illustration6.jpg">
-                    <img src="images/main.jpg">
-                    <img src="images/narca2.jpg">
-			<img src="images/merxmas.png">
-			
-                </div>
-                <div class="column">
-                    <img src="images/Persona5.jpg">
-                    <img src="images/post.jpg">
-                    <img src="images/s.jpg">
-                    <img src="images/s1.jpg">
-                    <img src="images/s1_2.jpg">
-                    <img src="images/s2.jpg">
-                    <img src="images/s3.jpg">
-                    <img src="images/Sayramoon.jpg">
-                    <img src="images/Scene.jpg">
-                    <img src="images/Thai_studen.jpg">
-                    <img src="images/VTuber_edit.jpg">
-                    <img src="images/nsclo.jpg">
-                    <img src="images/index.jpg">
-			<img src="images/Illustration3.png">
-			<img src="https://media.discordapp.net/attachments/620789873997119509/1051552229418598500/dragonon.png">
-			
-                </div>
-            </div>
-        </center>
-    </section>
-    <section class="about">
-        <div class="contentBx">
-            <h1>Project GAME</h1>
-            <br>
-            <p>Adventures of Sompamit</p>
-            <center>
-                <div class="row">
-                    <div class="column">
-                        <img src="images/nsclo.jpg">
-                        <img src="images/sompamit/01.jpg">
-
-                    </div>
-                    <div class="column">
-                        <img src="images/sompamit/03.jpg">
-                        <img src="images/sompamit/02.jpg">
-                    </div>
-                    <div class="column">
-                        <img src="images/sompamit/04.jpg">
-                        <img src="images/sompamit/05.jpg">
-                    </div>
-                </div>
-            </center>
-            <br>
-            <br>
-            <p>Tell ME</p>
-            <center>
-                <div class="row">
-                    <div class="column">
-                        <img src="images/main.jpg">
-                        <img src="images/tellme/01.jpg">
-
-                    </div>
-                    <div class="column">
-                        <img src="images/tellme/03.jpg">
-                        <img src="images/tellme/02.jpg">
-                    </div>
-                    <div class="column">
-                        <img src="images/tellme/04.jpg">
-                    </div>
-                </div>
-            </center>
-        </div>
-    </section>
-
-    <section class="about">
-        <div class="contentBx">
-            <div id="visits"></div>
-            <br>
-            <br>
-            <a href="#top" class="btn">Top</a>
-        </div>
-    </section>
-    <section class="banner2">
-        <img src="end.png" class="fitBg">
-    </section>
-    <section class="footer">
-        <ul class="sci">
-            <li>
-                <a href="https://www.facebook.com/EarthNattasetPanlek/" target="_blank">
-                    <img
-                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9Ijk3Ljc1cHgiIGhlaWdodD0iOTcuNzVweCIgdmlld0JveD0iMCAwIDk3Ljc1IDk3Ljc1IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA5Ny43NSA5Ny43NTsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQoJPg0KPGc+DQoJPHBhdGggZD0iTTQ4Ljg3NSwwQzIxLjg4MiwwLDAsMjEuODgyLDAsNDguODc1UzIxLjg4Miw5Ny43NSw0OC44NzUsOTcuNzVTOTcuNzUsNzUuODY4LDk3Ljc1LDQ4Ljg3NVM3NS44NjgsMCw0OC44NzUsMHoNCgkJIE02Ny41MjEsMjQuODlsLTYuNzYsMC4wMDNjLTUuMzAxLDAtNi4zMjYsMi41MTktNi4zMjYsNi4yMTV2OC4xNWgxMi42NDFMNjcuMDcsNTIuMDIzSDU0LjQzNnYzMi43NThINDEuMjUxVjUyLjAyM0gzMC4yMjlWMzkuMjU4DQoJCWgxMS4wMjJ2LTkuNDE0YzAtMTAuOTI1LDYuNjc1LTE2Ljg3NSwxNi40Mi0xNi44NzVsOS44NTEsMC4wMTVWMjQuODlMNjcuNTIxLDI0Ljg5eiIvPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=" />
-                </a>
-                <a href="https://www.artstation.com/nattasetpanlek" target="_blank">
-                    <img
-                        src="https://cdn4.iconfinder.com/data/icons/logos-and-brands-1/512/27_Artstation_logo_logos-512.png" />
-                </a>
-            </li>
-        </ul>
-        <div class="copyrigth">
-            <h3>อีเมล์ mastere00@hotmail.com</h3>
-            <h4>Copyright ©2020 Nattaset Panlek</h4>
-            <div>
-    </section>
 </body>
-
 </html>
