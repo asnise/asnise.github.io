@@ -1,0 +1,667 @@
+/* ===== การตั้งค่าพื้นฐานและตัวแปรสี (เหมือนเดิม) ===== */
+:root {
+    --primary-bg: #ffffff;
+    --secondary-bg: #f0f0f0;
+    --text-color: #333333;
+    --header-text: #ffffff;
+    --background-image: url("https://asnise.github.io/Cover.png");
+    /* เพิ่มตัวแปรสำหรับปุ่ม */
+    --button-bg: #000000;
+    --button-text: #ffffff;
+    --button-hover-bg: #7700ff;
+}
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hides the scrollbar */
+    cursor: default;
+}
+
+
+body {
+    font-family: 'Montserrat','Prompt', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* ===== ส่วน banner Header (แก้ไข) ===== */
+.banner {
+    position: relative;
+    height: 90vh;
+    background-size: cover;
+    background-position: center;
+    color: var(--header-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    background-attachment: fixed;
+    /* Add gradient black overlay */
+    background-image: linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, rgb(0, 0, 0) 100%), var(--background-image);
+}
+
+
+/* Ensure content appears above the overlay */
+.banner-content {
+    position: relative;
+    z-index: 100;
+}
+
+.banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 1;
+}
+
+.banner.fade {
+    opacity: 0;
+}
+
+.banner.fade::before {
+    opacity: 1;
+}
+
+.banner-content h1 {
+    font-size: 5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 5px;
+    font-weight: 500;
+    width: 100%;
+    animation: textGlow 3s infinite, fadeInText 1s ease-out forwards; /* นำเอฟเฟกต์ไปใช้กับ banner title */
+}
+
+.banner-content p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    animation: fadeInText 1.5s ease-out forwards;
+}
+
+#portfolio-menu {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    white-space: nowrap; /* Ensure text doesn't wrap */
+    justify-content: flex-start; /* Align menu items to the start */
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Apply blur effect to content behind */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    scrollbar-width: none; /* Firefox */
+}
+
+.menu-button {
+    background-color: transparent;
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    font-size: 12px;
+}
+
+.menu-button:hover {
+    border-bottom: 2px solid var(--text-color);
+}
+
+.menu-button.active {
+    border-bottom: 2px solid var(--text-color);
+}
+
+#portfolio-gallery {
+    width: 80%;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    box-sizing: border-box;
+}
+
+.portfolio-item {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 6rem;
+    align-items: flex-start;
+    min-height: 400px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.portfolio-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.artwork-container,
+.artwork-info {
+    flex: 1;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* ===== ✨ ใหม่: Grid Layout สำหรับแสดงหลายภาพ ✨ ===== */
+.artwork-grid {
+    display: grid;
+    gap: 10px;
+    /* กำหนดคอลัมน์เริ่มต้นที่ 2 */
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* จัดสัดส่วน Grid ตามจำนวนภาพ (ตัวอย่าง) */
+.artwork-grid[data-count="1"] {
+    grid-template-columns: 1fr;
+}
+
+.artwork-grid[data-count="2"] {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.artwork-grid[data-count="3"] {
+    grid-template-columns: 2fr 1fr;
+    /* ภาพแรกใหญ่กว่า */
+    grid-template-rows: repeat(2, auto);
+}
+
+/* สำหรับ 3 ภาพ: ให้ภาพที่ 2 และ 3 อยู่ในคอลัมน์ที่ 2 */
+.artwork-grid[data-count="3"] .artwork-image:nth-child(1) {
+    grid-row: span 2;
+}
+
+.artwork-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* การจัดวาง ซ้าย-ขวา */
+.layout-left .artwork-container {
+    order: 1;
+}
+
+.layout-left .artwork-info {
+    order: 2;
+}
+
+.layout-right .artwork-container {
+    order: 2;
+}
+
+.layout-right .artwork-info {
+    order: 1;
+}
+
+/* สไตล์สำหรับภาพเต็มความกว้าง */
+.layout-full-width .artwork-container {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.layout-full-width .artwork-info {
+    display: none;
+}
+
+/* ซ่อนคำอธิบายสำหรับ full-width */
+
+.artwork-info h2 {
+    font-size: 1.8rem;
+    margin: auto 0 0.5rem;
+}
+
+.artwork-info p {
+    font-size: 1.25rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+/* สไตล์ใหม่สำหรับปุ่ม */
+.portfolio-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: var(--button-bg);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 3px solid var(--button-bg);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Pseudo-element for hover background effect */
+.portfolio-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: var(--button-hover-bg);
+    z-index: -1;
+    transition: width 0.3s ease;
+    transform-origin: left;
+}
+
+.portfolio-button:hover::after {
+    width: 100%;
+}
+
+.portfolio-button:hover {
+    color: var(--button-text);
+    border-color: var(--button-hover-bg);
+}
+
+/* Style anchor tags with the "button" class to look like a button */
+.outlink{
+    display: inline-block;
+    padding: 5px 10px;
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hover effect for button-like anchors */
+.outlink:hover {
+    color: #ff004c;
+}
+
+/* ===== ส่วน Footer (แก้ไข) ===== */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--secondary-bg);
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.social-links {
+    margin-bottom: 1rem;
+}
+
+.social-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+    /* แก้ไขขนาดไอคอนตรงนี้ */
+    font-size: 1.5rem;
+}
+
+.social-links a:hover {
+    color: #007BFF;
+    /* เปลี่ยนสีเมื่อ hover */
+}
+
+/* ===== Responsive (ปรับปรุงใหม่) ===== */
+@media (max-width: 768px) {
+    /* ✨ ซ่อนเมนูเมื่อเป็นหน้าจอโทรศัพท์ ✨ */
+    #portfolio-menu {
+        display: none;
+    }
+
+    .portfolio-item {
+        flex-direction: column;
+    }
+
+    .layout-left .artwork-container,
+    .layout-right .artwork-container,
+    .layout-left .artwork-info,
+    .layout-right .artwork-info {
+        order: 0;
+        /* รีเซ็ต order ให้เรียงตามลำดับปกติ */
+    }
+
+    .artwork-info {
+        text-align: center;
+        padding-top: 2rem;
+    }
+}
+
+.artwork-grid[data-count="4"] {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+/* โค้ดใหม่: สไตล์สำหรับ Modal Overlay */
+.modal-overlay {
+    display: none; /* ซ่อนไว้ตอนเริ่มต้น */
+    position: fixed; /* ให้อยู่เหนือทุกองค์ประกอบ */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* พื้นหลังสีดำโปร่งแสง */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* ให้อยู่ด้านบนสุด */
+    overflow-y: auto; /* สามารถเลื่อนได้ในแนวตั้ง */
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background-color: #ffffff00;
+    padding: 2rem;
+    border-radius: 8px;
+    position: relative;
+    max-width: 60%;
+    max-height: 90%;
+    overflow-y: auto; /* ทำให้เนื้อหาภายในสามารถเลื่อนได้ */
+}
+
+.modal-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* ระยะห่างระหว่างภาพ */
+}
+
+.modal-image-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff00;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    z-index: 1001;
+}
+
+.modal-media {
+    max-width: 100%; /* ทำให้ media ไม่เกินความกว้างของ container */
+    height: auto;    /* รักษาอัตราส่วนของ media */
+    display: block;  /* ป้องกันช่องว่างด้านล่าง */
+}
+
+/* เมื่อ modal แสดงผล */
+.modal-overlay.active {
+    display: flex;
+}
+
+body.modal-open {
+    overflow: hidden; /* ป้องกันการเลื่อนในแนวตั้ง */
+    -ms-overflow-style: none;  /* สำหรับ Internet Explorer และ Edge */
+    scrollbar-width: none;  /* สำหรับ Firefox */
+}
+
+/* ซ่อน scrollbar สำหรับ Chrome, Safari และ Opera */
+body.modal-open::-webkit-scrollbar {
+    display: none;
+}
+
+/* ===== ✨ NEW: Responsive for screens < 360px (ปรับปรุงใหม่ทั้งหมด)✨ ===== */
+@media (max-width: 720px) {
+    .banner
+    {
+        width: 100%;
+    }
+    /* --- ปรับแก้ Banner --- */
+    .banner-content h1 {
+        font-size: 16px;
+    }
+
+    .banner-content p {
+        font-size: 9px;
+    }
+
+    /* --- ปรับแก้เมนู --- */
+    #portfolio-menu {
+        gap: 0.5rem; /* ลดช่องว่างระหว่างปุ่ม */
+        padding: 0.5rem;
+    }
+
+    .menu-button {
+        padding: 0.5rem;
+        font-size: 11px; /* ลดขนาดฟอนต์ปุ่มเล็กน้อย */
+    }
+
+    /* --- ปรับแก้ส่วน Gallery --- */
+    #portfolio-gallery {
+        align-items: center;
+        width: 100%;
+    }
+    .portfolio-item {
+        flex-direction: column; /* เปลี่ยนเป็นแนวตั้ง */
+        align-items: center; /* จัดกึ่งกลาง */
+        margin-bottom: 0; /* ลดระยะห่างระหว่างรายการ */
+    }
+
+    
+    .artwork-container, .artwork-info {
+        padding: 0.5rem; /* ลด padding ภายใน */
+    }
+
+    .artwork-info h2 {
+        font-size: 1.5rem; /* ลดขนาดฟอนต์หัวข้องาน */
+    }
+
+    .artwork-info p {
+        font-size: 0.9rem; /* ลดขนาดฟอนต์คำอธิบาย */
+    }
+    
+    .portfolio-button {
+        padding: 8px 16px; /* ลดขนาดปุ่ม */
+        font-size: 0.9rem;
+    }
+
+    /* --- ปรับแก้ Modal --- */
+    .modal-overlay {
+        padding: 0.5rem;
+    }
+    .modal-content {
+        max-width: 95%; /* ทำให้ Modal เกือบเต็มจอ */
+        padding: 1rem;
+    }
+    
+    /* --- ปรับแก้ Footer --- */
+    .social-links a {
+        font-size: 1.3rem; /* ลดขนาดไอคอนโซเชียล */
+        margin: 0 8px;
+    }
+
+    footer {
+        font-size: 0.8rem;
+        width: 100%;
+    }
+    .portfolio-item.layout-full-width {
+        display: none;
+        }
+}
+
+/* Keyframes สำหรับ text glow effect */
+@keyframes textGlow {
+    0% {
+        text-shadow: 0 0 5px var(--header-text);
+    }
+    50% {
+        text-shadow: 0 0 20px var(--button-hover-bg);
+    }
+    100% {
+        text-shadow: 0 0 5px var(--header-text);
+    }
+}
+
+/* เพิ่ม Keyframes สำหรับ fade in effect */
+@keyframes fadeInText {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ปรับปรุง Animation สำหรับ banner content */
+.banner-content h1 {
+    /* รัน fadeInText ครั้งเดียวแล้วตามด้วย textGlow แบบวนไม่รู้จบ */
+    animation: fadeInText 1s ease-out forwards, textGlow 3s infinite; /* นำเอฟเฟกต์ไปใช้กับ banner title */
+}
+
+.banner-content p {
+    /* กำหนดให้ข้อความ p ค่อยๆ แสดงด้วย fadeInText พร้อม delay เล็กน้อย */
+    animation: fadeInText 1.5s ease-out forwards;
+}
+
+/* Responsive สำหรับหน้าจอขนาด Tablet */
+@media (max-width: 768px) {
+    .banner {
+        height: 60vh;
+        background-attachment: scroll; /* ปิด parallax บนหน้าจอเล็ก */
+    }
+    .banner-content h1 {
+        font-size: 3rem;
+        letter-spacing: 2px;
+    }
+    .banner-content p {
+        font-size: 1rem;
+    }
+    #portfolio-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    .menu-button {
+        padding: 0.5rem;
+        font-size: 1rem;
+    }
+    #portfolio-gallery {
+        width: 90%;
+        padding: 2rem 1rem;
+    }
+    .portfolio-item {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 3rem;
+    }
+    .artwork-container,
+    .artwork-info {
+        padding: 0.5rem;
+        text-align: left;
+    }
+    .artwork-info h2 {
+        font-size: 1.5rem;
+    }
+    .artwork-info p {
+        font-size: 1rem;
+    }
+    .portfolio-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+    footer {
+        padding: 1rem;
+        font-size: 0.8rem;
+    }
+    .portfolio-button
+    {
+        width: 50%;
+    }
+}
+
+/* Responsive สำหรับหน้าจอขนาด Mobile */
+@media (max-width: 480px) {
+    .banner {
+        height: 50vh;
+    }
+    .banner-content h1 {
+        font-size: 2.5rem;
+    }
+    .banner-content p {
+        font-size: 0.9rem;
+    }
+    #portfolio-gallery {
+        width: 95%;
+        padding: 1.5rem 1rem;
+    }
+    .menu-button {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+    }
+    .portfolio-button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        width: 50%;
+    }
+    footer {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Loader Styling */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    transition: opacity 0.5s ease;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid var(--text-color);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Styling สำหรับ social-links บน Banner */
+.banner-social-links {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 101;
+    display: flex;
+    gap: 10px;
+}
+
+.banner-social-links a {
+    color: var(--header-text);
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.banner-social-links a:hover {
+    color: var(--button-hover-bg);
+}

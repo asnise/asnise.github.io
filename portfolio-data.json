@@ -1,0 +1,220 @@
+[
+    
+    {
+        "layout": "right",
+        "images": [
+            "/images/meena_05.jpg",
+            "/images/meena_06.jpg",
+            "/images/meena_0.jpg",
+            "/images/meena_02.jpg"
+        ],
+        "name": "Meena : Little Witch",
+        "description": "A Thai-fantasy-themed Endless Runner where you play as Meena, an ordinary schoolgirl... who secretly happens to be a witch! Dash through magical landscapes, collect power-ups, dodge obstacles, and uncover hidden secrets in this endlessly enchanting adventure.\n<b>Art by <a class='outlink' href='https://coppters.art/'>Coppters</a> | <a class='outlink' href='https://konlekhadgame.itch.io/meena'>Itch.io : Meena</a></b>\n<b>BGM by Patiphat Moungmaithong</b>\n<b>Konlek HadGame | <a class='outlink' href='https://konlekhadgame.itch.io/meena'>Itch.io</a></b>\n<b>17 APRIL 2025</b>",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/video/meena.mp4",
+                "/images/meena_01.jpg",
+                "/images/meena_03.jpg"
+            ]
+        }
+    },{
+        "layout": "full-width",
+        "images": [
+            "/images/3.jpg"
+        ],
+        "name": "THORN ROSE (Cover)",
+        "description": ""
+    },
+    {
+        "layout": "left",
+        "images": [
+            "/images/srystg_cp.jpg"
+        ],
+        "name": "STRING",
+        "description": "With this hand, nothing lies beyond my grasp.\n2.5D Animation Loop\n<b>19 APRIL 2025</b>",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/srystg_cp.jpg",
+                "/images/string_process.jpg",
+                "/video/string_render-compressed.mp4",
+                "/video/string_final-compressed.mp4"
+            ]
+        }
+    },
+    {
+        "layout": "right",
+        "images": [
+            "/images/shooot.jpg",
+            "/images/ams_01.jpg",
+            "/images/ams_02.jpg"
+        ],
+        "name": "Amethyst SHOT",
+        "description": "All shall fall before the wrath of the voidfire.\n<b>17 SEPTEMBER 2025</b>",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/5.jpg",
+                "/images/shooot.jpg"
+            ]
+        }
+    },
+    {
+        "layout": "left",
+        "images": [
+            "/images/verchange.jpg",
+            "/images/verchange_01.jpg",
+            "/images/verchange_02.jpg",
+            "/images/verchange_03.jpg"
+        ],
+        "name": "VERCHANGE",
+        "description": "Alone, I cannot change this world... but what about you? Will you stand with me to reshape it?\n<b>6 DECEMBER 2023</b>",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/4.jpg",
+                "/images/verchange.jpg"
+            ]
+        }
+    },
+    {
+        "layout": "full-width",
+        "images": [
+            "https://asnise.github.io/Cover.png"
+        ],
+        "name": "DORAE",
+        "description": ""
+    },
+    {
+        "layout": "right",
+        "images": [
+            "/images/9_page.jpg"
+        ],
+        "name": "DORAE | QUEEN OF DRADONID",
+        "description": "QUEEN OF DRADONID : With these hands, no matter where you run… they will reach you in the end.\nAnimation 3D",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/9.jpg",
+                "https://asnise.github.io/Cover.png",
+                "/images/11.jpg",
+                "/video/Dorea_page-compressed.mp4",
+                "/video/Dorea_render-compressed.mp4"
+            ]
+        }
+    },
+    {
+        "layout": "full-width",
+        "images": [
+            "/images/13.jpg"
+        ],
+        "name": "COSMIC ENTITY",
+        "description": ""
+    },
+    {
+        "layout": "left",
+        "images": [
+            "/images/Live_30_9_9x9_compost.jpg",
+            "/images/nebulia.jpg"
+        ],
+        "name": "NEBLULIA & Novalette",
+        "description": "In this cold and endless night, I will kindle the warmth of every living soul.\n<b>6 MARCH 2023 & 6 DECEMBER 2025</b>",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/14.jpg",
+                "/images/nebulia.jpg",
+                "/images/15.jpg",
+                "/images/Live_30_9_9x9_compost.jpg"
+            ]
+        }
+    },
+    {
+        "layout": "right",
+        "images": [
+            "/images/efdv_00.jpg",
+            "/images/efdv_01.jpg",
+            "/images/efdv_02.jpg",
+            "/images/efdv_03.jpg"
+        ],
+        "name": "END OF DIVINITY",
+        "description": "In the realm of eternity, the gods beyond the stars exist to control the power of the universe. Every time a god falls, their power is devoured by the others. The fewer gods remain, the stronger the surviving ones become.<br>\n'Azzaria' was a god considered the weakest. He had no power in battle, but he possessed the ability to 'devour' anything that fell into the void. The other gods ignored him—until only a few remained. They planned to kill him and steal his power.\nBut in the process, Irene—the only one Azzaria cared about—was accidentally killed. His rage drove him to devour everything. All the gods collapsed. He became something beyond a god.<br>\nFinally, he created a new universe, abolished the existence of gods, and freed all things from the bonds of divine power. He dissolved himself along with the past, leaving behind a universe free from the clutches of the gods forever.",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/16.jpg",
+                "/images/17.jpg",
+                "/images/18.jpg",
+                "/images/19.jpg",
+                "/images/20.jpg",
+                "/images/21.jpg",
+                "/images/color_script.jpg"
+            ]
+        }
+    },
+    {
+        "layout": "left",
+        "images": [
+            "/images/necro_fest_page.jpg"
+        ],
+        "name": "NECRO FEST",
+        "description": "Once an ordinary train station... now a gateway to Hell.\nDemons spilled forth, rampaging through the city, painting the streets red with the blood of the innocent. Amidst the screams and carnage, only one girl remained — a child sobbing, wailing, shaking in terror.\nYet strangely… neither demon nor man paid her any heed.\nAs if… she wasn't even there.\n<b>6 FEBRUARY 2025</b>",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/22.jpg",
+                "/images/necro_fest_full.jpg",
+                "/images/23.jpg"
+                
+            ]
+        }
+    },
+        {
+        "layout": "right",
+        "images": [
+            "/images/mayavee_03.jpg"
+        ],
+        "name": "MayaVee | Veraa",
+        "description": "In the Kingdom of Siam, legends spoke of the Ravintrat Blossom—a flower born on battlefields, once pure white but turned crimson, nourished by blood and spirits, thriving amidst vengeance and war. Its beauty deceived, its pollen killed, a symbol of hunger and death.\nFrom this merciless bloom came Mayavi Veera, the Daughter of the Blood Blossom. Her skin shone like pearl, her grace like a gem, yet she carried the flower’s curse: a reaper of souls, delighting in death and human suffering. Her destiny was to guard the enchanted kingdom where her mother, the Crimson Ravintrat Blossom, still lingered.\n<b>31 JULY 2022</b>",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/mayavee_03.jpg",
+                "/images/mayavee_00.jpg",
+                "/images/mayavee_01.jpg",
+                "/images/mayavee_04.jpg"
+            ]
+        }
+    },
+        {
+        "layout": "left",
+        "images": [
+            "/images/Brigth_00.jpg"
+        ],
+        "name": "Azura Ram | Brigth",
+        "description": "Bright was born into a family sworn to guard the Asuraram Stone, an ancient relic sealing a legendary giant.\nOn a moonless night, the seal trembled. Before Bright’s eyes, his brother took the Stone into himself—not as a thief, but as a vessel to contain its fury. Their parents perished in the chaos, and with his final words the brother said:\n“Grow stronger… and one day, set me free.”\nThen he vanished with the Stone, leaving only a fragment behind. When Bright touched it, the shard answered his grief and rage, binding him as the new host of Asuraram.\nThus began his journey—not for vengeance, but to uncover the truth and save the brother who became a living seal.\n<b>31 JULY 2021</b>",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/Brigth_00.jpg",
+                "/images/Brigth_01.jpg",
+                "/images/Brigth_02.jpg",
+                "/images/Brigth_03.jpg"
+            ]
+        }
+    }
+
+    
+
+]
