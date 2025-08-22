@@ -4,7 +4,7 @@
     --secondary-bg: #f0f0f0;
     --text-color: #333333;
     --header-text: #ffffff;
-    --background-image: url("https://asnise.github.io/Cover.png");
+    --background-image: url("/Cover.jpg");
     /* เพิ่มตัวแปรสำหรับปุ่ม */
     --button-bg: #000000;
     --button-text: #ffffff;
