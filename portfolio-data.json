@@ -85,7 +85,7 @@
     {
         "layout": "full-width",
         "images": [
-            "https://asnise.github.io/Cover.png"
+            "/images/Cover.jpg"
         ],
         "name": "DORAE",
         "description": ""
@@ -102,7 +102,7 @@
             "link": "Openimage",
             "another_url": [
                 "/images/9.jpg",
-                "https://asnise.github.io/Cover.png",
+                "/images/Cover.jpg",
                 "/images/11.jpg",
                 "/video/Dorea_page-compressed.mp4",
                 "/video/Dorea_render-compressed.mp4"
