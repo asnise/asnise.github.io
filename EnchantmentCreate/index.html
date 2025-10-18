@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchantment JSON Creator</title>
+    <style>
+        #scrollableContainer {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            max-width: 800px;
+        }
+
+        .enchantment {
+            border: 1px solid #000;
+            padding: 10px;
+            margin: 10px 0;
+            background: #fff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+            .row > * {
+                margin-right: 6px;
+            }
+
+        .material-entry {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin: 6px 0;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .btn {
+            cursor: pointer;
+        }
+
+        .status {
+            font-size: 12px;
+            padding: 2px 6px;
+            border: 1px solid #ccc;
+            background: #fafafa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enchantment JSON Creator</h1>
+
+    <div class="row" style="margin-bottom:10px">
+        <button type="button" class="btn" onclick="addEnchantment()">Add Enchantment</button>
+        <button type="button" class="btn" onclick="generateJSON()">Generate JSON</button>
+
+        <!-- Import Enchantments (replace/append) -->
+        <button type="button" class="btn" onclick="triggerImportEnchant()">Import Enchantments</button>
+        <label class="muted"><input type="checkbox" id="appendMode"> Append when importing</label>
+        <input type="file" id="importEnchantFile" accept=".json" style="display:none" onchange="importEnchantJSON(event)">
+
+        <!-- Data sources -->
+        <span style="margin-left:16px"></span>
+        <button type="button" class="btn" onclick="triggerImportElements()">Import elements.json</button>
+        <span id="elStatus" class="status">elements: not loaded</span>
+        <input type="file" id="importElementsFile" accept=".json" style="display:none" onchange="onImportElements(event)">
+
+        <button type="button" class="btn" onclick="triggerImportItems()">Import items.json</button>
+        <span id="itStatus" class="status">items: not loaded</span>
+        <input type="file" id="importItemsFile" accept=".json" style="display:none" onchange="onImportItems(event)">
+    </div>
+
+    <div id="scrollableContainer">
+        <form id="enchantmentForm">
+            <div id="enchantmentsContainer"></div>
+        </form>
+    </div>
+
+    <!-- Hidden template (clone when adding) -->
+    <div id="enchantmentTemplate" class="enchantment" style="display:none">
+        <div class="row" style="justify-content: space-between;">
+            <strong>Enchantment #<span class="auto-id">—</span></strong>
+            <button type="button" class="btn remove-enchant">Remove</button>
+        </div>
+
+        <label>Name:</label>
+        <input type="text" class="name" required><br><br>
+
+        <label>Description:</label>
+        <textarea class="description" rows="3" cols="60" required></textarea><br><br>
+
+        <label>Level:</label>
+        <input type="number" class="level" min="1" value="1" required>
+        <label>Max Level:</label>
+        <input type="number" class="maxLevel" min="1" value="10" required><br><br>
+
+        <label>Materials (requirements):</label>
+        <div class="material-container"></div>
+        <button type="button" class="btn add-material" onclick="addMaterial(this)">Add Material</button><br><br>
+
+        <label>Effect Type:</label>
+        <select class="effectType" required>
+            <option value="DamageOverTime">DamageOverTime</option>
+            <option value="Explosion" selected>Explosion</option>
+            <option value="Sharpness">Sharpness</option>
+        </select>
+        <label>Damage:</label>
+        <input type="number" class="damage" min="0" value="1" required>
+    </div>
+
+    <script>
+        // =========================
+        // Data sources (elements & items)
+        // =========================
+        let ELEMENTS = []; // [{id:number, name_:string, symbol_:string}]
+        let ITEMS = [];    // [{id:number, itemName:string}]
+
+        const elStatus = document.getElementById('elStatus');
+        const itStatus = document.getElementById('itStatus');
+
+        function setStatus(el, ok, labelOk, labelNo) {
+            el.textContent = ok ? labelOk : labelNo;
+            el.style.borderColor = ok ? '#7bc279' : '#ccc';
+            el.style.background = ok ? '#eef9ee' : '#fafafa';
+            el.style.color = ok ? '#256029' : '#333';
+        }
+
+        function normalizeElements(arr) {
+            return (arr || []).map(e => ({
+                id: +e.id,
+                name_: e.name_ ?? e.name ?? '',
+                symbol_: e.symbol_ ?? ''
+            })).filter(e => Number.isFinite(e.id));
+        }
+
+        function normalizeItems(arr) {
+            return (arr || []).map(x => ({
+                id: +x.id,
+                itemName: x.itemName ?? x.name ?? ''
+            })).filter(x => Number.isFinite(x.id));
+        }
+
+        async function tryAutoFetch(path, onOk) {
+            try {
+                const r = await fetch(path, { cache: 'no-store' });
+                if (r.ok) {
+                    const data = await r.json();
+                    onOk(data);
+                }
+            } catch (e) { /* ignore */ }
+        }
+
+        // Try auto-load elements/items from same folder
+        (async function boot() {
+            await tryAutoFetch('./elements.json', (data) => {
+                ELEMENTS = normalizeElements(data);
+                setStatus(elStatus, ELEMENTS.length > 0, `elements: ${ELEMENTS.length} loaded`, 'elements: not loaded');
+            });
+            await tryAutoFetch('./items.json', (data) => {
+                ITEMS = normalizeItems(data);
+                setStatus(itStatus, ITEMS.length > 0, `items: ${ITEMS.length} loaded`, 'items: not loaded');
+            });
+        })();
+
+        // =========================
+        // UI helpers
+        // =========================
+        function updateAllIds() {
+            const list = document.querySelectorAll('#enchantmentsContainer .enchantment');
+            list.forEach((el, idx) => {
+                const span = el.querySelector('.auto-id');
+                if (span) span.textContent = (idx + 1);
+            });
+        }
+
+        function populateSelect(selectEl, type, presetId) {
+            selectEl.innerHTML = '';
+            if (type === 'atom_number') {
+                if (!ELEMENTS.length) {
+                    const opt = new Option('Please import elements.json', '', true, true);
+                    opt.disabled = true; selectEl.add(opt);
+                    return;
+                }
+                ELEMENTS.forEach(e => {
+                    const text = (e.symbol_ ? e.symbol_ + ' - ' : '') + e.name_ + ` (id:${e.id})`;
+                    selectEl.add(new Option(text, String(e.id), false, false));
+                });
+                if (presetId != null) selectEl.value = String(presetId);
+                if (!selectEl.value) selectEl.selectedIndex = 0;
+            } else { // item_id
+                if (!ITEMS.length) {
+                    const opt = new Option('Please import items.json', '', true, true);
+                    opt.disabled = true; selectEl.add(opt);
+                    // force-open import dialog to "บังคับ" ให้โหลด items ก่อน
+                    triggerImportItems();
+                    return;
+                }
+                ITEMS.forEach(i => {
+                    const text = i.itemName + ` (id:${i.id})`;
+                    selectEl.add(new Option(text, String(i.id), false, false));
+                });
+                if (presetId != null) selectEl.value = String(presetId);
+                if (!selectEl.value) selectEl.selectedIndex = 0;
+            }
+        }
+
+        function createMaterialEntry(type = 'atom_number', presetId = null, count = 1) {
+            const entry = document.createElement('div');
+            entry.className = 'material-entry';
+
+            const typeLbl = document.createElement('label'); typeLbl.textContent = 'Type:';
+            const typeSel = document.createElement('select'); typeSel.className = 'material-type';
+            typeSel.innerHTML = `
+            <option value="atom_number"${type === 'atom_number' ? ' selected' : ''}>Element (Atom)</option>
+            <option value="item_id"${type === 'item_id' ? ' selected' : ''}>Item</option>
+          `;
+
+            const listLbl = document.createElement('label'); listLbl.textContent = 'List:';
+            const listSel = document.createElement('select'); listSel.className = 'material-select';
+
+            const cntLbl = document.createElement('label'); cntLbl.textContent = 'Count:';
+            const cntInp = document.createElement('input'); cntInp.type = 'number'; cntInp.className = 'material-value'; cntInp.min = '0'; cntInp.value = String(count || 0);
+
+            const rmBtn = document.createElement('button'); rmBtn.type = 'button'; rmBtn.className = 'btn'; rmBtn.textContent = 'Remove';
+
+            // populate first time
+            populateSelect(listSel, type, presetId);
+
+            // wire
+            typeSel.addEventListener('change', () => {
+                populateSelect(listSel, typeSel.value, null);
+            });
+            rmBtn.addEventListener('click', () => {
+                entry.remove();
+            });
+
+            entry.append(typeLbl, typeSel, listLbl, listSel, cntLbl, cntInp, rmBtn);
+            return entry;
+        }
+
+        // =========================
+        // Enchantment handlers
+        // =========================
+        function addEnchantment() {
+            const container = document.getElementById('enchantmentsContainer');
+            const template = document.getElementById('enchantmentTemplate');
+            const el = template.cloneNode(true);
+            el.style.display = '';
+            el.id = ''; // avoid duplicate id
+
+            // first material row (default atom)
+            const matContainer = el.querySelector('.material-container');
+            matContainer.appendChild(createMaterialEntry('atom_number', null, 1));
+
+            // remove enchant button
+            el.querySelector('.remove-enchant').addEventListener('click', () => {
+                el.remove();
+                updateAllIds();
+            });
+
+            container.appendChild(el);
+            updateAllIds();
+        }
+
+        function addMaterial(button) {
+            // called via onclick on the template button
+            const matContainer = button.previousElementSibling;
+            matContainer.appendChild(createMaterialEntry('atom_number', null, 1));
+        }
+
+        // =========================
+        // Export
+        // =========================
+        function generateJSON() {
+            const out = [];
+            const elements = document.querySelectorAll('#enchantmentsContainer .enchantment');
+
+            elements.forEach((el, idx) => {
+                const name = el.querySelector('.name').value.trim();
+                const description = el.querySelector('.description').value.trim();
+                const level = parseInt(el.querySelector('.level').value);
+                const maxLevel = parseInt(el.querySelector('.maxLevel').value);
+                const effectType = el.querySelector('.effectType').value;
+                const damage = parseInt(el.querySelector('.damage').value);
+
+                if (!name || !description || isNaN(level) || isNaN(maxLevel) || !effectType || isNaN(damage)) return;
+
+                const matAtom = {};
+                const matItem = {};
+
+                el.querySelectorAll('.material-entry').forEach(entry => {
+                    const t = entry.querySelector('.material-type').value;
+                    const sel = entry.querySelector('.material-select');
+                    const id = parseInt(sel.value);
+                    const qty = parseInt(entry.querySelector('.material-value').value);
+                    if (isNaN(id) || isNaN(qty)) return;
+                    if (t === 'atom_number') matAtom[id] = (matAtom[id] || 0) + qty;
+                    else if (t === 'item_id') matItem[id] = (matItem[id] || 0) + qty;
+                });
+
+                out.push({
+                    id: idx + 1, // <== auto numbering
+                    name, description, level, maxLevel,
+                    material_atom: matAtom,
+                    material_item: matItem,
+                    effects: { effectType, damage }
+                });
+            });
+
+            const jsonString = JSON.stringify(out, null, 2);
+            downloadJSON(jsonString, 'enchantments.json');
+        }
+
+        function downloadJSON(content, filename) {
+            const blob = new Blob([content], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+        }
+
+        // =========================
+        // Import Enchantments (replace/append)
+        // =========================
+        function triggerImportEnchant() {
+            document.getElementById('importEnchantFile').click();
+        }
+
+        function importEnchantJSON(ev) {
+            const file = ev.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const ench = JSON.parse(e.target.result);
+                    populateForm(ench, !!document.getElementById('appendMode').checked);
+                } catch (err) {
+                    alert('Invalid JSON: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function populateForm(enchantments, append) {
+            const container = document.getElementById('enchantmentsContainer');
+            const list = Array.isArray(enchantments) ? enchantments : Object.values(enchantments);
+
+            if (!append) container.innerHTML = '';
+
+            list.forEach(enchantment => {
+                const template = document.getElementById('enchantmentTemplate');
+                const el = template.cloneNode(true);
+                el.style.display = '';
+                el.id = '';
+
+                el.querySelector('.name').value = enchantment.name ?? '';
+                el.querySelector('.description').value = enchantment.description ?? '';
+                el.querySelector('.level').value = enchantment.level ?? 1;
+                el.querySelector('.maxLevel').value = enchantment.maxLevel ?? 1;
+                el.querySelector('.effectType').value = enchantment.effects?.effectType ?? 'Explosion';
+                el.querySelector('.damage').value = enchantment.effects?.damage ?? 1;
+
+                const matContainer = el.querySelector('.material-container');
+                matContainer.innerHTML = '';
+
+                // material_atom
+                if (enchantment.material_atom) {
+                    Object.entries(enchantment.material_atom).forEach(([idStr, qty]) => {
+                        const id = parseInt(idStr);
+                        matContainer.appendChild(createMaterialEntry('atom_number', id, qty));
+                    });
+                }
+                // material_item
+                if (enchantment.material_item) {
+                    Object.entries(enchantment.material_item).forEach(([idStr, qty]) => {
+                        const id = parseInt(idStr);
+                        matContainer.appendChild(createMaterialEntry('item_id', id, qty));
+                    });
+                }
+
+                // no material -> give one default row
+                if (!matContainer.children.length) {
+                    matContainer.appendChild(createMaterialEntry('atom_number', null, 1));
+                }
+
+                el.querySelector('.remove-enchant').addEventListener('click', () => {
+                    el.remove();
+                    updateAllIds();
+                });
+
+                container.appendChild(el);
+            });
+
+            updateAllIds();
+        }
+
+        // =========================
+        // Import Elements / Items
+        // =========================
+        function triggerImportElements() { document.getElementById('importElementsFile').click(); }
+        function triggerImportItems() { document.getElementById('importItemsFile').click(); }
+
+        function onImportElements(ev) {
+            const file = ev.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    ELEMENTS = normalizeElements(JSON.parse(e.target.result));
+                    setStatus(elStatus, ELEMENTS.length > 0, `elements: ${ELEMENTS.length} loaded`, 'elements: not loaded');
+                    // refresh existing selects of type atom
+                    document.querySelectorAll('.material-entry .material-type').forEach(sel => {
+                        if (sel.value === 'atom_number') {
+                            const listSel = sel.parentElement.querySelector('.material-select');
+                            const current = parseInt(listSel.value);
+                            populateSelect(listSel, 'atom_number', isNaN(current) ? null : current);
+                        }
+                    });
+                } catch (err) { alert('Invalid elements.json: ' + err.message); }
+            };
+            reader.readAsText(file);
+        }
+
+        function onImportItems(ev) {
+            const file = ev.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    ITEMS = normalizeItems(JSON.parse(e.target.result));
+                    setStatus(itStatus, ITEMS.length > 0, `items: ${ITEMS.length} loaded`, 'items: not loaded');
+                    // refresh existing selects of type item
+                    document.querySelectorAll('.material-entry .material-type').forEach(sel => {
+                        if (sel.value === 'item_id') {
+                            const listSel = sel.parentElement.querySelector('.material-select');
+                            const current = parseInt(listSel.value);
+                            populateSelect(listSel, 'item_id', isNaN(current) ? null : current);
+                        }
+                    });
+                } catch (err) { alert('Invalid items.json: ' + err.message); }
+            };
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>
