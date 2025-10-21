@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="th">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>NARA — Tasklist & Planner (No Mock Data)</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            .status-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                border-radius: 999px;
+                padding: 0.15rem 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                border-width: 1px;
+            }
+            .st-red {
+                background: #fee2e2;
+                border-color: #fecaca;
+                color: #991b1b;
+            }
+            .st-yellow {
+                background: #fef9c3;
+                border-color: #fde68a;
+                color: #854d0e;
+            }
+            .st-blue {
+                background: #dbeafe;
+                border-color: #bfdbfe;
+                color: #1e40af;
+            }
+            .st-green {
+                background: #dcfce7;
+                border-color: #bbf7d0;
+                color: #166534;
+            }
+            .st-none {
+                background: #f3f4f6;
+                border-color: #e5e7eb;
+                color: #374151;
+            }
+            .task-row:hover {
+                background: rgba(0, 0, 0, 0.02);
+            }
+            .task-title[contenteditable="true"] {
+                outline: 2px dashed #93c5fd;
+                outline-offset: 2px;
+            }
+            .state-btn {
+                border-width: 1px;
+                border-radius: 0.5rem;
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+            }
+            .state-btn.active {
+                outline: 2px solid rgba(99, 102, 241, 0.35);
+            }
+            details > summary::-webkit-details-marker {
+                display: none;
+            }
+        </style>
+    </head>
+    <body class="bg-white text-gray-800">
+        <header class="sticky top-0 z-30 border-b bg-white/90 backdrop-blur">
+            <div
+                class="mx-auto max-w-7xl px-4 py-3 flex flex-wrap items-center gap-3"
+            >
+                <h1 class="text-xl font-bold tracking-wide">
+                    NARA — Tasklist & Planner
+                </h1>
+                <div class="ml-auto flex items-center gap-2 text-xs">
+                    <span class="status-pill st-red">แดง = ด่วนมาก</span>
+                    <span class="status-pill st-yellow">เหลือง = ต้องแก้</span>
+                    <span class="status-pill st-blue">น้ำเงิน = กำลังทำ</span>
+                    <span class="status-pill st-green">เขียว = ผ่าน</span>
+                    <span class="status-pill st-none">เทา = ยังไม่ทำ</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="mx-auto max-w-7xl px-4 py-6 space-y-6">
+            <!-- Quick links -->
+            <section class="grid gap-4 md:grid-cols-2">
+                <div class="rounded-2xl border p-4">
+                    <h2 class="text-lg font-semibold mb-2">
+                        ลัดเข้าเครื่องมือ & เอกสาร
+                    </h2>
+                    <div class="grid sm:grid-cols-2 gap-2 text-sm">
+                        <a
+                            class="px-3 py-2 rounded-lg border hover:bg-gray-50"
+                            target="_blank"
+                            href="https://asnise.github.io/itemCreate/"
+                            >Item Creator</a
+                        >
+                        <a
+                            class="px-3 py-2 rounded-lg border hover:bg-gray-50"
+                            target="_blank"
+                            href="https://asnise.github.io/ElementCreate/"
+                            >Element Creator</a
+                        >
+                        <a
+                            class="px-3 py-2 rounded-lg border hover:bg-gray-50"
+                            target="_blank"
+                            href="https://asnise.github.io/EnchantmentCreate/"
+                            >Enchantment Creator</a
+                        >
+                        <a
+                            class="px-3 py-2 rounded-lg border hover:bg-gray-50"
+                            target="_blank"
+                            href="https://www.canva.com/design/DAGxPJMYoTw/AgWe9MfU3Jw6IXZmplCnEw/edit?utm_content=DAGxPJMYoTw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+                            >Slide (Canva)</a
+                        >
+                        <a
+                            class="px-3 py-2 rounded-lg border hover:bg-gray-50"
+                            target="_blank"
+                            href="https://drive.google.com/drive/folders/1dCa_nKSZlOqjJN-6J_LrWpvoZ128zbGB?usp=sharing"
+                            >Google Drive</a
+                        >
+                        <a
+                            class="px-3 py-2 rounded-lg border hover:bg-gray-50"
+                            target="_blank"
+                            href="https://www.figma.com/proto/iUcEymFSm9zH6elZNJ1KlZ/NARA?page-id=0%3A1&node-id=1-2&node-type=canvas&viewport=173%2C398%2C0.15&t=KZXSkd8Vxt0g5ppg-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A2"
+                            >Figma Prototype</a
+                        >
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border p-4">
+                    <h2 class="text-lg font-semibold mb-2">
+                        Game Mechanics Glossary
+                    </h2>
+                    <ul class="text-sm list-disc pl-5 space-y-1">
+                        <li>
+                            <b>DamageOverTime</b> — ดาเมจต่อวินาที (พิษ ฯลฯ)
+                        </li>
+                        <li>
+                            <b>Explosion</b> — AOE ดาเมจสุ่มช่วง
+                            <i>[input/2] – [input]</i> (ใส่ 50 → สุ่ม 25–50)
+                        </li>
+                        <li><b>Sharpness</b> — เพิ่มดาเมจต่อ hit</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Controls -->
+            <section class="rounded-2xl border p-4 space-y-3">
+                <div class="flex flex-wrap items-center gap-2">
+                    <input
+                        id="searchBox"
+                        placeholder="ค้นหางาน…"
+                        class="w-64 max-w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                    <select
+                        id="statusFilter"
+                        class="rounded-lg border px-3 py-2 text-sm"
+                    >
+                        <option value="all">ทุกสถานะ</option>
+                        <option value="none">ยังไม่ทำ</option>
+                        <option value="blue">กำลังทำ</option>
+                        <option value="yellow">ต้องแก้</option>
+                        <option value="red">ด่วนมาก</option>
+                        <option value="green">ผ่าน</option>
+                    </select>
+                    <select
+                        id="ownerFilter"
+                        class="rounded-lg border px-3 py-2 text-sm"
+                    >
+                        <option value="all">ผู้รับผิดชอบ: ทั้งหมด</option>
+                        <option value="ป๋วย">ป๋วย</option>
+                        <option value="ปลื้ม">ปลื้ม</option>
+                        <option value="สองคน">สองคน</option>
+                        <option value="">ไม่ระบุ</option>
+                    </select>
+                    <button
+                        id="addSectionBtn"
+                        class="rounded-xl border px-3 py-2 text-sm hover:bg-gray-50"
+                    >
+                        + เพิ่มหมวด
+                    </button>
+                    <button
+                        id="addTaskBtn"
+                        class="rounded-xl border px-3 py-2 text-sm hover:bg-gray-50"
+                    >
+                        + เพิ่มงาน
+                    </button>
+                    <div class="ml-auto flex items-center gap-2">
+                        <input
+                            id="importFile"
+                            type="file"
+                            accept="application/json"
+                            class="hidden"
+                        />
+                        <button
+                            id="importBtn"
+                            class="rounded-xl border px-3 py-2 text-sm hover:bg-gray-50"
+                        >
+                            Import JSON
+                        </button>
+                        <button
+                            id="exportBtn"
+                            class="rounded-xl border px-3 py-2 text-sm hover:bg-gray-50"
+                        >
+                            Export JSON
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Global progress -->
+                <div id="progressBar" class="mt-2">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span id="progressText" class="font-medium"
+                            >ความคืบหน้า: 0 / 0</span
+                        >
+                        <span id="statusCounts" class="text-gray-500"></span>
+                    </div>
+                    <div
+                        class="w-full h-3 bg-gray-100 rounded-full overflow-hidden"
+                    >
+                        <div
+                            id="progressFill"
+                            class="h-3 bg-green-500"
+                            style="width: 0%"
+                        ></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sections & Tasks -->
+            <section id="sections" class="space-y-4">
+                <!-- เริ่มว่าง ไม่มี mock data -->
+            </section>
+        </main>
+
+        <!-- Templates -->
+        <template id="sectionTemplate">
+            <details open class="rounded-2xl border">
+                <summary
+                    class="flex flex-col gap-2 px-4 py-3 cursor-pointer select-none"
+                >
+                    <div class="flex items-center gap-2">
+                        <span
+                            contenteditable="true"
+                            class="section-title font-semibold"
+                        ></span>
+                        <span class="text-xs text-gray-500"
+                            >(<span class="sec-count">0</span>)</span
+                        >
+                        <span class="ml-auto flex items-center gap-2">
+                            <button
+                                class="sec-add-task rounded-lg border px-2 py-1 text-xs hover:bg-gray-50"
+                            >
+                                + งาน
+                            </button>
+                            <button
+                                class="sec-del rounded-lg border px-2 py-1 text-xs hover:bg-red-50"
+                            >
+                                ลบหมวด
+                            </button>
+                        </span>
+                    </div>
+                    <!-- Section progress small -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs">
+                            <span class="sec-progress-text font-medium"
+                                >0 / 0 (0%)</span
+                            >
+                            <span
+                                class="sec-status-counts text-gray-500"
+                            ></span>
+                        </div>
+                        <div
+                            class="w-full h-2 bg-gray-100 rounded-full overflow-hidden"
+                        >
+                            <div
+                                class="sec-progress-fill h-2 bg-indigo-500"
+                                style="width: 0%"
+                            ></div>
+                        </div>
+                    </div>
+                </summary>
+                <div class="p-3">
+                    <div class="space-y-2 task-container"></div>
+                </div>
+            </details>
+        </template>
+
+        <template id="taskTemplate">
+            <div class="task-row border rounded-xl p-3 flex flex-col gap-2">
+                <div class="flex items-center gap-2">
+                    <span class="status-pill st-none task-pill">ยังไม่ทำ</span>
+                    <span
+                        class="task-title text-sm"
+                        contenteditable="false"
+                    ></span>
+                    <a
+                        class="task-link text-xs text-indigo-600 hover:underline hidden"
+                        target="_blank"
+                        >เปิดลิงก์</a
+                    >
+                    <div class="ml-auto flex items-center gap-1">
+                        <button
+                            class="state-btn st-none set-none"
+                            title="ยังไม่ทำ"
+                        >
+                            ยัง
+                        </button>
+                        <button
+                            class="state-btn st-blue set-blue"
+                            title="กำลังทำ"
+                        >
+                            ทำ
+                        </button>
+                        <button
+                            class="state-btn st-yellow set-yellow"
+                            title="ต้องแก้"
+                        >
+                            แก้
+                        </button>
+                        <button
+                            class="state-btn st-red set-red"
+                            title="ด่วนมาก"
+                        >
+                            ด่วน!
+                        </button>
+                        <button
+                            class="state-btn st-green set-green"
+                            title="ทำเสร็จ/ผ่าน"
+                        >
+                            ผ่าน ✓
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-2">
+                    <textarea
+                        class="task-notes w-full rounded-lg border px-3 py-2 text-xs"
+                        rows="2"
+                        placeholder="บันทึก / checklist ย่อย..."
+                    ></textarea>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <select
+                        class="task-owner rounded-lg border px-2 py-1 text-xs"
+                    >
+                        <option value="">ไม่ระบุ</option>
+                        <option value="ป๋วย">ป๋วย</option>
+                        <option value="ปลื้ม">ปลื้ม</option>
+                        <option value="สองคน">สองคน</option>
+                    </select>
+                    <button
+                        class="task-edit rounded-lg border px-2 py-1 text-xs hover:bg-gray-50"
+                    >
+                        แก้ไขชื่อ
+                    </button>
+                    <button
+                        class="task-del rounded-lg border px-2 py-1 text-xs hover:bg-red-50"
+                    >
+                        ลบ
+                    </button>
+                </div>
+            </div>
+        </template>
+
+        <script>
+            /* --------------------------- Project (NO MOCK) --------------------------- */
+            const project = { sections: [] }; // เริ่มว่าง
+
+            /* --------------------------- Utilities --------------------------- */
+            const $ = (s) => document.querySelector(s);
+            const uid = () => Math.random().toString(36).slice(2, 9);
+            const statusMeta = {
+                none: { text: "ยังไม่ทำ", cls: "st-none" },
+                blue: { text: "กำลังทำ", cls: "st-blue" },
+                yellow: { text: "ต้องแก้", cls: "st-yellow" },
+                red: { text: "ด่วนมาก", cls: "st-red" },
+                green: { text: "ผ่าน", cls: "st-green" },
+            };
+
+            const sectionsRoot = $("#sections");
+            const sectionTpl = $("#sectionTemplate");
+            const taskTpl = $("#taskTemplate");
+
+            function summarize(tasks) {
+                const counts = {
+                    none: 0,
+                    blue: 0,
+                    yellow: 0,
+                    red: 0,
+                    green: 0,
+                    total: 0,
+                    done: 0,
+                };
+                (tasks || []).forEach((t) => {
+                    counts.total++;
+                    const s = t.status || "none";
+                    counts[s] = (counts[s] || 0) + 1;
+                    if (s === "green") counts.done++;
+                });
+                return counts;
+            }
+
+            function render() {
+                sectionsRoot.innerHTML = "";
+                const q = $("#searchBox").value.trim().toLowerCase();
+                const stF = $("#statusFilter").value;
+                const ownF = $("#ownerFilter").value;
+
+                // Global progress
+                let allTasks = [];
+                project.sections.forEach(
+                    (s) => (allTasks = allTasks.concat(s.tasks || [])),
+                );
+                const g = summarize(allTasks);
+
+                $("#progressText").textContent =
+                    `ความคืบหน้า: ${g.done} / ${g.total}`;
+                const gpct = g.total ? Math.round((g.done / g.total) * 100) : 0;
+                $("#progressFill").style.width = gpct + "%";
+                $("#statusCounts").textContent = g.total
+                    ? `ยัง:${g.none} | ทำ:${g.blue} | แก้:${g.yellow} | ด่วน:${g.red} | ผ่าน:${g.green}`
+                    : "";
+
+                // Sections
+                project.sections.forEach((sec, sIdx) => {
+                    if (!sec.id) sec.id = uid();
+
+                    const secNode =
+                        sectionTpl.content.firstElementChild.cloneNode(true);
+                    const titleEl = secNode.querySelector(".section-title");
+                    const countEl = secNode.querySelector(".sec-count");
+                    const list = secNode.querySelector(".task-container");
+                    const secProgText =
+                        secNode.querySelector(".sec-progress-text");
+                    const secProgFill =
+                        secNode.querySelector(".sec-progress-fill");
+                    const secCountsEl =
+                        secNode.querySelector(".sec-status-counts");
+
+                    titleEl.textContent = sec.title || "หัวข้อ";
+                    titleEl.oninput = (e) => {
+                        sec.title = e.currentTarget.textContent.trim();
+                    };
+
+                    // Section progress
+                    const sc = summarize(sec.tasks || []);
+                    const spct = sc.total
+                        ? Math.round((sc.done / sc.total) * 100)
+                        : 0;
+                    secProgText.textContent = `${sc.done} / ${sc.total} (${spct}%)`;
+                    secProgFill.style.width = spct + "%";
+                    secCountsEl.textContent = sc.total
+                        ? `ยัง:${sc.none} | ทำ:${sc.blue} | แก้:${sc.yellow} | ด่วน:${sc.red} | ผ่าน:${sc.green}`
+                        : "";
+
+                    // Section actions
+                    secNode.querySelector(".sec-add-task").onclick = () => {
+                        sec.tasks = sec.tasks || [];
+                        sec.tasks.push({
+                            id: uid(),
+                            title: "งานใหม่",
+                            status: "none",
+                            owner: "",
+                        });
+                        render();
+                    };
+                    secNode.querySelector(".sec-del").onclick = () => {
+                        if (confirm(`ลบหมวด “${sec.title || "หัวข้อ"}” ?`)) {
+                            project.sections.splice(sIdx, 1);
+                            render();
+                        }
+                    };
+
+                    // Tasks with filters
+                    let visible = 0;
+                    (sec.tasks || []).forEach((t, tIdx) => {
+                        if (!t.id) t.id = uid();
+                        const txtOk =
+                            !q ||
+                            [t.title, t.notes, t.owner, sec.title]
+                                .join(" ")
+                                .toLowerCase()
+                                .includes(q);
+                        const stOk =
+                            stF === "all" || (t.status || "none") === stF;
+                        const ownOk =
+                            ownF === "all" || (t.owner || "") === ownF;
+                        if (!(txtOk && stOk && ownOk)) return;
+
+                        const row =
+                            taskTpl.content.firstElementChild.cloneNode(true);
+                        const pill = row.querySelector(".task-pill");
+                        const title = row.querySelector(".task-title");
+                        const linkA = row.querySelector(".task-link");
+                        const notes = row.querySelector(".task-notes");
+                        const ownerSel = row.querySelector(".task-owner");
+
+                        const meta = statusMeta[t.status || "none"];
+                        pill.textContent = meta.text;
+                        pill.className = `status-pill ${meta.cls}`;
+                        title.textContent =
+                            t.title + (t.status === "green" ? " /" : "");
+
+                        if (t.link) {
+                            linkA.classList.remove("hidden");
+                            linkA.href = t.link;
+                        }
+
+                        ownerSel.value = t.owner || "";
+                        ownerSel.onchange = (e) => {
+                            t.owner = e.target.value;
+                        };
+
+                        notes.value = t.notes || "";
+                        notes.oninput = (e) => {
+                            t.notes = e.target.value;
+                        };
+
+                        row.querySelector(".task-edit").onclick = (e) => {
+                            const editing =
+                                title.getAttribute("contenteditable") ===
+                                "true";
+                            if (!editing) {
+                                title.setAttribute("contenteditable", "true");
+                                title.focus();
+                                e.currentTarget.textContent = "บันทึกชื่อ";
+                            } else {
+                                title.setAttribute("contenteditable", "false");
+                                t.title = title.textContent
+                                    .replace(/\s*\/\s*$/, "")
+                                    .trim();
+                                e.currentTarget.textContent = "แก้ไขชื่อ";
+                                render();
+                            }
+                        };
+                        row.querySelector(".task-del").onclick = () => {
+                            if (confirm(`ลบงาน “${t.title}” ?`)) {
+                                sec.tasks.splice(tIdx, 1);
+                                render();
+                            }
+                        };
+
+                        const setState = (state) => {
+                            t.status = state;
+                            render();
+                        };
+                        row.querySelector(".set-none").onclick = () =>
+                            setState("none");
+                        row.querySelector(".set-blue").onclick = () =>
+                            setState("blue");
+                        row.querySelector(".set-yellow").onclick = () =>
+                            setState("yellow");
+                        row.querySelector(".set-red").onclick = () =>
+                            setState("red");
+                        row.querySelector(".set-green").onclick = () =>
+                            setState("green");
+
+                        const btnMap = {
+                            none: row.querySelector(".set-none"),
+                            blue: row.querySelector(".set-blue"),
+                            yellow: row.querySelector(".set-yellow"),
+                            red: row.querySelector(".set-red"),
+                            green: row.querySelector(".set-green"),
+                        };
+                        Object.values(btnMap).forEach((b) =>
+                            b.classList.remove("active"),
+                        );
+                        (
+                            btnMap[t.status || "none"] || btnMap.none
+                        ).classList.add("active");
+
+                        list.appendChild(row);
+                        visible++;
+                    });
+
+                    countEl.textContent = visible;
+                    sectionsRoot.appendChild(secNode);
+                });
+            }
+
+            /* --------------------------- Controls --------------------------- */
+            $("#searchBox").addEventListener("input", render);
+            $("#statusFilter").addEventListener("change", render);
+            $("#ownerFilter").addEventListener("change", render);
+
+            $("#addSectionBtn").onclick = () => {
+                project.sections.push({
+                    id: uid(),
+                    title: "หมวดใหม่",
+                    tasks: [],
+                });
+                render();
+            };
+            $("#addTaskBtn").onclick = () => {
+                if (!project.sections.length)
+                    project.sections.push({
+                        id: uid(),
+                        title: "หมวดใหม่",
+                        tasks: [],
+                    });
+                project.sections[0].tasks.push({
+                    id: uid(),
+                    title: "งานใหม่",
+                    status: "none",
+                    owner: "",
+                });
+                render();
+            };
+
+            // Import / Export (reset id on import)
+            $("#importBtn").onclick = () => $("#importFile").click();
+            $("#importFile").onchange = (e) => {
+                const f = e.target.files?.[0];
+                if (!f) return;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    try {
+                        const data = JSON.parse(reader.result);
+                        if (!data.sections) throw new Error("รูปแบบไม่ถูกต้อง");
+                        data.sections.forEach((s) => {
+                            s.id = uid();
+                            (s.tasks || []).forEach((t) => (t.id = uid()));
+                        });
+                        // ใช้ข้อมูลใหม่แทนของเดิมทั้งหมด
+                        project.sections = data.sections;
+                        render();
+                    } catch (err) {
+                        alert("Import ไม่สำเร็จ: " + err.message);
+                    }
+                };
+                reader.readAsText(f);
+                e.target.value = "";
+            };
+            $("#exportBtn").onclick = () => {
+                const blob = new Blob([JSON.stringify(project, null, 2)], {
+                    type: "application/json",
+                });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "nara-tasklist.json";
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    URL.revokeObjectURL(url);
+                    a.remove();
+                }, 0);
+            };
+
+            // First render
+            render();
+        </script>
+    </body>
+</html>
