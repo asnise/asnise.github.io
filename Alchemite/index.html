@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alchemite</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta name="theme-color" content="#2a2436">
+  <meta name="description" content="Alchemite — Indie 2D Action RPG" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink:#ff0075; --green:#599964; --purple:#473c5d; --gold:#f2b66b;
+      --cream:#ece3e1; --rust:#c37771; --pale:#eed7d6; --blue:#6191dc;
+      --bg:#2a2436; --fg:#ece3e1; --muted:#9d8fa8; --card:#3d3450; --border:#564a68;
+      --accent:#c37771;
+      --r:16px; --max:980px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--fg);
+      font:16px/1.6 'Itim', cursive;
+      display:flex; align-items:center; justify-content:center; min-height:100vh;
+    }
+    .wrap{width:100%; max-width:var(--max); max-height:100%;  padding:24px}
+    .card{
+      background:var(--card); border:2px solid var(--border); border-radius:var(--r);
+      padding:32px; display:flex; flex-direction:column; gap:24px;
+    }
+    @media (max-width:880px){ .card{padding:24px} }
+    .brand{
+      letter-spacing:.15rem; font-weight:400; font-size:14px; color:var(--accent);
+      text-transform:uppercase; margin-bottom:4px;
+    }
+
+    /* Player Characters */
+    .player-chars{
+      display:flex; justify-content:center; gap:12px; margin-bottom:12px;
+    }
+    .player-char{
+      width:56px; height:56px; cursor:pointer; transition:all .3s ease;
+      position:relative;
+    }
+    .player-char img{
+      width:56px; height:56px; object-fit:cover; border-radius:12px; border:2px solid var(--border);
+      background:var(--purple);
+    }
+    .player-char:hover img{
+      border-color:var(--accent);
+    }
+    .player-label{
+      position:absolute; bottom:-22px; left:50%; transform:translateX(-50%);
+      font-size:12px; color:var(--muted); white-space:nowrap;
+    }
+
+    h1{
+      margin:4px 0 8px; font-size:clamp(26px,4.5vw,42px); line-height:1.2;
+      color:var(--cream); font-weight:400;
+    }
+    .tag{color:var(--muted); font-size:16px; margin-bottom:4px}
+
+    /* Image Slider */
+    .slider{
+      border:2px solid var(--border); border-radius:12px; width:100%;
+      background:var(--purple); position:relative; overflow:visible;
+    }
+
+    /* NPC Header */
+    .npc-header{
+      display:flex; justify-content:center; gap:16px; padding:16px 0 20px;
+      position:relative;
+    }
+    .npc-icon{
+      width:64px; height:64px; cursor:pointer; transition:all .3s ease;
+      position:relative;
+    }
+    .npc-icon:hover{
+      transform:scale(1.15) translateY(-4px);
+    }
+    .npc-icon img{
+      width:100%; height:100%; object-fit:cover; border-radius:10%;
+      border:3px solid var(--border); transition:all .3s ease;
+      padding: 5px;
+      background:var(--purple);
+    }
+    .npc-icon:hover img{
+      border-color:var(--accent);
+    }
+    .npc-icon.active img{
+      border-color:var(--accent); box-shadow:0 0 0 3px rgba(195,119,113,.3);
+    }
+
+    /* Slider content */
+    .slider-content{
+      aspect-ratio:16/9; max-height: clamp(220px, 60vh, 560px); position:relative; overflow:hidden;
+      border-radius:10px 10px 12px 12px;
+    }
+    .slides{
+      display:flex; height:100%; transition:transform .5s ease;
+    }
+    .slide{
+      min-width:100%; height:100%; display:grid; place-items:center; position:relative;
+      background:linear-gradient(135deg, var(--purple) 0%, #362d47 100%);
+    }
+    /* <<<<<< เพิ่มเฉพาะกฎภาพในสไลด์ เพื่อรองรับภาพใหญ่ 1920x1080 ไม่ล้น/ไม่ยืด >>>>>> */
+    .slide img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+    }
+
+    .slide span{
+      color:var(--pale); text-shadow:0 1px 0 rgba(0,0,0,.3);
+      position:absolute; left:12px; bottom:12px; font-size:13px; opacity:.8;
+    }
+
+    .slider-nav{
+      display:flex; gap:8px; justify-content:center; padding:12px 0 0;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:6px; background:rgba(236,227,225,.35);
+      border:none; cursor:pointer; transition:all .2s ease;
+    }
+    .dot.active{background:var(--accent); width:28px; border-radius:5px}
+    .dot:hover{background:rgba(236,227,225,.6)}
+
+    .arrow{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:var(--purple); border:2px solid var(--border); border-radius:8px;
+      width:40px; height:40px; display:grid; place-items:center; cursor:pointer;
+      opacity:0; transition:opacity .3s ease; z-index:10;
+    }
+    .slider-content:hover .arrow{opacity:1}
+    .arrow:hover{background:var(--card); border-color:var(--accent)}
+    .arrow.prev{left:12px}
+    .arrow.next{right:12px}
+    .arrow svg{width:20px; height:20px; stroke:var(--cream)}
+
+    .btns{display:flex; flex-wrap:wrap; gap:12px; margin-top:16px}
+    .btn{
+      appearance:none; border:2px solid var(--border); border-radius:10px; padding:14px 24px;
+      background:var(--cream); color:var(--purple); font-weight:400; text-decoration:none;
+      display:inline-flex; align-items:center; gap:8px; font-size:17px;
+      transition:all .2s ease; cursor:pointer; font-family:'Itim',cursive;
+    }
+    .btn:hover{background:#f5ede9; border-color:var(--accent)}
+    .btn:active{transform:scale(.98)}
+    .btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+    .btn.sec{background:var(--cream); border-color:var(--border); color:var(--purple)}
+    .btn.sec:hover{background:#f5ede9; border-color:var(--accent)}
+    .btn svg{width:18px; height:18px; flex-shrink:0}
+    .row{display:flex; align-items:center; gap:10px; color:var(--muted); font-size:14px; margin-top:12px}
+    .row span{display:flex; align-items:center; gap:6px}
+    footer{margin-top:20px; text-align:center; color:var(--muted); font-size:14px; opacity:.8}
+
+    /* Forms section */
+    .forms{
+      margin-top:18px; padding:16px; border:2px dashed var(--border); border-radius:12px;
+      display:flex; flex-wrap:wrap; gap:10px; background:rgba(71,60,93,.3);
+      position:relative;
+    }
+    .forms::before{
+      content:'แบบประเมิน'; position:absolute; top:-12px; left:12px;
+      background:var(--card); padding:0 10px; font-size:14px; color:var(--accent);
+      font-weight:400; letter-spacing:.05em;
+    }
+    .forms .btn{
+      padding:10px 16px; font-size:15px; background:var(--cream); border-color:var(--border); color:var(--purple);
+    }
+    .forms .btn:hover{background:#f5ede9; border-color:var(--accent)}
+  </style>
+</head>
+<body>
+  <main class="wrap" role="main">
+    <section class="card">
+      <!-- Image Slider -->
+      <div class="slider-content">
+        <div class="slides" id="slides">
+          <div class="slide"><img src="screenshot/01.png" alt="01"></div>
+          <div class="slide"><img src="screenshot/02.png" alt="02" loading="lazy" decoding="async"></div>
+          <div class="slide"><img src="screenshot/03.png" alt="03" loading="lazy" decoding="async"></div>
+          <div class="slide"><img src="screenshot/04.png" alt="04" loading="lazy" decoding="async"></div>
+          <div class="slide"><img src="screenshot/05.png" alt="05" loading="lazy" decoding="async"></div>
+          <div class="slide"><img src="screenshot/06.png" alt="06" loading="lazy" decoding="async"></div>
+        </div>
+
+        <button class="arrow prev" onclick="changeSlide(-1)" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <button class="arrow next" onclick="changeSlide(1)" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+
+        <div class="slider-nav" id="dots"></div>
+      </div>
+
+      <div>
+          <div class="npc-header">
+            <div class="npc-icon" onclick="goToSlide(0)">
+              <img src="npc/01.png" alt="นักเล่นแร่แปรธาตุ">
+            </div>
+            <div class="npc-icon" onclick="goToSlide(1)">
+              <img src="npc/02.png" alt="ชาวเมือง">
+            </div>
+            <div class="npc-icon" onclick="goToSlide(2)">
+              <img src="npc/03.png" alt="ยามประจำเมือง">
+            </div>
+            <div class="npc-icon" onclick="goToSlide(3)">
+              <img src="npc/04.png" alt="เจ้าเมือง">
+            </div>
+            <div class="npc-icon" onclick="goToSlide(4)">
+              <img src="npc/main_m.png" alt="ผู้เล่นชาย">
+            </div>
+            <div class="npc-icon" onclick="goToSlide(5)">
+              <img src="npc/main_f.png" alt="ผู้เล่นหญิง">
+            </div>
+          </div>
+        <div class="brand">Indie 2D Action RPG</div>
+        <h1>ALCHEMITE • VER.1</h1>
+        <div class="tag">เก็บ • คราฟต์ • ปลดหนี้</div>
+        <div class="btns" role="group" aria-label="actions">
+          <a class="btn" href="https://drive.google.com/file/d/1lKk1_c1jXWNfPd_4Aci9bC2lrUMB7zwY/view?usp=drive_link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            Download (Windows)
+          </a>
+          <a class="btn sec" href="https://youtu.be/WOvWr-0TwiQ" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            Watch Video
+          </a>
+        </div>
+
+        <!-- แบบทดสอบ/แบบประเมิน -->
+        <div class="forms" role="group" aria-label="forms">
+          <a class="btn sec" href="https://forms.gle/qLkb9S7MXs11a6tTA" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="13" x2="15" y2="13"/>
+              <line x1="9" y1="17" x2="15" y2="17"/>
+            </svg>
+            ก่อนเล่น
+          </a>
+          <a class="btn sec" href="https://forms.gle/3P8DM9X53v8hiyTQ6" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="13" x2="15" y2="13"/>
+              <line x1="9" y1="17" x2="15" y2="17"/>
+            </svg>
+            หลังเล่น
+          </a>
+          <a class="btn sec" href="https://forms.gle/saAJje8CLhCQ5pWU7" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="13" x2="15" y2="13"/>
+              <line x1="9" y1="17" x2="15" y2="17"/>
+            </svg>
+            ความพึงพอใจ
+          </a>
+        </div>
+
+        <div class="row">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Updated 26/10/2025
+          </span>
+          <span>•</span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18"/>
+            </svg>
+            Minimal build
+          </span>
+        </div>
+      </div>
+    </section>
+    <footer>© 2025 Alchemite</footer>
+  </main>
+
+  <script>
+    let currentSlide = 0;
+    let autoSlideTimer;
+    const slides = document.querySelectorAll('.slide');
+    const slidesContainer = document.getElementById('slides');
+    const dotsContainer = document.getElementById('dots');
+
+    // Create dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.onclick = () => goToSlide(i);
+      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      dotsContainer.appendChild(dot);
+    });
+
+    // Update active dot & slide
+    function updateSlider(){
+      slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+      [...dotsContainer.children].forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+    }
+
+    function changeSlide(delta){
+      currentSlide = (currentSlide + delta + slides.length) % slides.length;
+      updateSlider();
+    }
+
+    function goToSlide(i){
+      currentSlide = i;
+      updateSlider();
+    }
+
+    // Auto slide
+    function startAutoSlide(){
+      clearInterval(autoSlideTimer);
+      autoSlideTimer = setInterval(() => changeSlide(1), 3800);
+    }
+
+    // Init
+    updateSlider();
+    startAutoSlide();
+
+    // Pause on hover
+    document.querySelector('.slider-content').addEventListener('mouseenter', () => {
+      clearInterval(autoSlideTimer);
+    });
+
+    document.querySelector('.slider-content').addEventListener('mouseleave', () => {
+      startAutoSlide();
+    });
+  </script>
+</body>
+</html>
