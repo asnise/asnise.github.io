@@ -1,21 +1,118 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
+    
     const gallery = document.getElementById('portfolio-gallery');
     const menu = document.getElementById('portfolio-menu');
     const body = document.body;
 
+    let isLoaderDismissed = false;
+
+    function updateProgress(percent, statusText) {
+        const fill = document.getElementById('progress-bar-fill');
+        const percentEl = document.getElementById('loader-percent');
+        const statusEl = document.getElementById('loader-status-text');
+
+        if (fill) fill.style.width = `${Math.min(percent, 100)}%`;
+        if (percentEl) percentEl.textContent = `${Math.min(Math.round(percent), 100)}%`;
+        if (statusEl && statusText) statusEl.textContent = statusText;
+    }
+
+    function hideLoader() {
+        if (isLoaderDismissed) return;
+        isLoaderDismissed = true;
+
+        updateProgress(100, 'Ready');
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.classList.add('hidden');
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 400);
+            }
+        }, 180);
+    }
+
     // 1. ฟังก์ชันสำหรับดึงข้อมูลจาก JSON
     async function loadPortfolioData() {
+        updateProgress(20, 'Loading core assets...');
         try {
+            updateProgress(45, 'Loading portfolio data...');
             const response = await fetch('portfolio-data.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
+
+            updateProgress(75, 'Rendering project gallery...');
             renderPortfolio(data);
             createMenu(data);
+
+            updateProgress(90, 'Preparing media...');
+            
+            // Preload banner cover
+            const coverImg = new Image();
+            coverImg.onload = coverImg.onerror = () => {
+                hideLoader();
+            };
+            coverImg.src = '/images/Cover.jpg';
+
+            // Safeguard timeout to ensure zero delay
+            setTimeout(hideLoader, 600);
         } catch (error) {
             console.error("Could not load portfolio data:", error);
             gallery.innerHTML = '<p>Sorry, the portfolio could not be loaded.</p>';
+            hideLoader();
+        }
+    }
+
+    // Helper function สำหรับสร้าง Lazy Media พร้อม Skeleton Ghost Placeholder
+    function createLazyMedia(mediaUrl, altText, isModal = false) {
+        const wrapper = document.createElement('div');
+        wrapper.className = isModal ? 'modal-media-wrapper' : 'media-wrapper';
+
+        const isVideo = mediaUrl && mediaUrl.match(/\.(mp4|webm|ogv)$/i);
+
+        if (isVideo) {
+            const video = document.createElement('video');
+            video.className = (isModal ? 'modal-media' : 'artwork-image') + ' lazy-media';
+            video.controls = true;
+            video.autoplay = isModal;
+            video.muted = true;
+            video.preload = 'metadata';
+            
+            const onVideoLoaded = () => {
+                video.classList.add('loaded');
+                wrapper.classList.add('loaded');
+            };
+
+            video.addEventListener('loadeddata', onVideoLoaded);
+            video.addEventListener('canplay', onVideoLoaded);
+            video.src = mediaUrl;
+            wrapper.appendChild(video);
+            return wrapper;
+        } else {
+            const img = document.createElement('img');
+            img.className = (isModal ? 'modal-media' : 'artwork-image') + ' lazy-media';
+            img.alt = altText || 'Artwork';
+            img.loading = 'lazy';
+
+            const onLoaded = () => {
+                img.classList.add('loaded');
+                wrapper.classList.add('loaded');
+            };
+
+            img.addEventListener('load', onLoaded);
+            img.addEventListener('error', onLoaded);
+            
+            img.src = mediaUrl;
+
+            if (img.complete && img.naturalWidth > 0) {
+                onLoaded();
+            }
+
+            wrapper.appendChild(img);
+            return wrapper;
         }
     }
 
@@ -39,23 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
             artworkGrid.dataset.count = item.images.length; 
 
             item.images.forEach(imageUrl => {
-                const isVideo = imageUrl.match(/\.(mp4|webm|ogv)$/i);
-                
-                if (isVideo) {
-                    const video = document.createElement('video');
-                    video.src = imageUrl;
-                    video.controls = true;
-                    video.autoplay = false;
-                    video.muted = true;
-                    video.className = 'artwork-image';
-                    artworkGrid.appendChild(video);
-                } else {
-                    const img = document.createElement('img');
-                    img.src = imageUrl;
-                    img.alt = item.name;
-                    img.className = 'artwork-image';
-                    artworkGrid.appendChild(img);
-                }
+                const mediaWrapper = createLazyMedia(imageUrl, item.name, false);
+                artworkGrid.appendChild(mediaWrapper);
             });
 
             artworkContainer.appendChild(artworkGrid);
@@ -68,21 +150,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>${formattedDescription}</p>
             `;
             
-            if (item.button) {
-                const buttonLink = document.createElement('a');
-                buttonLink.href = item.button.link;
-                buttonLink.className = 'portfolio-button';
-                buttonLink.textContent = item.button.name;
-                buttonLink.target = '_blank';
-                artworkInfo.appendChild(buttonLink);
-                
-                if (item.button.link === "Openimage" && item.button.another_url) {
-                    buttonLink.addEventListener('click', (event) => {
-                        event.preventDefault();
-                        openImageModal(item.button.another_url);
-                    });
-                } 
-            
+            const buttonsToRender = item.buttons || (item.button ? [item.button] : []);
+            if (buttonsToRender.length > 0) {
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'portfolio-button-group';
+                buttonContainer.style.display = 'flex';
+                buttonContainer.style.gap = '10px';
+                buttonContainer.style.flexWrap = 'wrap';
+
+                buttonsToRender.forEach(btn => {
+                    const buttonLink = document.createElement('a');
+                    buttonLink.href = btn.link;
+                    buttonLink.className = 'portfolio-button';
+                    buttonLink.textContent = btn.name;
+                    buttonLink.target = '_blank';
+                    if (btn.link === "Openimage" && btn.another_url) {
+                        buttonLink.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            openImageModal(btn.another_url);
+                        });
+                    }
+                    buttonContainer.appendChild(buttonLink);
+                });
+                artworkInfo.appendChild(buttonContainer);
             }
 
             portfolioItem.appendChild(artworkContainer);
@@ -92,24 +182,96 @@ document.addEventListener('DOMContentLoaded', () => {
             
             gallery.appendChild(portfolioItem);
         });
-
-        setupIntersectionObserver();
     }
 
-    // ฟังก์ชันใหม่: สร้างเมนูปุ่มสำหรับนำทาง
+    // ฟังก์ชันใหม่: สร้างเมนู Jump Directory สำหรับนำทาง
     function createMenu(portfolioData) {
-        portfolioData.forEach(item => {
+        menu.innerHTML = `
+            <div class="menu-brand">
+                <span class="menu-label">INDEX</span>
+                <span class="menu-divider">/</span>
+                <span class="project-count">${portfolioData.length} WORKS</span>
+            </div>
+            <div class="jump-dropdown-container">
+                <button class="jump-dropdown-btn" id="jump-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+                    <span class="jump-current-title" id="jump-current-title">Select Work</span>
+                    <svg class="jump-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="jump-dropdown-menu" id="jump-dropdown-menu">
+                    <div class="jump-dropdown-header">
+                        <span>Directory</span>
+                        <a href="#" class="jump-to-top">↑ Top</a>
+                    </div>
+                    <div class="jump-dropdown-list" id="jump-dropdown-list">
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const list = document.getElementById('jump-dropdown-list');
+        const dropdownBtn = document.getElementById('jump-dropdown-btn');
+        const dropdownMenu = document.getElementById('jump-dropdown-menu');
+
+        portfolioData.forEach((item, index) => {
             if (item.name) {
-                const button = document.createElement('a');
-                button.href = `#${item.name.replace(/\s/g, '-')}`;
-                button.textContent = item.name;
-                button.className = 'menu-button';
-                menu.appendChild(button);
+                const id = item.name.replace(/\s/g, '-');
+                const link = document.createElement('a');
+                link.href = `#${id}`;
+                link.className = 'jump-dropdown-item';
+                link.dataset.id = id;
+                
+                const num = (index + 1).toString().padStart(2, '0');
+                link.innerHTML = `
+                    <span class="jump-item-num">${num}</span>
+                    <span class="jump-item-name">${item.name}</span>
+                `;
+
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    dropdownMenu.classList.remove('open');
+                    dropdownBtn.classList.remove('active');
+                    dropdownBtn.setAttribute('aria-expanded', 'false');
+                    const targetEl = document.getElementById(id);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+                list.appendChild(link);
             }
         });
+
+        // Toggle dropdown
+        dropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdownMenu.classList.toggle('open');
+            dropdownBtn.classList.toggle('active', isOpen);
+            dropdownBtn.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target)) {
+                dropdownMenu.classList.remove('open');
+                dropdownBtn.classList.remove('active');
+                dropdownBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Top button inside dropdown
+        const topLink = menu.querySelector('.jump-to-top');
+        if (topLink) {
+            topLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                dropdownMenu.classList.remove('open');
+                dropdownBtn.classList.remove('active');
+                dropdownBtn.setAttribute('aria-expanded', 'false');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
     }
 
-    // ฟังก์ชันใหม่: openImageModal
+    // ฟังก์ชันใหม่: openImageModal พร้อม Ghost Skeleton Loader
     function openImageModal(images) {
         const modal = document.getElementById('image-modal');
         const modalImageContainer = modal.querySelector('.modal-image-container');
@@ -117,23 +279,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modalImageContainer.innerHTML = '';
 
-        images.forEach(mediaUrl => {
-            const isVideo = mediaUrl.match(/\.(mp4|webm|ogv)$/i);
+        images.forEach(item => {
+            const mediaUrl = typeof item === 'string' ? item : item.url;
+            const title = typeof item === 'object' ? item.title : null;
+            const description = typeof item === 'object' ? item.description : null;
 
-            if (isVideo) {
-                const video = document.createElement('video');
-                video.src = mediaUrl;
-                video.controls = true;
-                video.className = 'modal-media';
-                video.autoplay = true;
-                video.muted = true;
-                modalImageContainer.appendChild(video);
+            if (!mediaUrl) return;
+
+            const mediaWrapper = createLazyMedia(mediaUrl, title || 'Artwork detail', true);
+
+            if (title || description) {
+                const card = document.createElement('div');
+                card.className = 'modal-card';
+                card.appendChild(mediaWrapper);
+
+                const info = document.createElement('div');
+                info.className = 'modal-card-info';
+                
+                if (title) {
+                    const h3 = document.createElement('h3');
+                    h3.className = 'modal-card-title';
+                    h3.textContent = title;
+                    info.appendChild(h3);
+                }
+
+                if (description) {
+                    const p = document.createElement('div');
+                    p.className = 'modal-card-desc';
+                    p.innerHTML = description.replace(/\n/g, '<br>');
+                    info.appendChild(p);
+                }
+
+                card.appendChild(info);
+                modalImageContainer.appendChild(card);
             } else {
-                const img = document.createElement('img');
-                img.src = mediaUrl;
-                img.alt = 'Artwork detail';
-                img.className = 'modal-media';
-                modalImageContainer.appendChild(img);
+                modalImageContainer.appendChild(mediaWrapper);
             }
         });
         
@@ -177,35 +357,11 @@ document.addEventListener('DOMContentLoaded', () => {
         closeAllModals();
     });
 
-    // โค้ดที่แก้ไข: ทำให้แอนิเมชันทำงานซ้ำได้
-    function setupIntersectionObserver() {
-        const portfolioItems = document.querySelectorAll('.portfolio-item');
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.2
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                } else {
-                    entry.target.classList.remove('visible');
-                }
-            });
-        }, observerOptions);
-
-        portfolioItems.forEach(item => {
-            observer.observe(item);
-        });
-    }
-
-    // ฟังก์ชันใหม่: updateActiveMenu
+    // ฟังก์ชัน: updateActiveMenu สำหรับ Dropdown Jump List
     function updateActiveMenu() {
         const sections = document.querySelectorAll('.portfolio-item');
         let activeSection = null;
-        const center = window.innerHeight / 2;
+        const center = window.innerHeight / 3;
         
         sections.forEach(section => {
             const rect = section.getBoundingClientRect();
@@ -214,14 +370,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        const menuButtons = document.querySelectorAll('.menu-button');
-        menuButtons.forEach(btn => btn.classList.remove('active'));
+        const items = document.querySelectorAll('.jump-dropdown-item');
+        items.forEach(item => item.classList.remove('active'));
         
+        const currentTitleEl = document.getElementById('jump-current-title');
         if (activeSection) {
-            const activeMenu = document.querySelector(`.menu-button[href="#${activeSection.id}"]`);
-            if (activeMenu) {
-                activeMenu.classList.add('active');
+            const activeItem = document.querySelector(`.jump-dropdown-item[data-id="${activeSection.id}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+                if (currentTitleEl) {
+                    const itemName = activeItem.querySelector('.jump-item-name');
+                    if (itemName) {
+                        currentTitleEl.textContent = itemName.textContent;
+                    }
+                }
             }
+        } else if (window.scrollY < 200 && currentTitleEl) {
+            currentTitleEl.textContent = "Select Project";
         }
     }
 
@@ -235,36 +400,18 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPortfolioData();
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    const portfolioItems = document.querySelectorAll(".portfolio-item");
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-            }
-        });
-    }, { threshold: 0.1 });
 
-    portfolioItems.forEach(item => {
-        observer.observe(item);
-    });
-});
-
-window.addEventListener('load', () => {
-    const loader = document.getElementById('loader');
-    if (loader) {
-        loader.style.opacity = '0';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 500); // Match the CSS transition duration
-    }
-});
 
 function initBannerCarousel() {
     const carouselInner = document.querySelector('.carousel-inner');
     const prevButton = document.querySelector('.carousel-control-prev');
     const nextButton = document.querySelector('.carousel-control-next');
     const items = document.querySelectorAll('.carousel-item');
+    
+    if (!carouselInner || !prevButton || !nextButton || items.length === 0) {
+        return;
+    }
+
     let currentIndex = 0;
     const totalItems = items.length;
     
@@ -283,7 +430,6 @@ function initBannerCarousel() {
         updateCarousel();
     });
 
-    // เลื่อนอัตโนมัติทุก 5 วินาที
     setInterval(() => {
         currentIndex = (currentIndex + 1) % totalItems;
         updateCarousel();
@@ -292,5 +438,4 @@ function initBannerCarousel() {
 
 document.addEventListener('DOMContentLoaded', () => {
     initBannerCarousel();
-    // …existing code สำหรับ portfolio และ modal…
 });
