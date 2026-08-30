@@ -31,7 +31,93 @@
         ]
     },
     {
+        "layout": "right",
+        "images": [
+            "/images/ShapeKeyAxisControl/Cover.png",
+            "/images/ShapeKeyAxisControl/Info.png",
+            "/images/ShapeKeyAxisControl/01.png",
+            "/images/ShapeKeyAxisControl/03.png"
+        ],
+        "name": "ShapeKey Axis Control — Blender Add-on",
+        "blender_addon_slug": "shapekey-axis-control",
+        "fallback_downloads": 4565,
+        "description": "A powerful animation and rigging add-on for Blender designed to streamline facial rigging, eye tracking, and complex animations by mapping shape key values to an intuitive 2D Axis HUD Joystick. Features multi-axis coordinate blending (Box, Radial, Axis-restricted falloffs), global scene preset recording/keyframing, and timeline automation.\n\n<b>Blender 4.2 LTS+ Compatible | GPL-3.0</b>\n<b>Game Dev & Technical Art Tooling | 2026</b>",
+        "buttons": [
+            {
+                "name": "Blender Extensions",
+                "link": "https://extensions.blender.org/add-ons/shapekey-axis-control/"
+            },
+            {
+                "name": "GitHub Repo",
+                "link": "https://github.com/asnise/ShapeKeyAxisControl"
+            },
+            {
+                "name": "Feature Showcase",
+                "link": "Openimage",
+                "another_url": [
+                    {
+                        "url": "/images/ShapeKeyAxisControl/Cover.png",
+                        "title": "ShapeKey Axis Control — Overview",
+                        "description": "Control shape keys effortlessly using an intuitive 2D Axis HUD Joystick in Blender 4.2 LTS and newer."
+                    },
+                    {
+                        "url": "/images/ShapeKeyAxisControl/Info.png",
+                        "title": "HUD Architecture & Controls",
+                        "description": "Real-time 2D Joystick HUD panel, custom group management (Eyes, Mouth, Brows), falloff blend modes, and timeline auto-keying."
+                    },
+                    {
+                        "url": "/images/ShapeKeyAxisControl/01.png",
+                        "title": "Advanced Blend Modes & Falloffs",
+                        "description": "Customize influence zones using Box, Radial, or restricted Axis (X-only / Y-only) coordinate calculations for precise facial animation."
+                    },
+                    {
+                        "url": "/images/ShapeKeyAxisControl/03.png",
+                        "title": "Global Animation Presets & Keyframing",
+                        "description": "Capture joystick coordinates across all objects in the scene. Use 'Set' to record, 'Call' to apply, and 'Key' to insert keyframes for all affected shape keys instantly."
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "layout": "left",
+        "images": [
+            "/images/OCRLocalTranslate/01.png",
+            "/images/OCRLocalTranslate/02.png",
+            "/images/OCRLocalTranslate/03.png"
+        ],
+        "name": "OCR Local Translate — Real-Time Game Subtitle Translator",
+        "description": "A high-performance, 100% on-device game subtitle translator for Windows designed for low latency, zero API costs, and seamless in-game overlay integration. Powered by local ONNX OCR (RapidOCR/DBNet), CTranslate2 (Argos Translate offline neural translation), DXGI Desktop Duplication (1-3ms frame capture), and a frameless transparent UI with hotkey capture and LRU in-memory translation caching.\n\n<b>100% On-Device Offline Neural Translation | Zero API Cost</b>\n<b>DXGI Screen Duplication & DirectML / CUDA Hardware Acceleration</b>\n<b>Python, ONNX Runtime, PyQt/Custom UI | 2026</b>",
+        "buttons": [
+            {
+                "name": "GitHub Repo",
+                "link": "https://github.com/asnise/OCR-Local-Translate"
+            },
+            {
+                "name": "Feature Showcase",
+                "link": "Openimage",
+                "another_url": [
+                    {
+                        "url": "/images/OCRLocalTranslate/01.png",
+                        "title": "Real-Time In-Game Capture & Translation Overlay",
+                        "description": "Captures dialogue and subtitle zones with 1-3ms DXGI screen duplication, performing fast on-device OCR and local neural translation without internet dependency."
+                    },
+                    {
+                        "url": "/images/OCRLocalTranslate/02.png",
+                        "title": "Subtitles Overlay & Gameplay Integration",
+                        "description": "Unobtrusive semi-transparent frameless overlay with ghost skeleton loading indicator, font auto-splitting, and LRU cache for instant response."
+                    },
+                    {
+                        "url": "/images/OCRLocalTranslate/03.png",
+                        "title": "Interactive Settings & Hardware Acceleration",
+                        "description": "Configurable capture zones, hotkey rebind system, DirectML / CUDA GPU acceleration options, and deep translation fallback."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "layout": "right",
         "images": [
             "/images/Alchemite/50.jpg",
             "/images/Alchemite/51.jpg",

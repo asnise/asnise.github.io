@@ -116,6 +116,70 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Counter animation utility for live stats
+    function animateCounter(element, start, end, duration = 1200) {
+        if (!element || isNaN(end)) return;
+        const startTime = performance.now();
+        function update(now) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(start + (end - start) * ease);
+            element.textContent = current.toLocaleString();
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            } else {
+                element.textContent = end.toLocaleString();
+            }
+        }
+        requestAnimationFrame(update);
+    }
+
+    // Dynamic scraper/fetcher for Blender Extensions platform download count
+    async function fetchBlenderDownloads(slug, fallbackValue, targetElement) {
+        if (!slug || !targetElement) return;
+
+        const cacheKey = `blender_ext_dl_${slug}`;
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) {
+            const cachedNum = parseInt(cached, 10);
+            if (!isNaN(cachedNum)) {
+                targetElement.textContent = cachedNum.toLocaleString();
+                return;
+            }
+        }
+
+        const targetUrl = `https://extensions.blender.org/add-ons/${slug}/`;
+        const proxies = [
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+            `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`
+        ];
+
+        for (const proxyUrl of proxies) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+                const response = await fetch(proxyUrl, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                if (!response.ok) continue;
+                const html = await response.text();
+                const match = html.match(/<dt>\s*Downloads\s*<\/dt>\s*<dd>(\d+)<\/dd>/i);
+                if (match && match[1]) {
+                    const downloadCount = parseInt(match[1], 10);
+                    if (!isNaN(downloadCount)) {
+                        sessionStorage.setItem(cacheKey, downloadCount.toString());
+                        const initialVal = fallbackValue ? parseInt(fallbackValue, 10) : 0;
+                        animateCounter(targetElement, initialVal > 0 ? Math.floor(initialVal * 0.75) : 0, downloadCount);
+                        return;
+                    }
+                }
+            } catch (e) {
+                // Continue to fallback
+            }
+        }
+    }
+
     // 2. ฟังก์ชันสำหรับสร้าง HTML และแสดงผลในหน้าเว็บ
     function renderPortfolio(portfolioData) {
         if (!portfolioData || portfolioData.length === 0) {
@@ -149,6 +213,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2>${item.name}</h2>
                 <p>${formattedDescription}</p>
             `;
+
+            if (item.blender_addon_slug) {
+                const statsBadge = document.createElement('div');
+                statsBadge.className = 'addon-stats-badge';
+                const initialCount = item.fallback_downloads ? Number(item.fallback_downloads).toLocaleString() : '4,565';
+                statsBadge.innerHTML = `
+                    <div class="stats-live-dot" title="Live Sync Active"></div>
+                    <i class="fa-solid fa-cloud-arrow-down stats-icon"></i>
+                    <span class="stats-text"><strong class="stats-count" id="blender-count-${item.blender_addon_slug}">${initialCount}</strong> Downloads on Blender Extensions</span>
+                `;
+                artworkInfo.appendChild(statsBadge);
+                
+                const countEl = statsBadge.querySelector('.stats-count');
+                fetchBlenderDownloads(item.blender_addon_slug, item.fallback_downloads, countEl);
+            }
             
             const buttonsToRender = item.buttons || (item.button ? [item.button] : []);
             if (buttonsToRender.length > 0) {

@@ -554,6 +554,79 @@ body {
     color: #ff004c;
 }
 
+/* ===== Blender Add-on Stats Badge ===== */
+.addon-stats-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.42rem 0.85rem;
+    margin: 0.25rem 0 1.25rem 0;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: #171717;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    max-width: 100%;
+}
+
+.addon-stats-badge:hover {
+    border-color: #171717;
+    background: #fafafa;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.stats-live-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+    animation: livePulse 2s infinite;
+    flex-shrink: 0;
+}
+
+@keyframes livePulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.stats-icon {
+    color: #737373;
+    font-size: 0.88rem;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+
+.addon-stats-badge:hover .stats-icon {
+    color: #171717;
+}
+
+.stats-text {
+    font-size: 0.82rem;
+    font-weight: 450;
+    color: #52525b;
+    letter-spacing: 0.2px;
+}
+
+.stats-count {
+    font-weight: 700;
+    color: #171717;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
 /* ===== 5. Fullscreen Lightbox Modal ===== */
 .modal-overlay {
     display: none;
