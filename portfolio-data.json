@@ -1,7 +1,119 @@
 [
-    
+    {
+        "layout": "left",
+        "images": [
+            "/images/InventoryPage.png",
+            "/images/GachaPage.png",
+            "/images/VisualNovel.png",
+            "/images/CostumePage.png"
+        ],
+        "name": "Rievel Games — Game Dev & Tech Artist",
+        "description": "Contributed as a Technical Artist and Game Developer focusing on UI architecture and optimization. Engineered high-density scroll recycling reducing draw calls by 60%, developed custom UI shaders and procedural mesh tools, created an in-house Visual Novel engine, and integrated real-time backend systems for gacha presentations, global chat, and matchmaking lobbies.\n<b>DEC 2025 – AUG 2026 | Rievel Games CO., Ltd</b>",
+        "buttons": [
+            {
+                "name": "Try Visual-NV Tool",
+                "link": "https://asnise.github.io/Visual-NV/"
+            },
+            {
+                "name": "More UI & Showcase",
+                "link": "Openimage",
+                "another_url": [
+                    "/images/InventoryPage.png",
+                    "/images/InventoryPageLogic.png",
+                    "/images/GachaPage.png",
+                    "/video/gacha_result_ui.mp4",
+                    "/images/VisualNovel.png",
+                    "/images/CostumePage.png",
+                    "/images/Chat.png",
+                    "/images/ConsumebleGamePlay.png"
+                ]
+            }
+        ]
+    },
     {
         "layout": "right",
+        "images": [
+            "/images/WhisperPaleThon/1.jpg",
+            "/images/WhisperPaleThon/33.jpg",
+            "/images/WhisperPaleThon/35.jpg",
+            "/images/WhisperPaleThon/37.jpg"
+        ],
+        "name": "Whispers of the Pale Throne",
+        "description": "In the ancient past, the kingdom of Aetheranil flourished under a sacred covenant with primordial gods. When King Ailzen discovered humanity was being harvested as eternal vessels, he broke the covenant in 'The Severance,' shattering the realm. Centuries later, echoes of the broken covenant awaken once more from the ruins.\n<b>Original Concept Art & World-Building Project</b>",
+        "button": {
+            "name": "Explore Concept & Lore",
+            "link": "Openimage",
+            "another_url": [
+                "/images/WhisperPaleThon/1.jpg",
+                "/images/WhisperPaleThon/11.jpg",
+                "/images/WhisperPaleThon/12.jpg",
+                "/images/WhisperPaleThon/13.jpg",
+                "/images/WhisperPaleThon/14.jpg",
+                "/images/WhisperPaleThon/15.jpg",
+                "/images/WhisperPaleThon/16.jpg",
+                "/images/WhisperPaleThon/17.jpg",
+                "/images/WhisperPaleThon/18.jpg",
+                "/images/WhisperPaleThon/19.jpg",
+                "/images/WhisperPaleThon/20.jpg",
+                "/images/WhisperPaleThon/21.jpg",
+                "/images/WhisperPaleThon/22.jpg",
+                "/images/WhisperPaleThon/23.jpg",
+                "/images/WhisperPaleThon/24.jpg",
+                "/images/WhisperPaleThon/25.jpg",
+                "/images/WhisperPaleThon/26.jpg",
+                "/images/WhisperPaleThon/27.jpg",
+                "/images/WhisperPaleThon/28.jpg",
+                "/images/WhisperPaleThon/29.jpg",
+                "/images/WhisperPaleThon/30.jpg",
+                "/images/WhisperPaleThon/31.jpg",
+                "/images/WhisperPaleThon/32.jpg",
+                {
+                    "url": "/images/WhisperPaleThon/33.jpg",
+                    "title": "Serina Wynther & Velgrath — The Pale Crook",
+                    "description": "Velgrath – The Pale Crook: A pale-white staff with a C-shaped tip, wrapped in black rune-etched cloth that glows silver or violet when Serina casts her magic.\n\nSerina, a girl from a distant village, lived a simple life until whispers from the Pale Throne awakened within her the power to summon ancient Shadows. She now holds the key to decide whether the world will be restored — or erased forever."
+                },
+                {
+                    "url": "/images/WhisperPaleThon/35.jpg",
+                    "title": "Hymeira & Lyra Etherane",
+                    "description": "Lyra Etherane (Human Vessel): The youngest daughter of the Etherane noble line, descended from the fallen royal bloodline. A gentle 15-year-old girl dragged into execution alongside her family.\n\nHymeira (True Existence): A half-Outer God entity born from the chaos after The Severance. Took possession of Lyra's lifeless body, using it as a bridge between the human realm and the cosmic beyond. A large scar marks where her neck was cut."
+                },
+                {
+                    "url": "/images/WhisperPaleThon/37.jpg",
+                    "title": "Alveros — The Eternal Guardian",
+                    "description": "Alveros was once a noble knight, sworn to uphold an ancient Covenant forged in a forgotten age. Bound to a cursed suit of armor that has walked through centuries, he carries himself with dignity even as his humanity fades.\n\nTo him, Serina represents both a threat and a temptation — the embodiment of change that could unmake the order he is sworn to protect."
+                },
+                {
+                    "url": "/images/WhisperPaleThon/39.jpg",
+                    "title": "The Remnant — The Covenant",
+                    "description": "A formless existence from before the birth of the world — a cosmic will beyond gods and demons dwelling outside mortal comprehension. Bound by colossal soul-forged chains, its presence bends reality.\n\nIt was the true architect of the ancient Covenant, seeking to gradually consume humanity's will. Fractured into shadows and whispers, it subtly weaves the world's fate from the dark."
+                },
+                "/images/WhisperPaleThon/41.jpg"
+            ]
+        }
+    },
+    {
+        "layout": "right",
+        "images": [
+            "/images/111_pic_ex.jpg",
+            "/images/TheeComp.jpg",
+            "/images/ElyonUnMask.png",
+            "/images/Elyon.png"
+        ],
+        "name": "CHARACTER ARTWORKS",
+        "description": "Original Character Art & Digital Illustrations\n<b>2025 - 2026</b>",
+        "button": {
+            "name": "More",
+            "link": "Openimage",
+            "another_url": [
+                "/images/111_pic_ex.jpg",
+                "/images/TheeComp.jpg",
+                "/images/ElyonUnMask.png",
+                "/images/Elyon.png"
+            ]
+        }
+    },
+    {
+        "layout": "left",
         "images": [
             "/images/meena_05.jpg",
             "/images/meena_06.jpg",
@@ -19,7 +131,8 @@
                 "/images/meena_03.jpg"
             ]
         }
-    },{
+    },
+    {
         "layout": "full-width",
         "images": [
             "/images/3.jpg"
@@ -110,14 +223,6 @@
         }
     },
     {
-        "layout": "full-width",
-        "images": [
-            "/images/13.jpg"
-        ],
-        "name": "COSMIC ENTITY",
-        "description": ""
-    },
-    {
         "layout": "left",
         "images": [
             "/images/Live_30_9_9x9_compost.jpg",
@@ -174,11 +279,10 @@
                 "/images/22.jpg",
                 "/images/necro_fest_full.jpg",
                 "/images/23.jpg"
-                
             ]
         }
     },
-        {
+    {
         "layout": "right",
         "images": [
             "/images/mayavee_03.jpg"
@@ -196,7 +300,7 @@
             ]
         }
     },
-        {
+    {
         "layout": "left",
         "images": [
             "/images/Brigth_00.jpg"
@@ -214,7 +318,4 @@
             ]
         }
     }
-
-    
-
 ]

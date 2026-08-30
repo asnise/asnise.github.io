@@ -1,33 +1,52 @@
-/* ===== การตั้งค่าพื้นฐานและตัวแปรสี (เหมือนเดิม) ===== */
+/* ===== 1. การตั้งค่าพื้นฐานและตัวแปรสี (Design Tokens) ===== */
 :root {
+    /* ปรับความหนาตัวอักษร PORTFOLIO ได้ที่นี่: 300 (Light), 400 (Regular), 500 (Medium), 700 (Bold) */
+    --banner-title-weight: 500;
+    --banner-title-spacing: 5px;
+
     --primary-bg: #ffffff;
-    --secondary-bg: #f0f0f0;
-    --text-color: #333333;
+    --secondary-bg: #f8f9fa;
+    --text-color: #171717;
+    --text-muted: #737373;
     --header-text: #ffffff;
     --background-image: url("/images/Cover.jpg");
-    /* เพิ่มตัวแปรสำหรับปุ่ม */
-    --button-bg: #000000;
+    --button-bg: #111111;
     --button-text: #ffffff;
     --button-hover-bg: #7700ff;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --border-color: #e5e5e5;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 html {
     scroll-behavior: smooth;
-    scrollbar-width: none; /* Hides the scrollbar */
+    scrollbar-width: thin;
     cursor: default;
+    -webkit-text-size-adjust: 100%;
 }
 
-
 body {
-    font-family: 'Montserrat','Prompt', sans-serif;
+    font-family: 'Montserrat', 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--primary-bg);
     color: var(--text-color);
-    line-height: 1.6;
+    line-height: 1.65;
+    overflow-x: hidden;
+    word-break: break-word;
 }
 
-/* ===== ส่วน banner Header (แก้ไข) ===== */
+/* ===== 2. ส่วน Banner Header ===== */
 .banner {
     position: relative;
     height: 90vh;
@@ -40,129 +59,341 @@ body {
     text-align: center;
     padding: 0 20px;
     background-attachment: fixed;
-    /* Add gradient black overlay */
+    /* Gradient overlay */
     background-image: linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, rgb(0, 0, 0) 100%), var(--background-image);
 }
 
-
-/* Ensure content appears above the overlay */
 .banner-content {
     position: relative;
     z-index: 100;
-}
-
-.banner::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    opacity: 0;
-    transition: opacity 1s ease;
-    z-index: 1;
-}
-
-.banner.fade {
-    opacity: 0;
-}
-
-.banner.fade::before {
-    opacity: 1;
+    max-width: 850px;
+    margin: 0 auto;
 }
 
 .banner-content h1 {
     font-size: 5rem;
-    margin-bottom: 0.5rem;
-    letter-spacing: 5px;
-    font-weight: 500;
+    margin: 0 0 0.5rem;
+    letter-spacing: var(--banner-title-spacing, 5px);
+    font-weight: var(--banner-title-weight, 500);
     width: 100%;
-    animation: textGlow 3s infinite, fadeInText 1s ease-out forwards; /* นำเอฟเฟกต์ไปใช้กับ banner title */
 }
 
 .banner-content p {
     font-size: 1.2rem;
     font-weight: 300;
-    animation: fadeInText 1.5s ease-out forwards;
+    margin: 0.35rem 0;
 }
 
+.banner-content p:nth-of-type(2) {
+    margin-bottom: 1.5rem;
+}
+
+/* Social links in banner */
+.banner-social-links {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 101;
+    display: flex;
+    gap: 12px;
+}
+
+.banner-social-links a {
+    color: var(--header-text);
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.banner-social-links a:hover {
+    color: var(--button-hover-bg);
+    transform: translateY(-2px);
+}
+
+/* Resume Button */
+.resume-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    padding: 10px 22px;
+    background-color: transparent;
+    color: #f0f0f0;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 3px solid #f0f0f0;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.resume-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: var(--button-hover-bg);
+    z-index: -1;
+    transition: width 0.3s ease;
+    transform-origin: left;
+}
+
+.resume-button:hover::after {
+    width: 100%;
+}
+
+.resume-button:hover {
+    color: var(--button-text);
+    border-color: var(--button-hover-bg);
+}
+
+/* ===== 3. Sticky Navigation Menu (Anti-Slop / Minimalist Swiss Jump List) ===== */
 #portfolio-menu {
     display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping */
-    white-space: nowrap; /* Ensure text doesn't wrap */
-    justify-content: flex-start; /* Align menu items to the start */
+    justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
-    backdrop-filter: blur(10px); /* Apply blur effect to content behind */
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    padding: 0.85rem 2rem;
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
     z-index: 1000;
-    overflow-x: auto; /* Enable horizontal scrolling if needed */
-    scrollbar-width: none; /* Firefox */
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
 }
 
-.menu-button {
-    background-color: transparent;
-    color: var(--text-color);
-    padding: 0.5rem 1rem;
+.menu-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #171717;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.menu-brand .menu-label {
+    color: #171717;
+}
+
+.menu-brand .menu-divider {
+    color: #d4d4d4;
+    font-weight: 300;
+}
+
+.menu-brand .project-count {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #737373;
+    letter-spacing: 1px;
+}
+
+/* Dropdown Container */
+.jump-dropdown-container {
+    position: relative;
+    user-select: none;
+}
+
+.jump-dropdown-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.45rem 0.9rem;
+    background: #ffffff;
+    border: 1px solid #d4d4d4;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: #171717;
     cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.jump-dropdown-btn:hover,
+.jump-dropdown-btn.active {
+    border-color: #171717;
+    background: #fafafa;
+}
+
+.jump-current-title {
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.2px;
+}
+
+.jump-chevron {
+    transition: transform 0.2s ease;
+    color: #737373;
+    flex-shrink: 0;
+}
+
+.jump-dropdown-btn.active .jump-chevron {
+    transform: rotate(180deg);
+    color: #171717;
+}
+
+/* Dropdown Menu Modal/Card (Anti-Slop Clean Directory) */
+.jump-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    width: 320px;
+    max-height: 400px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+    overflow: hidden;
+    z-index: 1001;
+}
+
+.jump-dropdown-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.jump-dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #737373;
+    border-bottom: 1px solid #f0f0f0;
+    background: #fafafa;
+}
+
+.jump-to-top {
+    color: #171717;
     text-decoration: none;
-    border-bottom: 2px solid transparent;
-    font-size: 12px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    transition: opacity 0.15s;
 }
 
-.menu-button:hover {
-    border-bottom: 2px solid var(--text-color);
+.jump-to-top:hover {
+    text-decoration: underline;
+    opacity: 0.8;
 }
 
-.menu-button.active {
-    border-bottom: 2px solid var(--text-color);
+.jump-dropdown-list {
+    overflow-y: auto;
+    max-height: 340px;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
 }
 
+.jump-dropdown-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.jump-dropdown-list::-webkit-scrollbar-thumb {
+    background: #e5e5e5;
+    border-radius: 4px;
+}
+
+.jump-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #262626;
+    font-size: 0.82rem;
+    transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.jump-item-num {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #a3a3a3;
+    min-width: 20px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.jump-item-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 450;
+}
+
+.jump-dropdown-item:hover {
+    background: #f5f5f5;
+    color: #000000;
+}
+
+.jump-dropdown-item.active {
+    background: #171717;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.jump-dropdown-item.active .jump-item-num {
+    color: #a3a3a3;
+}
+
+/* ===== 4. Gallery & Portfolio Items ===== */
 #portfolio-gallery {
-    width: 80%;
+    width: 90%;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 4rem 1.5rem;
     box-sizing: border-box;
 }
 
 .portfolio-item {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 6rem;
-    align-items: flex-start;
-    min-height: 400px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    margin-bottom: 5.5rem;
+    align-items: center;
+    gap: 2.5rem;
 }
 
-.portfolio-item.visible {
-    opacity: 1;
-    transform: translateY(0);
+.artwork-container {
+    flex: 1 1 500px;
+    min-width: 0;
 }
 
-.artwork-container,
 .artwork-info {
-    flex: 1;
-    padding: 1rem;
-    box-sizing: border-box;
+    flex: 1 1 420px;
+    min-width: 0;
+    padding: 0.5rem;
 }
 
-/* ===== ✨ ใหม่: Grid Layout สำหรับแสดงหลายภาพ ✨ ===== */
+/* Grid Layout สำหรับแสดงภาพ */
 .artwork-grid {
     display: grid;
-    gap: 10px;
-    /* กำหนดคอลัมน์เริ่มต้นที่ 2 */
+    gap: 12px;
     grid-template-columns: repeat(2, 1fr);
+    border-radius: var(--radius-md);
+    overflow: hidden;
 }
 
-/* จัดสัดส่วน Grid ตามจำนวนภาพ (ตัวอย่าง) */
 .artwork-grid[data-count="1"] {
     grid-template-columns: 1fr;
 }
@@ -172,24 +403,36 @@ body {
 }
 
 .artwork-grid[data-count="3"] {
-    grid-template-columns: 2fr 1fr;
-    /* ภาพแรกใหญ่กว่า */
-    grid-template-rows: repeat(2, auto);
+    grid-template-columns: 1.8fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
 }
 
-/* สำหรับ 3 ภาพ: ให้ภาพที่ 2 และ 3 อยู่ในคอลัมน์ที่ 2 */
-.artwork-grid[data-count="3"] .artwork-image:nth-child(1) {
+.artwork-grid[data-count="3"] > *:nth-child(1) {
     grid-row: span 2;
+}
+
+.artwork-grid[data-count="4"] {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
 }
 
 .artwork-image {
     width: 100%;
     height: 100%;
+    max-height: 520px;
     object-fit: cover;
     display: block;
+    border-radius: var(--radius-sm);
+    transition: transform 0.4s ease, filter 0.3s ease;
+    box-shadow: var(--shadow-sm);
 }
 
-/* การจัดวาง ซ้าย-ขวา */
+.artwork-image:hover {
+    transform: scale(1.02);
+    filter: brightness(1.04);
+}
+
+/* Order ซ้าย-ขวา สลับกันบน Desktop */
 .layout-left .artwork-container {
     order: 1;
 }
@@ -206,46 +449,73 @@ body {
     order: 1;
 }
 
-/* สไตล์สำหรับภาพเต็มความกว้าง */
+/* Full width layout */
 .layout-full-width .artwork-container {
     flex: 0 0 100%;
     max-width: 100%;
+}
+
+.layout-full-width .artwork-grid {
+    grid-template-columns: 1fr;
+}
+
+.layout-full-width .artwork-image {
+    max-height: 650px;
+    border-radius: var(--radius-md);
 }
 
 .layout-full-width .artwork-info {
     display: none;
 }
 
-/* ซ่อนคำอธิบายสำหรับ full-width */
-
+/* Info Typography */
 .artwork-info h2 {
-    font-size: 1.8rem;
-    margin: auto 0 0.5rem;
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    margin: 0 0 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    letter-spacing: 0.5px;
+    line-height: 1.3;
 }
 
 .artwork-info p {
-    font-size: 1.25rem;
-    color: #555;
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    color: #4a4a4a;
     margin-bottom: 1.5rem;
+    line-height: 1.7;
 }
 
-/* สไตล์ใหม่สำหรับปุ่ม */
+.artwork-info b {
+    color: #1a1a1a;
+}
+
+/* Button & Button Group */
+.portfolio-button-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
 .portfolio-button {
     position: relative;
     overflow: hidden;
-    display: inline-block;
-    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 22px;
     background-color: transparent;
     color: var(--button-bg);
     text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    border: 3px solid var(--button-bg);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 2px solid var(--button-bg);
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    z-index: 1;
 }
 
-/* Pseudo-element for hover background effect */
 .portfolio-button::after {
     content: "";
     position: absolute;
@@ -256,70 +526,397 @@ body {
     background-color: var(--button-hover-bg);
     z-index: -1;
     transition: width 0.3s ease;
-    transform-origin: left;
 }
 
-.portfolio-button:hover::after {
+.portfolio-button:hover::after,
+.portfolio-button:active::after {
     width: 100%;
 }
 
-.portfolio-button:hover {
-    color: var(--button-text);
+.portfolio-button:hover,
+.portfolio-button:active {
+    color: #ffffff;
     border-color: var(--button-hover-bg);
+    box-shadow: 0 4px 14px rgba(119, 0, 255, 0.25);
+    transform: translateY(-2px);
 }
 
-/* Style anchor tags with the "button" class to look like a button */
-.outlink{
+.outlink {
     display: inline-block;
-    padding: 5px 10px;
-    color: #007BFF;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    cursor: pointer;
+    padding: 2px 6px;
+    color: #7700ff;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.2s ease;
 }
 
-/* Hover effect for button-like anchors */
 .outlink:hover {
     color: #ff004c;
 }
 
-/* ===== ส่วน Footer (แก้ไข) ===== */
+/* ===== 5. Fullscreen Lightbox Modal ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 2000;
+    overflow-y: auto;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: transparent;
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 1rem 0;
+}
+
+.modal-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+}
+
+.modal-media {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Skeleton Ghost Placeholder Loader */
+@keyframes skeletonGhost {
+    0% {
+        background-position: 180% 0;
+    }
+    100% {
+        background-position: -180% 0;
+    }
+}
+
+.media-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    background: linear-gradient(90deg, #18181b 25%, #27272a 50%, #18181b 75%);
+    background-size: 200% 100%;
+    animation: skeletonGhost 1.8s infinite ease-in-out;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-media-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    background: linear-gradient(90deg, #18181b 25%, #27272a 50%, #18181b 75%);
+    background-size: 200% 100%;
+    animation: skeletonGhost 1.8s infinite ease-in-out;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-card .modal-media-wrapper {
+    border-radius: 0;
+}
+
+.lazy-media {
+    opacity: 0;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.lazy-media.loaded {
+    opacity: 1;
+}
+
+.media-wrapper.loaded,
+.modal-media-wrapper.loaded {
+    background: transparent;
+    animation: none;
+    min-height: auto;
+}
+
+.modal-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 960px;
+    background: rgba(20, 20, 24, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.modal-card .modal-media {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.modal-card-info {
+    padding: 1.25rem 1.6rem 1.6rem;
+    color: #f4f4f5;
+    text-align: left;
+}
+
+.modal-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.modal-card-desc {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: #d4d4d8;
+    margin: 0;
+}
+
+.modal-close-button {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(15, 15, 18, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2050;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    outline: none;
+    padding: 0;
+}
+
+.modal-close-button svg {
+    transition: transform 0.25s ease;
+}
+
+.modal-close-button:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+    transform: scale(1.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.modal-close-button:hover svg {
+    transform: rotate(90deg);
+}
+
+.modal-close-button:active {
+    transform: scale(0.95);
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* ===== 6. Footer ===== */
 footer {
     text-align: center;
-    padding: 2rem;
+    padding: 3rem 1.5rem;
     background-color: var(--secondary-bg);
-    color: #666;
-    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    border-top: 1px solid var(--border-color);
 }
 
 .social-links {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .social-links a {
     color: var(--text-color);
     text-decoration: none;
-    margin: 0 10px;
-    transition: color 0.3s ease;
-    /* แก้ไขขนาดไอคอนตรงนี้ */
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s ease;
 }
 
-.social-links a:hover {
-    color: #007BFF;
-    /* เปลี่ยนสีเมื่อ hover */
+.social-links a:hover,
+.social-links a:active {
+    color: #ffffff;
+    background: var(--button-hover-bg);
+    transform: translateY(-3px);
 }
 
-/* ===== Responsive (ปรับปรุงใหม่) ===== */
-@media (max-width: 768px) {
-    /* ✨ ซ่อนเมนูเมื่อเป็นหน้าจอโทรศัพท์ ✨ */
-    #portfolio-menu {
-        display: none;
+/* ===== 7. Modern Progress Loader ===== */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0b0b0e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+}
+
+#loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-container {
+    width: 90%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    text-align: center;
+    user-select: none;
+}
+
+.loader-brand {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.progress-bar-track {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    transition: width 0.2s ease;
+}
+
+.loader-status {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: #a1a1aa;
+    letter-spacing: 0.4px;
+}
+
+#loader-status-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+    text-align: left;
+    color: #a1a1aa;
+}
+
+#loader-percent {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* ===== 8. Keyframes Animations ===== */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== 9. Comprehensive Responsive Design (Tablet & Mobile) ===== */
+
+/* --- Tablet (Screen width <= 992px) --- */
+@media (max-width: 992px) {
+    .banner {
+        height: 75vh;
+        min-height: 480px;
+        background-attachment: scroll;
+    }
+
+    .banner-content h1 {
+        font-size: 3.5rem;
+        letter-spacing: 3px;
+    }
+
+    .banner-content p {
+        font-size: 1.1rem;
+    }
+
+    #portfolio-gallery {
+        width: 94%;
+        padding: 3rem 1rem;
     }
 
     .portfolio-item {
-        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 4.5rem;
+    }
+
+    .artwork-container {
+        flex: 1 1 100%;
+    }
+
+    .artwork-info {
+        flex: 1 1 100%;
     }
 
     .layout-left .artwork-container,
@@ -327,341 +924,123 @@ footer {
     .layout-left .artwork-info,
     .layout-right .artwork-info {
         order: 0;
-        /* รีเซ็ต order ให้เรียงตามลำดับปกติ */
-    }
-
-    .artwork-info {
-        text-align: center;
-        padding-top: 2rem;
     }
 }
 
-.artwork-grid[data-count="4"] {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-}
-
-/* โค้ดใหม่: สไตล์สำหรับ Modal Overlay */
-.modal-overlay {
-    display: none; /* ซ่อนไว้ตอนเริ่มต้น */
-    position: fixed; /* ให้อยู่เหนือทุกองค์ประกอบ */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9); /* พื้นหลังสีดำโปร่งแสง */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* ให้อยู่ด้านบนสุด */
-    overflow-y: auto; /* สามารถเลื่อนได้ในแนวตั้ง */
-    padding: 2rem;
-    box-sizing: border-box;
-}
-
-.modal-content {
-    background-color: #ffffff00;
-    padding: 2rem;
-    border-radius: 8px;
-    position: relative;
-    max-width: 60%;
-    max-height: 90%;
-    overflow-y: auto; /* ทำให้เนื้อหาภายในสามารถเลื่อนได้ */
-}
-
-.modal-image-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px; /* ระยะห่างระหว่างภาพ */
-}
-
-.modal-image-container img {
-    max-width: 100%;
-    height: auto;
-}
-
-.modal-close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ffffff00;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    z-index: 1001;
-}
-
-.modal-media {
-    max-width: 100%; /* ทำให้ media ไม่เกินความกว้างของ container */
-    height: auto;    /* รักษาอัตราส่วนของ media */
-    display: block;  /* ป้องกันช่องว่างด้านล่าง */
-}
-
-/* เมื่อ modal แสดงผล */
-.modal-overlay.active {
-    display: flex;
-}
-
-body.modal-open {
-    overflow: hidden; /* ป้องกันการเลื่อนในแนวตั้ง */
-    -ms-overflow-style: none;  /* สำหรับ Internet Explorer และ Edge */
-    scrollbar-width: none;  /* สำหรับ Firefox */
-}
-
-/* ซ่อน scrollbar สำหรับ Chrome, Safari และ Opera */
-body.modal-open::-webkit-scrollbar {
-    display: none;
-}
-
-/* ===== ✨ NEW: Responsive for screens < 360px (ปรับปรุงใหม่ทั้งหมด)✨ ===== */
-@media (max-width: 720px) {
-    .banner
-    {
-        width: 100%;
-    }
-    /* --- ปรับแก้ Banner --- */
-    .banner-content h1 {
-        font-size: 16px;
-    }
-
-    .banner-content p {
-        font-size: 9px;
-    }
-
-    /* --- ปรับแก้เมนู --- */
-    #portfolio-menu {
-        gap: 0.5rem; /* ลดช่องว่างระหว่างปุ่ม */
-        padding: 0.5rem;
-    }
-
-    .menu-button {
-        padding: 0.5rem;
-        font-size: 11px; /* ลดขนาดฟอนต์ปุ่มเล็กน้อย */
-    }
-
-    /* --- ปรับแก้ส่วน Gallery --- */
-    #portfolio-gallery {
-        align-items: center;
-        width: 100%;
-    }
-    .portfolio-item {
-        flex-direction: column; /* เปลี่ยนเป็นแนวตั้ง */
-        align-items: center; /* จัดกึ่งกลาง */
-        margin-bottom: 0; /* ลดระยะห่างระหว่างรายการ */
-    }
-
-    
-    .artwork-container, .artwork-info {
-        padding: 0.5rem; /* ลด padding ภายใน */
-    }
-
-    .artwork-info h2 {
-        font-size: 1.5rem; /* ลดขนาดฟอนต์หัวข้องาน */
-    }
-
-    .artwork-info p {
-        font-size: 0.9rem; /* ลดขนาดฟอนต์คำอธิบาย */
-    }
-    
-    .portfolio-button {
-        padding: 8px 16px; /* ลดขนาดปุ่ม */
-        font-size: 0.9rem;
-    }
-
-    /* --- ปรับแก้ Modal --- */
-    .modal-overlay {
-        padding: 0.5rem;
-    }
-    .modal-content {
-        max-width: 95%; /* ทำให้ Modal เกือบเต็มจอ */
-        padding: 1rem;
-    }
-    
-    /* --- ปรับแก้ Footer --- */
-    .social-links a {
-        font-size: 1.3rem; /* ลดขนาดไอคอนโซเชียล */
-        margin: 0 8px;
-    }
-
-    footer {
-        font-size: 0.8rem;
-        width: 100%;
-    }
-    .portfolio-item.layout-full-width {
-        display: none;
-        }
-}
-
-/* Keyframes สำหรับ text glow effect */
-@keyframes textGlow {
-    0% {
-        text-shadow: 0 0 5px var(--header-text);
-    }
-    50% {
-        text-shadow: 0 0 20px var(--button-hover-bg);
-    }
-    100% {
-        text-shadow: 0 0 5px var(--header-text);
-    }
-}
-
-/* เพิ่ม Keyframes สำหรับ fade in effect */
-@keyframes fadeInText {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ปรับปรุง Animation สำหรับ banner content */
-.banner-content h1 {
-    /* รัน fadeInText ครั้งเดียวแล้วตามด้วย textGlow แบบวนไม่รู้จบ */
-    animation: fadeInText 1s ease-out forwards, textGlow 3s infinite; /* นำเอฟเฟกต์ไปใช้กับ banner title */
-}
-
-.banner-content p {
-    /* กำหนดให้ข้อความ p ค่อยๆ แสดงด้วย fadeInText พร้อม delay เล็กน้อย */
-    animation: fadeInText 1.5s ease-out forwards;
-}
-
-/* Responsive สำหรับหน้าจอขนาด Tablet */
-@media (max-width: 768px) {
+/* --- Mobile Smartphones (Screen width <= 640px) --- */
+@media (max-width: 640px) {
     .banner {
-        height: 60vh;
-        background-attachment: scroll; /* ปิด parallax บนหน้าจอเล็ก */
+        height: 85vh;
+        min-height: 460px;
+        padding: 0 16px;
+        background-attachment: scroll;
     }
+
     .banner-content h1 {
-        font-size: 3rem;
+        font-size: 2.3rem;
         letter-spacing: 2px;
     }
+
     .banner-content p {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
+
+    .banner-social-links {
+        bottom: 16px;
+        right: 16px;
+        gap: 10px;
+    }
+
+    .banner-social-links a {
+        font-size: 1.25rem;
+    }
+
+    .resume-button {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+    }
+
     #portfolio-menu {
-        flex-direction: column;
-        gap: 0.5rem;
-        padding: 0.5rem;
+        padding: 0.6rem 1rem;
     }
-    .menu-button {
-        padding: 0.5rem;
-        font-size: 1rem;
+
+    .menu-brand span {
+        font-size: 0.82rem;
+        letter-spacing: 1px;
     }
+
+    .jump-dropdown-btn {
+        padding: 0.45rem 0.95rem;
+        font-size: 0.82rem;
+        gap: 0.45rem;
+    }
+
+    .jump-current-title {
+        max-width: 130px;
+    }
+
+    .jump-dropdown-menu {
+        width: calc(100vw - 1.5rem);
+        right: -0.5rem;
+        max-height: 380px;
+    }
+
     #portfolio-gallery {
-        width: 90%;
+        width: 100%;
         padding: 2rem 1rem;
     }
+
     .portfolio-item {
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 3rem;
+        margin-bottom: 3.5rem;
+        gap: 1.25rem;
     }
-    .artwork-container,
+
+    .artwork-grid {
+        gap: 8px;
+    }
+
     .artwork-info {
-        padding: 0.5rem;
-        text-align: left;
+        padding: 0.25rem 0;
     }
+
     .artwork-info h2 {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
     }
+
     .artwork-info p {
-        font-size: 1rem;
+        font-size: 0.92rem;
+        line-height: 1.6;
     }
+
+    .portfolio-button-group {
+        width: 100%;
+        flex-direction: column;
+    }
+
     .portfolio-button {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-        text-align: center;
+        width: 100%;
+        padding: 12px 18px;
+        font-size: 0.92rem;
     }
+
+    .modal-overlay {
+        padding: 1rem 0.5rem;
+    }
+
+    .modal-close-button {
+        top: 14px;
+        right: 14px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .modal-close-button svg {
+        width: 17px;
+        height: 17px;
+    }
+
     footer {
-        padding: 1rem;
-        font-size: 0.8rem;
+        padding: 2rem 1rem;
+        font-size: 0.85rem;
     }
-    .portfolio-button
-    {
-        width: 50%;
-    }
-}
-
-/* Responsive สำหรับหน้าจอขนาด Mobile */
-@media (max-width: 480px) {
-    .banner {
-        height: 50vh;
-    }
-    .banner-content h1 {
-        font-size: 2.5rem;
-    }
-    .banner-content p {
-        font-size: 0.9rem;
-    }
-    #portfolio-gallery {
-        width: 95%;
-        padding: 1.5rem 1rem;
-    }
-    .menu-button {
-        font-size: 0.9rem;
-        padding: 0.4rem;
-    }
-    .portfolio-button {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-        width: 50%;
-    }
-    footer {
-        padding: 0.5rem;
-        font-size: 0.75rem;
-    }
-}
-
-/* Loader Styling */
-#loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--primary-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 3000;
-    transition: opacity 0.5s ease;
-}
-
-.spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid var(--text-color);
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Styling สำหรับ social-links บน Banner */
-.banner-social-links {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    z-index: 101;
-    display: flex;
-    gap: 10px;
-}
-
-.banner-social-links a {
-    color: var(--header-text);
-    font-size: 1.5rem;
-    transition: color 0.3s ease;
-}
-
-.banner-social-links a:hover {
-    color: var(--button-hover-bg);
 }
