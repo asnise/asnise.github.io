@@ -31,6 +31,127 @@
         ]
     },
     {
+        "layout": "left",
+        "images": [
+            "/images/Alchemite/50.jpg",
+            "/images/Alchemite/51.jpg",
+            "/images/Alchemite/52.jpg",
+            "/images/Alchemite/1.jpg"
+        ],
+        "name": "Alchemite (Alchemita) — 2D Chemistry RPG",
+        "description": "An action-adventure rogue-like RPG integrating real-world chemistry principles into core gameplay. Players venture through ancient dimensional portals to battle elemental monsters, gather elemental drops, and synthesize chemical compounds (such as H₂O, CaCO₃, C₆H₁₂O₆) in an alchemy furnace to repay a 1,000,000 G town restoration debt.\n\n<b>Tech & Architecture:</b> Unity Engine (C#), Custom VS Code JSON Database Creator & Parser Architecture, Dynamic Inventory & Modular Recipe Systems, 2D Top-Down Combat & Isometric Town Level Design.\n<b>Senior Project | Game Dev & Technical Design</b>",
+        "button": {
+            "name": "Explore Game Design & Dev Showcase",
+            "link": "Openimage",
+            "another_url": [
+                {
+                    "url": "/images/Alchemite/1.jpg",
+                    "title": "Alchemite — Project Overview",
+                    "description": "2D Action-Adventure Rogue-Like RPG combining dungeon crawling with real chemical compound synthesis and economy management."
+                },
+                {
+                    "url": "/images/Alchemite/48.jpg",
+                    "title": "Opening Lore & Narrative Storyboard",
+                    "description": "Uncovering an ancient portal leads to a dimensional breach. Monsters ravage the town, saddling the protagonist with a 1,000,000 G reconstruction debt."
+                },
+                {
+                    "url": "/images/Alchemite/16.jpg",
+                    "title": "Core Game Loop Architecture",
+                    "description": "Flowchart mapping Main Menu → Town Hub → Dungeon Portals → Elemental Combat & Loot Drop → Alchemy Furnace & Crafting → Shop Trade → Castle Debt Settlement."
+                },
+                {
+                    "url": "/images/Alchemite/18.jpg",
+                    "title": "UI Wireframe Systems",
+                    "description": "Wireframe specifications for Title Screen, Periodic Table Interface, Furnace Crafting, Inventory Storage, and Debt Repayment UI."
+                },
+                {
+                    "url": "/images/Alchemite/21.jpg",
+                    "title": "Periodic Table Integration",
+                    "description": "In-game classification and property database for Metals, Non-metals, and Metalloids based on real chemistry."
+                },
+                {
+                    "url": "/images/Alchemite/23.jpg",
+                    "title": "Molecular Synthesis Mechanic",
+                    "description": "Chemical reaction system where single elements combine into molecules (e.g., H₂ + O → H₂O, Carbon crystallization) with gameplay advantages for real chemistry knowledge."
+                },
+                {
+                    "url": "/images/Alchemite/30.jpg",
+                    "title": "Monster Art & Sprite Animations",
+                    "description": "Concept design and sprite sheets for elemental dungeon monsters including Slimes, Crystal Golems, and Shadows."
+                },
+                {
+                    "url": "/images/Alchemite/39.jpg",
+                    "title": "Character & NPC Design",
+                    "description": "Chibi 2D protagonist designs alongside specialized town NPCs (Blacksmith, Merchant, Town Lord, and Wizard)."
+                },
+                {
+                    "url": "/images/Alchemite/43.jpg",
+                    "title": "Town Hub & Level Design",
+                    "description": "Isometric level layout and 2D environment assets for the central hub and dynamic dungeon chambers."
+                },
+                {
+                    "url": "/images/Alchemite/45.jpg",
+                    "title": "Dungeon Portal Sprite Sheet",
+                    "description": "Custom animated 2D sprite frames for the ancient portal transition effect."
+                },
+                {
+                    "url": "/images/Alchemite/46.jpg",
+                    "title": "Level Design Evolution",
+                    "description": "From blockout prototype to fully textured and lit isometric town hub."
+                },
+                {
+                    "url": "/images/Alchemite/32.jpg",
+                    "title": "Custom JSON Data Architecture",
+                    "description": "Custom-built VS Code JSON creator tools for defining elements, item properties, recipes, and drop tables."
+                },
+                {
+                    "url": "/images/Alchemite/36.jpg",
+                    "title": "C# Script Architecture & Systems",
+                    "description": "Modular C# system breakdown across Data Readers, Combat Hitboxes, Enemy Spawners, Save/Load State, and UI Managers."
+                },
+                {
+                    "url": "/images/Alchemite/50.jpg",
+                    "title": "Final Gameplay: Hub & Crafting",
+                    "description": "In-game capture of NPC interaction, dungeon portals, shop merchant UI, and the alchemy furnace crafting interface."
+                },
+                {
+                    "url": "/images/Alchemite/51.jpg",
+                    "title": "Final Gameplay: Economy & Chemistry Recipes",
+                    "description": "Live debt settlement interface (-1,000,000 G goal), item marketplace, and chemical synthesis (CaCO₃, NaHCO₃, CH₃COOH, C₆H₁₂O₆, NH₄NO₃)."
+                },
+                {
+                    "url": "/images/Alchemite/52.jpg",
+                    "title": "Final Gameplay: Combat & Chemical Buffs",
+                    "description": "Weapon enchantment system with chemical element infusions (Nitrosurge, Tungstic Edge) and top-down dungeon combat."
+                },
+                "/images/Alchemite/14.jpg",
+                "/images/Alchemite/15.jpg",
+                "/images/Alchemite/17.jpg",
+                "/images/Alchemite/19.jpg",
+                "/images/Alchemite/20.jpg",
+                "/images/Alchemite/22.jpg",
+                "/images/Alchemite/24.jpg",
+                "/images/Alchemite/25.jpg",
+                "/images/Alchemite/26.jpg",
+                "/images/Alchemite/27.jpg",
+                "/images/Alchemite/28.jpg",
+                "/images/Alchemite/29.jpg",
+                "/images/Alchemite/31.jpg",
+                "/images/Alchemite/33.jpg",
+                "/images/Alchemite/34.jpg",
+                "/images/Alchemite/37.jpg",
+                "/images/Alchemite/38.jpg",
+                "/images/Alchemite/40.jpg",
+                "/images/Alchemite/41.jpg",
+                "/images/Alchemite/42.jpg",
+                "/images/Alchemite/44.jpg",
+                "/images/Alchemite/47.jpg",
+                "/images/Alchemite/49.jpg",
+                "/images/Alchemite/53.jpg"
+            ]
+        }
+    },
+    {
         "layout": "right",
         "images": [
             "/images/WhisperPaleThon/1.jpg",
