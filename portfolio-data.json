@@ -3,12 +3,12 @@
         "layout": "left",
         "images": [
             "/images/InventoryPage.png",
-            "/images/GachaPage.png",
+            "/images/GachaPage.jpg",
             "/images/VisualNovel.png",
             "/images/CostumePage.png"
         ],
-        "name": "Rievel Games — Game Dev & Tech Artist",
-        "description": "Contributed as a Technical Artist and Game Developer focusing on UI architecture and optimization. Engineered high-density scroll recycling reducing draw calls by 60%, developed custom UI shaders and procedural mesh tools, created an in-house Visual Novel engine, and integrated real-time backend systems for gacha presentations, global chat, and matchmaking lobbies.\n<b>DEC 2025 – AUG 2026 | Rievel Games CO., Ltd</b>",
+        "name": "Rievel Games — Game Developer",
+        "description": "Contributed as a Game Developer focusing on UI architecture and optimization. Engineered high-density scroll recycling reducing draw calls by 60%, developed custom UI shaders and procedural mesh tools, created an in-house Visual Novel engine, and integrated real-time backend systems for gacha presentations, global chat, and matchmaking lobbies.\n<b>DEC 2025 – AUG 2026 | Rievel Games CO., Ltd</b>",
         "buttons": [
             {
                 "name": "Try Visual-NV Tool",
@@ -20,7 +20,7 @@
                 "another_url": [
                     "/images/InventoryPage.png",
                     "/images/InventoryPageLogic.png",
-                    "/images/GachaPage.png",
+                    "/images/GachaPage.jpg",
                     "/video/gacha_result_ui.mp4",
                     "/images/VisualNovel.png",
                     "/images/CostumePage.png",
@@ -33,15 +33,15 @@
     {
         "layout": "right",
         "images": [
-            "/images/ShapeKeyAxisControl/Cover.png",
-            "/images/ShapeKeyAxisControl/Info.png",
-            "/images/ShapeKeyAxisControl/01.png",
-            "/images/ShapeKeyAxisControl/03.png"
+            "/images/ShapeKeyAxisControl/Cover.jpg",
+            "/images/ShapeKeyAxisControl/Info.jpg",
+            "/images/ShapeKeyAxisControl/01.jpg",
+            "/images/ShapeKeyAxisControl/03.jpg"
         ],
         "name": "ShapeKey Axis Control — Blender Add-on",
         "blender_addon_slug": "shapekey-axis-control",
         "fallback_downloads": 4565,
-        "description": "A powerful animation and rigging add-on for Blender designed to streamline facial rigging, eye tracking, and complex animations by mapping shape key values to an intuitive 2D Axis HUD Joystick. Features multi-axis coordinate blending (Box, Radial, Axis-restricted falloffs), global scene preset recording/keyframing, and timeline automation.\n\n<b>Blender 4.2 LTS+ Compatible | GPL-3.0</b>\n<b>Game Dev & Technical Art Tooling | 2026</b>",
+        "description": "A powerful animation and rigging add-on for Blender designed to streamline facial rigging, eye tracking, and complex animations by mapping shape key values to an intuitive 2D Axis HUD Joystick. Features multi-axis coordinate blending (Box, Radial, Axis-restricted falloffs), global scene preset recording/keyframing, and timeline automation.\n\n<b>Blender 4.2 LTS+ Compatible | GPL-3.0</b>\n<b>Blender Tooling & Animation Add-on | 2026</b>",
         "buttons": [
             {
                 "name": "Blender Extensions",
@@ -56,22 +56,22 @@
                 "link": "Openimage",
                 "another_url": [
                     {
-                        "url": "/images/ShapeKeyAxisControl/Cover.png",
+                        "url": "/images/ShapeKeyAxisControl/Cover.jpg",
                         "title": "ShapeKey Axis Control — Overview",
                         "description": "Control shape keys effortlessly using an intuitive 2D Axis HUD Joystick in Blender 4.2 LTS and newer."
                     },
                     {
-                        "url": "/images/ShapeKeyAxisControl/Info.png",
+                        "url": "/images/ShapeKeyAxisControl/Info.jpg",
                         "title": "HUD Architecture & Controls",
                         "description": "Real-time 2D Joystick HUD panel, custom group management (Eyes, Mouth, Brows), falloff blend modes, and timeline auto-keying."
                     },
                     {
-                        "url": "/images/ShapeKeyAxisControl/01.png",
+                        "url": "/images/ShapeKeyAxisControl/01.jpg",
                         "title": "Advanced Blend Modes & Falloffs",
                         "description": "Customize influence zones using Box, Radial, or restricted Axis (X-only / Y-only) coordinate calculations for precise facial animation."
                     },
                     {
-                        "url": "/images/ShapeKeyAxisControl/03.png",
+                        "url": "/images/ShapeKeyAxisControl/03.jpg",
                         "title": "Global Animation Presets & Keyframing",
                         "description": "Capture joystick coordinates across all objects in the scene. Use 'Set' to record, 'Call' to apply, and 'Key' to insert keyframes for all affected shape keys instantly."
                     }
@@ -82,9 +82,9 @@
     {
         "layout": "left",
         "images": [
-            "/images/OCRLocalTranslate/01.png",
-            "/images/OCRLocalTranslate/02.png",
-            "/images/OCRLocalTranslate/03.png"
+            "/images/OCRLocalTranslate/01.jpg",
+            "/images/OCRLocalTranslate/02.jpg",
+            "/images/OCRLocalTranslate/03.jpg"
         ],
         "name": "OCR Local Translate — Real-Time Game Subtitle Translator",
         "description": "A high-performance, 100% on-device game subtitle translator for Windows designed for low latency, zero API costs, and seamless in-game overlay integration. Powered by local ONNX OCR (RapidOCR/DBNet), CTranslate2 (Argos Translate offline neural translation), DXGI Desktop Duplication (1-3ms frame capture), and a frameless transparent UI with hotkey capture and LRU in-memory translation caching.\n\n<b>100% On-Device Offline Neural Translation | Zero API Cost</b>\n<b>DXGI Screen Duplication & DirectML / CUDA Hardware Acceleration</b>\n<b>Python, ONNX Runtime, PyQt/Custom UI | 2026</b>",
@@ -98,17 +98,17 @@
                 "link": "Openimage",
                 "another_url": [
                     {
-                        "url": "/images/OCRLocalTranslate/01.png",
+                        "url": "/images/OCRLocalTranslate/01.jpg",
                         "title": "Real-Time In-Game Capture & Translation Overlay",
                         "description": "Captures dialogue and subtitle zones with 1-3ms DXGI screen duplication, performing fast on-device OCR and local neural translation without internet dependency."
                     },
                     {
-                        "url": "/images/OCRLocalTranslate/02.png",
+                        "url": "/images/OCRLocalTranslate/02.jpg",
                         "title": "Subtitles Overlay & Gameplay Integration",
                         "description": "Unobtrusive semi-transparent frameless overlay with ghost skeleton loading indicator, font auto-splitting, and LRU cache for instant response."
                     },
                     {
-                        "url": "/images/OCRLocalTranslate/03.png",
+                        "url": "/images/OCRLocalTranslate/03.jpg",
                         "title": "Interactive Settings & Hardware Acceleration",
                         "description": "Configurable capture zones, hotkey rebind system, DirectML / CUDA GPU acceleration options, and deep translation fallback."
                     }
@@ -238,6 +238,77 @@
         }
     },
     {
+        "layout": "left",
+        "images": [
+            "/images/UXUI/Passive Skill 16_9.jpg",
+            "/images/UXUI/Equipment 16_9.jpg",
+            "/images/UXUI/Skill Manage 16_9.jpg",
+            "/images/UXUI/Class Change Mastery 16_9.jpg"
+        ],
+        "name": "Realm of Hero — 2D Action RPG (UX/UI & Systems)",
+        "description": "A top-down 2D Action RPG built on Unity (URP) featuring a deep mathematical stat progression (STR, AGI, INT, VIT, DEX, LUK), 12 distinct class archetypes, a massive node-based passive skill tree, and a modular Data-Driven architecture. Designed with a centralized Global Drag-and-Drop system, dynamic cast time calculations (VCT/FCT), support skill modifiers, Addressables costume rendering, and high-performance world-space telegraphing.\n\n<b>Tech & Architecture:</b> Unity (C# / URP), Event-Driven & Data-Driven (ScriptableObjects/JSON), Modular UI & Global Drag System, Addressables PSB Animation.\n<b>Game Systems & Technical UX/UI Design | 2026</b>",
+        "button": {
+            "name": "Explore UX/UI & System Architecture",
+            "link": "Openimage",
+            "another_url": [
+                {
+                    "url": "/images/UXUI/Passive Skill 16_9.jpg",
+                    "title": "Passive Skill Tree — Node-Based Progression",
+                    "description": "Massive node-based skill tree system with dynamic zoom and pan navigation (DraggableZoomPanel). Features Attribute Nodes, Skill Nodes, and Key Class Unlock Nodes."
+                },
+                {
+                    "url": "/images/UXUI/Equipment 16_9.jpg",
+                    "title": "Equipment & Costume Architecture",
+                    "description": "Comprehensive gear management integrating core combat equipment (Weapon, Armor, Shield, Relics), conditional set bonuses, and cosmetic Costume Slots powered by Addressables PSB 2D Animation."
+                },
+                {
+                    "url": "/images/UXUI/Skill Manage 16_9.jpg",
+                    "title": "Skill Management & Support Modifiers",
+                    "description": "Active skill configuration featuring dynamic cast calculations (Variable Cast Time & Fixed Cast Time) and Support Skill Slots (Payload Modifiers) for custom spell tweaking."
+                },
+                {
+                    "url": "/images/UXUI/Class Change Mastery 16_9.jpg",
+                    "title": "Class Change & Mastery System",
+                    "description": "12 distinct class archetypes with specialized class mastery trees, unlocking unique passive perks and advanced class skill sets."
+                },
+                {
+                    "url": "/images/UXUI/Refinement 16_9.jpg",
+                    "title": "Equipment Refinement & Reforging",
+                    "description": "Tiered gear enhancement system with conditional refine milestones (+5, +7, +10 bonuses) and stat re-rolling."
+                },
+                {
+                    "url": "/images/UXUI/Socket 16_9.jpg",
+                    "title": "Socketing & Rune Inscription",
+                    "description": "Socket creation and Fragment / Skill Rune embedding system to customize weapon properties and grant active abilities."
+                },
+                {
+                    "url": "/images/UXUI/Skill Indicator.jpg",
+                    "title": "Combat Area of Effect & Skill Indicators",
+                    "description": "Real-time telegraphing and targeting indicators supporting Cone, Radius, and Box projections with dynamic range scaling."
+                },
+                {
+                    "url": "/images/UXUI/WorldSpace 16_9.jpg",
+                    "title": "World-Space Floating Status HUD",
+                    "description": "High-performance floating health/mana/stamina status bars (FloatingStatusBar) rendered in world space with responsive billboard projection."
+                },
+                {
+                    "url": "/images/UXUI/UI_Transition_Page.jpg",
+                    "title": "UI Architecture & Global Drag-and-Drop",
+                    "description": "Centralized GlobalDragManager handling seamless cross-canvas drag-and-drop sessions between Inventory, Equipment, Hotbar, and Sockets."
+                },
+                {
+                    "url": "/images/UXUI/UI_Transition_Page-1.jpg",
+                    "title": "Progressive Disclosure Screen Flow",
+                    "description": "Clean modal transitions, context menu menus (Unequip, Use, Info), and optimized canvas scaling across 16:9 and ultrawide resolutions."
+                },
+                "/images/UXUI/Skill Manage 16_9 - Basic.jpg",
+                "/images/UXUI/Skill Manage 16_9 - Effect.jpg",
+                "/images/UXUI/Assets-Built-in.jpg",
+                "/images/UXUI/Assets Extract.jpg"
+            ]
+        }
+    },
+    {
         "layout": "right",
         "images": [
             "/images/WhisperPaleThon/1.jpg",
@@ -303,8 +374,8 @@
         "images": [
             "/images/111_pic_ex.jpg",
             "/images/TheeComp.jpg",
-            "/images/ElyonUnMask.png",
-            "/images/Elyon.png"
+            "/images/ElyonUnMask.jpg",
+            "/images/Elyon.jpg"
         ],
         "name": "CHARACTER ARTWORKS",
         "description": "Original Character Art & Digital Illustrations\n<b>2025 - 2026</b>",
@@ -314,8 +385,8 @@
             "another_url": [
                 "/images/111_pic_ex.jpg",
                 "/images/TheeComp.jpg",
-                "/images/ElyonUnMask.png",
-                "/images/Elyon.png"
+                "/images/ElyonUnMask.jpg",
+                "/images/Elyon.jpg"
             ]
         }
     },
