@@ -82,6 +82,53 @@
     {
         "layout": "left",
         "images": [
+            "/images/EXeaJiggle/front_preview.webp",
+            "/images/EXeaJiggle/wireframe_preview.webp",
+            "/images/EXeaJiggle/side_preview.webp",
+            "/images/EXeaJiggle/back_preview.webp"
+        ],
+        "name": "EXea Jiggle — Blender Add-on",
+        "description": "An effortless real-time secondary motion and bone jiggle physics add-on for Blender armatures. Designed to bring character hair, tails, clothing, breasts, and accessories to life without manual keyframing. Features live 3D Viewport simulation, one-click bone chain dynamics with customizable tip falloffs, physical stiffness and damping presets (Soft, Medium, Firm), and clean non-destructive baking directly into standard Action keyframes.\n\n<b>Blender 4.2 LTS+ Extensions & 3.0–4.1 Compatible | GPL-3.0</b>\n<b>Blender Tooling, Rigging & Animation Add-on | 2026</b>",
+        "buttons": [
+            {
+                "name": "Blender Extensions",
+                "link": "https://extensions.blender.org/approval-queue/exea-jiggle/"
+            },
+            {
+                "name": "GitHub Repo",
+                "link": "https://github.com/asnise/EXeaJiggle"
+            },
+            {
+                "name": "Feature Showcase",
+                "link": "Openimage",
+                "another_url": [
+                    {
+                        "url": "/images/EXeaJiggle/Preview_1080p_Front.webp",
+                        "title": "EXea Jiggle — Real-Time Viewport Physics",
+                        "description": "Interactive secondary motion simulation running live directly in the 3D Viewport. Hair, clothing, and accessories react naturally during animation playback and interactive posing."
+                    },
+                    {
+                        "url": "/images/EXeaJiggle/Preview_1080p_Wire.webp",
+                        "title": "One-Click Bone Chain Dynamics",
+                        "description": "Quickly setup multi-joint bone chains for hair strands and tails with automatic root-to-tip falloffs and spring mechanics."
+                    },
+                    {
+                        "url": "/images/EXeaJiggle/Preview_1080p_Side.webp",
+                        "title": "Multi-Angle Interactive Simulation",
+                        "description": "Instant visual feedback from any viewport angle. Adjust Stiffness, Damping, and Gravity parameters in real time."
+                    },
+                    {
+                        "url": "/images/EXeaJiggle/Preview_1080p_Back.webp",
+                        "title": "Hair & Accessories Dynamics + Clean Baking",
+                        "description": "Smooth physics on long back hair and accessories. Bakes directly into standard Action keyframes with automated helper cleanup."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "layout": "right",
+        "images": [
             "/images/OCRLocalTranslate/01.jpg",
             "/images/OCRLocalTranslate/02.jpg",
             "/images/OCRLocalTranslate/03.jpg"
@@ -117,7 +164,7 @@
         ]
     },
     {
-        "layout": "right",
+        "layout": "left",
         "images": [
             "/images/Alchemite/50.jpg",
             "/images/Alchemite/51.jpg",
@@ -238,7 +285,7 @@
         }
     },
     {
-        "layout": "left",
+        "layout": "right",
         "images": [
             "/images/UXUI/Passive Skill 16_9.jpg",
             "/images/UXUI/Equipment 16_9.jpg",
@@ -309,7 +356,7 @@
         }
     },
     {
-        "layout": "right",
+        "layout": "left",
         "images": [
             "/images/WhisperPaleThon/1.jpg",
             "/images/WhisperPaleThon/33.jpg",
